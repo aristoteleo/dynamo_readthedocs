@@ -128,7 +128,7 @@ intersphinx_mapping = {
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = ["notebooks/*"]
 
 # Generate the API documentation when building
 autosummary_generate = True
