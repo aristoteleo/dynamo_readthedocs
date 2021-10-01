@@ -1,3 +1,12 @@
+.. raw:: html
+
+    <div class="note">
+      <a href="https://colab.research.google.com/github/aristoteleo/dynamo-tutorials/blob/master/scEU_seq_organoid_analysis_kinetic.ipynb" target="_parent">
+      <img src="https://user-images.githubusercontent.com/7456281/93841442-99c3e180-fc61-11ea-9c87-07760b5dfc9a.png" width="119" alt="Open In Colab"/></a>
+      <a href="https://nbviewer.jupyter.org/github/aristoteleo/dynamo-tutorials/blob/master/scEU_seq_organoid_analysis_kinetic.ipynb" target="_parent">
+      <img src="https://user-images.githubusercontent.com/7456281/93841447-9c263b80-fc61-11ea-99b2-4eafe9958ee4.png" width="119" alt="Open In nbviewer"/></a>
+    </div>
+
 scEU-seq organoid
 =================
 
