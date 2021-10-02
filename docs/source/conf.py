@@ -20,8 +20,6 @@ sys.path.insert(0, os.path.abspath(module_path))
 sys.path.insert(0, os.path.abspath("../"))
 sys.path.insert(0, os.path.abspath("../../"))
 
-import dynamo
-
 # HERE = Path(__file__).parent
 # sys.path[:0] = [str(HERE.parent)]
 
@@ -59,7 +57,6 @@ for nb in notebooks:
 nbsphinx_prolog = r"""
 {% set docname = 'github/aristoteleo/dynamo-tutorials/blob/master/' + env.doc2path(env.docname, base=None) %}
 .. raw:: html
-
     <div class="note">
       <a href="https://colab.research.google.com/{{ docname|e }}" target="_parent">
       <img src="https://user-images.githubusercontent.com/7456281/93841442-99c3e180-fc61-11ea-9c87-07760b5dfc9a.png" width="119" alt="Open In Colab"/></a>
@@ -67,6 +64,7 @@ nbsphinx_prolog = r"""
       <img src="https://user-images.githubusercontent.com/7456281/93841447-9c263b80-fc61-11ea-99b2-4eafe9958ee4.png" width="119" alt="Open In nbviewer"/></a>
     </div>
 """
+rst_prolog = ""
 
 # -- Project information -----------------------------------------------------
 
