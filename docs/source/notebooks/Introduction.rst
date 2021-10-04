@@ -94,7 +94,7 @@ measuring hundread thousands of single cells.
 For the first time, `Wu lab <https://www.wulabupenn.org/>`__ from Upenn
 developed a drop-seq based metabolic labeling based scRNA-seq, scNT-seq.
 .. raw:: html
-   <img src="https://user-images.githubusercontent.com/7456281/93839221-4601ca00-fc5a-11ea-8e56-d39ec1725a6b.png">
+   <img src="https://user-images.githubusercontent.com/7456281/93839221-4601ca00-fc5a-11ea-8e56-d39ec1725a6b.png"/>
 
 Comparison between different labeling based scRNA-seq methods
 -------------------------------------------------------------
@@ -113,7 +113,7 @@ datasets for time-resolved RNA-velocity analysis. Those results
 demonstrate the power of dynamo and scNT-seq in revealing the
 fine-grained transcriptomic dynamics.
 .. raw:: html
-   <img src="https://user-images.githubusercontent.com/7456281/93838287-1b624200-fc57-11ea-9674-76006ba07950.png">
+   <img src="https://user-images.githubusercontent.com/7456281/93838287-1b624200-fc57-11ea-9674-76006ba07950.png"/>
 
 Labeling strategies
 -------------------
@@ -140,7 +140,7 @@ perturbations.
 
 .. raw:: html
    <div>
-      <img src="https://user-images.githubusercontent.com/7456281/93838322-392fa700-fc57-11ea-9019-e76358160f57.png">
+      <img src="https://user-images.githubusercontent.com/7456281/93838322-392fa700-fc57-11ea-9019-e76358160f57.png"/>
    <div>
 Dynamo’s comprehensive model framework for analyzing lableing datasets
 ----------------------------------------------------------------------
@@ -160,5 +160,5 @@ velocity.
 
 .. raw:: html
    <div>
-      <img src="https://user-images.githubusercontent.com/7456281/93839275-747fa500-fc5a-11ea-9605-24947534eacb.png">
+      <img src="https://user-images.githubusercontent.com/7456281/93839275-747fa500-fc5a-11ea-9605-24947534eacb.png"/>
    </div>
