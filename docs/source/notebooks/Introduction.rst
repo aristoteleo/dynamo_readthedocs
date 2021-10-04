@@ -68,8 +68,8 @@ In fact, metabolic labeling has been widely adapted for the past a few
 decades. We can use various nucleotides to label RNA, for example, BrU,
 Eu and Biotin-NTP. For 4sU based labeling, there are about three
 different strategies, namely, SLAM-seq, TUC-seq, and Time-lapse-seq.
-.. raw:: html
-   <img src="https://user-images.githubusercontent.com/7456281/93838316-346af300-fc57-11ea-9cf9-79d37d8ff927.png">
+.. image:: https://user-images.githubusercontent.com/7456281/93838316-346af300-fc57-11ea-9cf9-79d37d8ff927.png
+   :align: center
 
 Metabolic labeling based scRNA-seq
 ----------------------------------
@@ -93,8 +93,8 @@ measuring hundread thousands of single cells.
 
 For the first time, `Wu lab <https://www.wulabupenn.org/>`__ from Upenn
 developed a drop-seq based metabolic labeling based scRNA-seq, scNT-seq.
-.. raw:: html
-   <img src="https://user-images.githubusercontent.com/7456281/93839221-4601ca00-fc5a-11ea-8e56-d39ec1725a6b.png"/>
+.. image:: https://user-images.githubusercontent.com/7456281/93839221-4601ca00-fc5a-11ea-8e56-d39ec1725a6b.png
+   :align: center
 
 Comparison between different labeling based scRNA-seq methods
 -------------------------------------------------------------
@@ -112,8 +112,8 @@ In our study, we show that dynamo can be used to leverage scNT-seq
 datasets for time-resolved RNA-velocity analysis. Those results
 demonstrate the power of dynamo and scNT-seq in revealing the
 fine-grained transcriptomic dynamics.
-.. raw:: html
-   <img src="https://user-images.githubusercontent.com/7456281/93838287-1b624200-fc57-11ea-9674-76006ba07950.png"/>
+.. image:: https://user-images.githubusercontent.com/7456281/93838287-1b624200-fc57-11ea-9674-76006ba07950.png
+   :align: center
 
 Labeling strategies
 -------------------
@@ -138,10 +138,9 @@ strategies, for exmple, combining pulse chase in a single experiment or
 integrating metabolic labeling with drug treatment or genetic
 perturbations.
 
-.. raw:: html
-   <div>
-      <img src="https://user-images.githubusercontent.com/7456281/93838322-392fa700-fc57-11ea-9019-e76358160f57.png"/>
-   <div>
+.. image:: https://user-images.githubusercontent.com/7456281/93838322-392fa700-fc57-11ea-9019-e76358160f57.png
+   :align: center
+
 Dynamo’s comprehensive model framework for analyzing lableing datasets
 ----------------------------------------------------------------------
 
@@ -158,7 +157,5 @@ the steady state assumptions to support analyzing regular 10 x data.
 Similarly, dynamo supports studying cite-seq data to estimate protein
 velocity.
 
-.. raw:: html
-   <div>
-      <img src="https://user-images.githubusercontent.com/7456281/93839275-747fa500-fc5a-11ea-9605-24947534eacb.png"/>
-   </div>
+.. image:: https://user-images.githubusercontent.com/7456281/93838322-392fa700-fc57-11ea-9019-e76358160f57.png
+   :align: center

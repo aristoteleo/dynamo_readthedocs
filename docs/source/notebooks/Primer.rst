@@ -67,10 +67,8 @@ field.
 
    </h1>
 
-.. raw:: html
-   <div>
-      <img src="https://raw.githubusercontent.com/Xiaojieqiu/jungle/master/Box1.png"/>
-   </div>
+.. image:: https://raw.githubusercontent.com/Xiaojieqiu/jungle/master/Box1.png
+   :align: center
 
 The trace of the Jacobian is divergence:
 :math:`\begin{align*}  \nabla \cdot \mathbf f = \sum_{i=1}^{d}\dfrac{\partial f_i}{\partial x_i} = \mathrm{tr} \mathbf J \ . \end{align*}`
