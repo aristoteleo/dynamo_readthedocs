@@ -114,6 +114,7 @@ In our study, we show that dynamo can be used to leverage scNT-seq
 datasets for time-resolved RNA-velocity analysis. Those results
 demonstrate the power of dynamo and scNT-seq in revealing the
 fine-grained transcriptomic dynamics.
+
 .. image:: https://user-images.githubusercontent.com/7456281/93838287-1b624200-fc57-11ea-9674-76006ba07950.png
    :align: center
 
