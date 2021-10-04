@@ -67,8 +67,8 @@ field.
 
    </h1>
 
-
-<img src="https://raw.githubusercontent.com/Xiaojieqiu/jungle/master/Box1.png">
+.. raw:: html
+   <img src="https://raw.githubusercontent.com/Xiaojieqiu/jungle/master/Box1.png">
 
 
 The trace of the Jacobian is divergence:
