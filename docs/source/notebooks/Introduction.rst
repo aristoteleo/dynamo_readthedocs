@@ -139,8 +139,9 @@ integrating metabolic labeling with drug treatment or genetic
 perturbations.
 
 .. raw:: html
-   <img src="https://user-images.githubusercontent.com/7456281/93838322-392fa700-fc57-11ea-9019-e76358160f57.png">
-
+   <div>
+      <img src="https://user-images.githubusercontent.com/7456281/93838322-392fa700-fc57-11ea-9019-e76358160f57.png">
+   <div>
 Dynamo’s comprehensive model framework for analyzing lableing datasets
 ----------------------------------------------------------------------
 
@@ -158,4 +159,6 @@ Similarly, dynamo supports studying cite-seq data to estimate protein
 velocity.
 
 .. raw:: html
-   <img src="https://user-images.githubusercontent.com/7456281/93839275-747fa500-fc5a-11ea-9605-24947534eacb.png">
+   <div>
+      <img src="https://user-images.githubusercontent.com/7456281/93839275-747fa500-fc5a-11ea-9605-24947534eacb.png">
+   </div>
