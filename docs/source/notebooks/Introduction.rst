@@ -68,6 +68,7 @@ In fact, metabolic labeling has been widely adapted for the past a few
 decades. We can use various nucleotides to label RNA, for example, BrU,
 Eu and Biotin-NTP. For 4sU based labeling, there are about three
 different strategies, namely, SLAM-seq, TUC-seq, and Time-lapse-seq.
+
 .. image:: https://user-images.githubusercontent.com/7456281/93838316-346af300-fc57-11ea-9cf9-79d37d8ff927.png
    :align: center
 
@@ -93,6 +94,7 @@ measuring hundread thousands of single cells.
 
 For the first time, `Wu lab <https://www.wulabupenn.org/>`__ from Upenn
 developed a drop-seq based metabolic labeling based scRNA-seq, scNT-seq.
+
 .. image:: https://user-images.githubusercontent.com/7456281/93839221-4601ca00-fc5a-11ea-8e56-d39ec1725a6b.png
    :align: center
 
