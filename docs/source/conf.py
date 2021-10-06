@@ -34,23 +34,23 @@ master_doc = "index"
 # -- Retrieve notebooks ------------------------------------------------
 
 
-notebooks_url = "https://github.com/aristoteleo/dynamo-tutorials/raw/master/"
-notebooks = [
-    "Introduction.ipynb",
-    "Primer.ipynb",
-    "Differential_geometry.ipynb",
-    "zebrafish.ipynb",
-    # "dentategyrus_subset_scvelo.ipynb",
-    # "pancreatic_endocrinogenesis.ipynb",
-    "scNT_seq_readthedocs.ipynb",
-    "scEU_seq_rpe1_analysis_kinetic.ipynb",
-    "scEU_seq_organoid_analysis_kinetic.ipynb",
-]
-for nb in notebooks:
-    try:
-        urlretrieve(notebooks_url + nb, nb)
-    except:
-        pass
+# notebooks_url = "https://github.com/aristoteleo/dynamo-tutorials/raw/master/"
+# notebooks = [
+#     "Introduction.ipynb",
+#     "Primer.ipynb",
+#     "Differential_geometry.ipynb",
+#     "zebrafish.ipynb",
+#     # "dentategyrus_subset_scvelo.ipynb",
+#     # "pancreatic_endocrinogenesis.ipynb",
+#     "scNT_seq_readthedocs.ipynb",
+#     "scEU_seq_rpe1_analysis_kinetic.ipynb",
+#     "scEU_seq_organoid_analysis_kinetic.ipynb",
+# ]
+# for nb in notebooks:
+#     try:
+#         urlretrieve(notebooks_url + nb, nb)
+#     except:
+#         pass
 
 
 # Add notebooks prolog to Google Colab and nbviewer
@@ -126,7 +126,7 @@ intersphinx_mapping = {
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ["notebooks/*"]
+exclude_patterns = []
 
 # Generate the API documentation when building
 autosummary_generate = True
