@@ -1,7 +1,7 @@
 Least Action Path Application
 =============================
 
-Least action path (LAP) introduction
+Introduction
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 | The ability to drive conversion between different cell states has
@@ -407,7 +407,6 @@ Developmental LAPs
         adata_labeling, basis="umap_ori", save_show_or_return="return", ax=ax, color="cell_type", frontier=True
     )
     
-    # TODO: check streamline plot output axes obj or list
     ax = ax[0]
     x, y = 0, 1
     for i in develope_keys:
