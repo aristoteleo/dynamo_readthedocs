@@ -37,6 +37,7 @@ __pycache__/
 
 # always-ignore notebooks
 *.ipynb
+!lap_box_introduction.ipynb
 
 # OS or Editor files and folders
 .DS_Store
