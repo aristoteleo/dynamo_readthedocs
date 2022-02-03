@@ -49,6 +49,7 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
 
    notebooks/Introduction
    notebooks/Primer
+   notebooks/lap_box_introduction.ipynb
 
 
 .. toctree::
