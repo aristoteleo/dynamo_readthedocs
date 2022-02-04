@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.abspath("../../"))
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 source_suffix = [".rst"]
-latex_additional_files = ['lap.bib']
+latex_additional_files = ['./notebooks/lap.bib']
 
 master_doc = "index"
 
@@ -84,6 +84,7 @@ release = "1.0.0"
 
 # specify sphinx version
 needs_sphinx = "4"
+bibtex_bibfiles = ['./notebooks/lap.bib']
 
 extensions = [
     "nbsphinx",
@@ -101,6 +102,7 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     # Automatically document param types (less noise in class signature)
     "sphinx_autodoc_typehints",
+    "sphinxcontrib.bibtex",
 ]
 
 # Mappings for sphinx.ext.intersphinx. Projects have to have Sphinx-generated doc! (.inv file)
