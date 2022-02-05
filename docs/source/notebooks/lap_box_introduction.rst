@@ -1,5 +1,10 @@
-Optimal Cell Fate Transitions via Least Action Paths
+.. _lap_theory_tutorial:
+Optimal cell fate transitions via most probably path
 ====================================================
+
+.. image:: dynamo_paper_figures/fig6_a.png
+   :align: center
+   :width: 400
 
 The least action path (LAP) principle, first proposed as early as 1744
 by Maupertuis :cite:t:`terrall` and famously advocated by Feynman with
@@ -28,7 +33,7 @@ separated by attractor barriers, and during transdifferentiation
 processes, cells from one stable attractor overcome these barriers and
 transverse into another stable attractor. Overcoming the
 dedifferentiation/transdifferentiation barriers driven by stochasticity
-are :raw-latex:`\textit{rare transitions}`, as evidenced by extremely
+are :math:`\textit{rare transitions}`, as evidenced by extremely
 low experimental reprogramming efficiency, as low as 0.001–0.01%
 :cite:t:`Merkl2013`. This is why reprogramming factors are
 generally needed, which reshape the developmental landscape in favor of
@@ -51,7 +56,8 @@ paths (LAPs)
 :cite:t:`freidlin2012random, onsager1953, Maier1997`. The
 action is defined as:
 
-:math:`\begin{align*}  \newcommand{\trp}{\mathsf{T}}  S_T(\boldsymbol x) = \frac{1}{2} \int_{0}^{T}\mathrm dt {\Big(\boldsymbol v(t) - \boldsymbol f\big(\boldsymbol x(t)\big)\Big)}^\trp \boldsymbol{D}^{-1}  \Big(\boldsymbol v(t) - \boldsymbol f\big(\boldsymbol x(t)\big)\Big), \end{align*}`\ 
+.. math::
+  \begin{align*}  \newcommand{\trp}{\mathsf{T}}  S_T(\boldsymbol x) = \frac{1}{2} \int_{0}^{T}\mathrm dt {\Big(\boldsymbol v(t) - \boldsymbol f\big(\boldsymbol x(t)\big)\Big)}^\trp \boldsymbol{D}^{-1}  \Big(\boldsymbol v(t) - \boldsymbol f\big(\boldsymbol x(t)\big)\Big), \end{align*}`
 
 :math:`\boldsymbol x` is a path and :math:`\boldsymbol v` its tangential
 velocity (the path is parametrized by time :math:`t`, so
@@ -84,11 +90,13 @@ defined as :cite:t:`Perez-Carrasco2016, Tang2017`:
   :math:`\boldsymbol y_k = (\boldsymbol x_{k-1} + \boldsymbol x_k)/2`.
   Given a traversal time :math:`T`, the LAP is a path such that:
 
-| :math:`\begin{align*}  P^* = \underset{P}{\operatorname{argmin}}\ S_T(P) = \underset{P}{\operatorname{argmin}}\ \frac{1}{2D}\sum_{k=1}^{n} \Big(\boldsymbol v_k - \boldsymbol f(\boldsymbol y_k)\Big)^2\Delta t . \end{align*}`\ 
+.. math::
+    \begin{align*}  P^* = \underset{P}{\operatorname{argmin}}\ S_T(P) = \underset{P}{\operatorname{argmin}}\ \frac{1}{2D}\sum_{k=1}^{n} \Big(\boldsymbol v_k - \boldsymbol f(\boldsymbol y_k)\Big)^2\Delta t . \end{align*} 
 | To obtain the global LAP, the optimal traversal time :math:`T^*` is
   determined as:
 
-:math:`\begin{align*}  T^* = \underset{T}{\operatorname{argmin}}\ S_T(P) \end{align*}`\ 
+.. math::
+  \begin{align*}  T^* = \underset{T}{\operatorname{argmin}}\ S_T(P) \end{align*}
 
 The algorithm discretizes the path as a sequence of points,
 :math:`P=\{\boldsymbol x_0, \boldsymbol x_1, \dots, \boldsymbol x_n\}`,
@@ -99,12 +107,16 @@ where :math:`\Delta t` is the time step for the cell to move from
 :math:`\boldsymbol x_{k-1}`. In addition to the deterministic vector
 field, we also assume a certain degree of stochasticity in the system:
 
-| :math:`\begin{align*}  \dot{\boldsymbol x} = \boldsymbol f(\boldsymbol x) + \sigma \boldsymbol\eta(t), \end{align*}`\ 
+.. math::
+    \begin{align*}  \dot{\boldsymbol x} = \boldsymbol f(\boldsymbol x) + \sigma \boldsymbol\eta(t), \end{align*}
+
 | where :math:`\boldsymbol\eta(t)` is a stochastic white noise and
   :math:`\boldsymbol\sigma` the size of it. The action :math:`S` along
   the discrete path is defined as (Perez-Carrasco et al., 2016):
 
-| :math:`\begin{align*}  S(P, \Delta t) = \frac{1}{2D}\sum_{k=1}^{n}\Big(\boldsymbol v_k - \boldsymbol f(\boldsymbol y_k)\Big)^2\Delta t, \end{align*}`\ 
+.. math::
+  \begin{align*}  S(P, \Delta t) = \frac{1}{2D}\sum_{k=1}^{n}\Big(\boldsymbol v_k - \boldsymbol f(\boldsymbol y_k)\Big)^2\Delta t, \end{align*}
+
 | where :math:`\boldsymbol y_k` are the middle points of the line
   segments, i.e.,
   :math:`\boldsymbol y_k = (\boldsymbol x_{k-1} + \boldsymbol x_k)/2`.
@@ -114,24 +126,34 @@ field, we also assume a certain degree of stochasticity in the system:
   field has smaller action than paths that do not. The LAP is a path
   such that:
 
-| :math:`\begin{align*}  P^* = \underset{P, \Delta t}{\operatorname{argmin}} S(P, \Delta t) = \underset{P, \Delta t}{\operatorname{argmin}}\frac{1}{2D}\sum_{k=1}^{n}\Big(\boldsymbol v_k - \boldsymbol f(\boldsymbol y_k)\Big)^2\Delta t, \end{align*}`\ 
+.. math::
+  \begin{align*}  P^* = \underset{P, \Delta t}{\operatorname{argmin}} S(P, \Delta t) = \underset{P, \Delta t}{\operatorname{argmin}}\frac{1}{2D}\sum_{k=1}^{n}\Big(\boldsymbol v_k - \boldsymbol f(\boldsymbol y_k)\Big)^2\Delta t, \end{align*}
+
 | The algorithm for finding the LAP therefore consists of two steps:
 
 -  Minimization of the action by varying the time step. The optimal time
    step given a fixed path is a simple univariate least square
    minimization, i.e.:
--  :math:`\begin{align*}  \Delta t^* = \underset{\Delta t}{\operatorname{argmin}}\frac{1}{2D}\sum_{k=1}^{n}\Big(\frac{\boldsymbol x_k - \boldsymbol x_{k-1}}{\Delta t} - \boldsymbol f(\boldsymbol y_k)\Big)^2\Delta t,  \end{align*}`\ 
+
+.. math::
+  \begin{align*}  \Delta t^* = \underset{\Delta t}{\operatorname{argmin}}\frac{1}{2D}\sum_{k=1}^{n}\Big(\frac{\boldsymbol x_k - \boldsymbol x_{k-1}}{\Delta t} - \boldsymbol f(\boldsymbol y_k)\Big)^2\Delta t,  \end{align*}
+
 -  Minimization of the action by varying the path without moving the
    starting and end points. The optimal path given a fixed time step is
    found by:
--  :math:`\begin{align*}  P^* = \underset{\{\boldsymbol x_1, \boldsymbol x_2, \dots, \boldsymbol x_{n-1}\}}{\operatorname{argmin}}\frac{1}{2D}\sum_{k=1}^{n}\Big(\frac{\boldsymbol x_k - \boldsymbol x_{k-1}}{\Delta t} - \boldsymbol f\big(\frac{\boldsymbol x_{k-1} + \boldsymbol x_k}{2}\big)\Big)^2\Delta t, \end{align*}`\ 
-   For a :math:`d`-dimensional vector field, the number of variables in
-   the above optimization problem is :math:`d\times n`. To mitigate the
-   computational cost, the Jacobian of the action w.r.t. the path (more
-   specifically, the a-th component of the :math:`k`-th point) is
-   analytically computed:
 
-| :math:`\begin{align*} \frac{\partial{S}}{\partial{x_k^a}} =& \frac{1}{D}\Big(v_k^a - v_{k+1}^a + f^a(\boldsymbol y_{k+1}) - f^a(\boldsymbol y_k)\Big)\\  &-\frac{1}{2D}\Big(\big(\boldsymbol v_{k+1} - \boldsymbol f(\boldsymbol x_{k+1})\big) \cdot \frac{\partial{f}}{\partial{x^a}}\Big|_{\boldsymbol x_{k+1}} + \big(\boldsymbol v_k - \boldsymbol f(\boldsymbol x_k)\big)\cdot\frac{\partial f}{\partial{x^a}}\Big|_{\boldsymbol x_k}\Big)  \end{align*}`\ 
+.. math::
+  \begin{align*}  P^* = \underset{\{\boldsymbol x_1, \boldsymbol x_2, \dots, \boldsymbol x_{n-1}\}}{\operatorname{argmin}}\frac{1}{2D}\sum_{k=1}^{n}\Big(\frac{\boldsymbol x_k - \boldsymbol x_{k-1}}{\Delta t} - \boldsymbol f\big(\frac{\boldsymbol x_{k-1} + \boldsymbol x_k}{2}\big)\Big)^2\Delta t, \end{align*}
+
+For a :math:`d`-dimensional vector field, the number of variables in
+the above optimization problem is :math:`d\times n`. To mitigate the
+computational cost, the Jacobian of the action w.r.t. the path (more
+specifically, the a-th component of the :math:`k`-th point) is
+analytically computed:
+
+.. math::
+  \begin{align*} \frac{\partial{S}}{\partial{x_k^a}} =& \frac{1}{D}\Big(v_k^a - v_{k+1}^a + f^a(\boldsymbol y_{k+1}) - f^a(\boldsymbol y_k)\Big)\\  &-\frac{1}{2D}\Big(\big(\boldsymbol v_{k+1} - \boldsymbol f(\boldsymbol x_{k+1})\big) \cdot \frac{\partial{f}}{\partial{x^a}}\Big|_{\boldsymbol x_{k+1}} + \big(\boldsymbol v_k - \boldsymbol f(\boldsymbol x_k)\big)\cdot\frac{\partial f}{\partial{x^a}}\Big|_{\boldsymbol x_k}\Big)  \end{align*}
+
 | Note that the partial derivative of the vector field is the
   :math:`a`-th row of the Jacobian of the vector field. With the
   analytical Jacobian, the computation efficiency of the LAP
@@ -157,13 +179,17 @@ minimal traversal time (which will be referred to as the optimal path
 below) contributes the most to this transition rate
 :cite:t:`freidlin2012random, onsager1953, Maier1997, Aurell2002`:
 
-| :math:`\begin{align*}  R(A\rightarrow B) \approx C\exp(-S_{T^*}), \end{align*}`\ 
+.. math::
+  \begin{align*}  R(A\rightarrow B) \approx C\exp(-S_{T^*}), \end{align*}
+
 | where :math:`A` and :math:`B` are two cell types, :math:`S_{T^*}` the
   action of the optimal path, and :math:`C` a proportional factor.
   Furthermore, the transition time, or more specifically the mean first
   passage time (MFPT), is related to the transition rate:
 
-| :math:`\begin{align*}  \mathrm{MFPT} = \frac{1}{R(A\rightarrow B)} \end{align*}`\ 
+.. math::
+  \begin{align*}  \mathrm{MFPT} = \frac{1}{R(A\rightarrow B)} \end{align*}
+
 | Therefore, the action of the optimal path predicts both the likelihood
   and transition time for such rare transitions. Again, most
   reprogramming experiments take a few weeks or months, depending on the
@@ -190,7 +216,9 @@ information on regulatory genes, and their dynamics, during cell fate
 transitions. We calculate the mean squared displacement (MSD) for every
 gene :math:`i` along the optimal path:
 
-| :math:`\begin{align*}  \mathrm{MSD}_i = \sum_{t=0}^{T} \big(y_i(t) - y_i(0)\big)^2 \end{align*}`\ 
+.. math::
+  \begin{align*}  \mathrm{MSD}_i = \sum_{t=0}^{T} \big(y_i(t) - y_i(0)\big)^2 \end{align*}
+
 | Genes with large MSD are potentially genes that regulate the
   corresponding transitions.
 

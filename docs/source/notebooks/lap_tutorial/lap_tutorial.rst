@@ -1,4 +1,4 @@
-Least Action Path Application
+Most Probably Path Predictions
 =============================
 
 Introduction
@@ -25,6 +25,7 @@ Introduction
   transition paths found by LAP on vectorfield - heatmaps of pairwise
   actions and transition times; transcriptomics factor ranking; RoC
   curve of priority scores
+| - :ref:`You can read more about theory part here<lap_theory_tutorial>`.
 
 Import relevant packages
 

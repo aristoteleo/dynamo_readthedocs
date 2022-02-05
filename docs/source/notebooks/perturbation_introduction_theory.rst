@@ -1,4 +1,5 @@
-In silico perturbation
+.. _perturbation_theory_tutorial:
+Math behind In-silico Perturbation 
 =========================================================================================
 
 :math:`\newcommand{\pdv}[2]{\dfrac{\partial #1}{\partial #2}} \newcommand{\trp}{\mathsf{T}}`
@@ -13,14 +14,21 @@ small perturbations in the expression of all genes in the network
 :math:`\mathrm dx_1`, :math:`\mathrm dx_2`,…, :math:`\mathrm dx_n`, can
 be calculated with the :math:`\textit{exact differential}`:
 
-:math:`\begin{align*}  \mathrm d f_i = \pdv{f_i}{x_1}\mathrm dx_1 + \pdv{f_i}{x_2}\mathrm dx_2 + ... + \pdv{f_i}{x_n}\mathrm dx_n. \end{align*}`
+.. math::
+    \begin{align*}  \mathrm d f_i = \pdv{f_i}{x_1}\mathrm dx_1 + \pdv{f_i}{x_2}\mathrm dx_2 + ... + \pdv{f_i}{x_n}\mathrm dx_n. \end{align*}
+
 In vectorized form:
-:math:`\begin{align*}  \begin{bmatrix}  \mathrm df_1 \\[1.5ex] \mathrm df_2 \\[1.5ex] \dots \\[1.5ex] \mathrm df_n  \end{bmatrix} =  \begin{bmatrix}  \pdv{f_1}{x_1} \ &\pdv{f_1}{x_2} \ &\dots \ &\pdv{f_1}{x_n} \\[2ex]  \pdv{f_2}{x_1} \ &\pdv{f_2}{x_2} \ &\dots \ &\pdv{f_2}{x_n} \\[2ex]  \dots \ &\dots \ &\dots \ &\dots \\[2ex]  \pdv{f_n}{x_1} \ &\pdv{f_n}{x_2} \ &\dots \ &\pdv{f_n}{x_n}  \end{bmatrix}  \begin{bmatrix}  \mathrm dx_1 \\[1.5ex] \mathrm dx_2 \\[1.5ex] \dots \\[1.5ex] \mathrm dx_n  \end{bmatrix}. \end{align*}`
+
+.. math::
+    \begin{align*}  \begin{bmatrix}  \mathrm df_1 \\[1.5ex] \mathrm df_2 \\[1.5ex] \dots \\[1.5ex] \mathrm df_n  \end{bmatrix} =  \begin{bmatrix}  \pdv{f_1}{x_1} \ &\pdv{f_1}{x_2} \ &\dots \ &\pdv{f_1}{x_n} \\[2ex]  \pdv{f_2}{x_1} \ &\pdv{f_2}{x_2} \ &\dots \ &\pdv{f_2}{x_n} \\[2ex]  \dots \ &\dots \ &\dots \ &\dots \\[2ex]  \pdv{f_n}{x_1} \ &\pdv{f_n}{x_2} \ &\dots \ &\pdv{f_n}{x_n}  \end{bmatrix}  \begin{bmatrix}  \mathrm dx_1 \\[1.5ex] \mathrm dx_2 \\[1.5ex] \dots \\[1.5ex] \mathrm dx_n  \end{bmatrix}. \end{align*}
 
 The matrix on the right hand side is the Jacobian of the vector field.
 Replacing infinitesimal changes with finite perturbations, the above
 equation becomes:
-:math:`\begin{align*}  \Delta \boldsymbol f = \boldsymbol J \Delta \boldsymbol x. \end{align*}`
+
+.. math::
+    \begin{align*}  \Delta \boldsymbol f = \boldsymbol J \Delta \boldsymbol x. \end{align*}
+
 In practice, a proportionality constant :math:`c` is often added to the
 perturbation :math:`\Delta \boldsymbol x` to amplify the response
 :math:`\Delta \boldsymbol f`. Furthermore, because vector fields are

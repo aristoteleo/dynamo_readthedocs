@@ -1,4 +1,4 @@
-Gene Perturbation
+In-silico Perturbation
 =================
 
 In dynamo paper [reference link], we introduce the analytical form of a
@@ -24,11 +24,10 @@ figure7 [reference]
 Similarly, suppressing the HSPC maintenance gene HLF1 triggers cells to
 move away from the progenitors (Lehnertz et al., 2021).
 
+| - :ref:`You can read more about theory part here<perturbation_theory_tutorial>`.
 Perturbation method introduction
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[TODO] add reference link to perturbation and LAP method box in
-introduction part.
 
 Import relevant packages
 
