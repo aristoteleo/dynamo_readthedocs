@@ -2,9 +2,11 @@
 Optimal cell fate transitions via most probably path
 ====================================================
 
-.. image:: dynamo_paper_figures/fig6_a.png
+.. figure:: dynamo_paper_figures/fig6_a.png
    :align: center
    :width: 400
+   
+   The grand problem of predicting OPtimal cell-fate Conversions(OPCs).
 
 The least action path (LAP) principle, first proposed as early as 1744
 by Maupertuis :cite:t:`terrall` and famously advocated by Feynman with
@@ -49,6 +51,13 @@ worth additional clarification:
 -  traversal time: The time the cell spends traveling along a specific
    path. Theoretically, this is the time for a single cell to complete
    the cell type conversion once the cell has decided on the commitment.
+
+
+.. figure:: dynamo_paper_figures/fig6_b.png
+
+  Predicted optimal developmental path (a.k.a. developmental LAP) from HSC to each of
+  the terminal cell types in the UMAP embedding. Color of the node along the paths
+  indicates the LAP transition time.
 
 Given the vector field function, :math:`\boldsymbol f`, optimal pathways
 of cell fate conversion can be mathematically analyzed by least action
