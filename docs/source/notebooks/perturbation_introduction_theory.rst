@@ -1,4 +1,4 @@
-In silico perturbation to predict gene-wise perturbation effects and cell fate diversions
+In silico perturbation
 =========================================================================================
 
 :math:`\newcommand{\pdv}[2]{\dfrac{\partial #1}{\partial #2}} \newcommand{\trp}{\mathsf{T}}`
