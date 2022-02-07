@@ -1,5 +1,5 @@
-Most Probably Path Predictions
-=============================
+Most probably path predictions
+==========================================================
 
 Introduction
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

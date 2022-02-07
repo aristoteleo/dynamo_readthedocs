@@ -1,13 +1,21 @@
 .. _perturbation_theory_tutorial:
-Math behind In-silico Perturbation 
+
+*In-silico* perturbation
 =========================================================================================
 
 :math:`\newcommand{\pdv}[2]{\dfrac{\partial #1}{\partial #2}} \newcommand{\trp}{\mathsf{T}}`
 
 We leverage the analytical Jacobian of the reconstructed vector field
 function to make :math:`\textit{in silico}` genetic perturbation
-and predict cell-fate outcomes after the perturbation. Mathematically,
-for gene :math:`i` in any cell, the genetic perturbation effects or
+and predict cell-fate outcomes after the perturbation, showcased in :ref:`this figure<dynamo_fig7_a>`. 
+
+.. _dynamo_fig7_a:
+.. figure:: dynamo_paper_figures/fig7_a.png
+    :align: center
+
+    In silico genetic perturbation of the velocity vector field. i) In silico perturbation can predict the gene-wise response. ii) In silico perturbation can predict the cell fate trajectory after genetic perturbation by integrating the displacement of velocities across cells.
+
+Mathematically, for gene :math:`i` in any cell, the genetic perturbation effects or
 change in its velocity (or more accurately, the vector field) w.r.t. to
 small perturbations in the expression of all genes in the network
 (encoded by the Jacobian matrix :math:`\boldsymbol J`),
@@ -28,6 +36,7 @@ equation becomes:
 
 .. math::
     \begin{align*}  \Delta \boldsymbol f = \boldsymbol J \Delta \boldsymbol x. \end{align*}
+
 
 In practice, a proportionality constant :math:`c` is often added to the
 perturbation :math:`\Delta \boldsymbol x` to amplify the response

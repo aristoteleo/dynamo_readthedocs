@@ -1,12 +1,8 @@
 .. _lap_theory_tutorial:
+
 Optimal cell fate transitions via most probably path
 ====================================================
 
-.. figure:: dynamo_paper_figures/fig6_a.png
-   :align: center
-   :width: 400
-   
-   The grand problem of predicting OPtimal cell-fate Conversions(OPCs).
 
 The least action path (LAP) principle, first proposed as early as 1744
 by Maupertuis :cite:t:`terrall` and famously advocated by Feynman with
@@ -14,16 +10,24 @@ his reformulation of quantum mechanics via the path integral of the
 classical Hamilton action :cite:t:`fey65`, has previously been used
 in predicting the optimal transition path of cell fate transition for
 simplistic and designed systems
-:cite:t:`Qiu2012-yt, Wang2014-zc, Wang8257` We reason that with the
+:cite:t:`Qiu2012-yt, Wang2014-zc, Wang8257`. We reason that with the
 reconstructed continuous, differentiable vector field, we can extend the
 LAP approach to real datasets in transcriptomic space to computationally
 explore optimal paths for differentiation and reprogramming
 (dedifferentiation and transdifferentiation), which then helps identify
 key transcription factors whose expression levels vary strongest along
-these paths.
+these paths. The grand problem of prediction OPCs is summarized :ref:`here<lap_theory_dynamo_paper_fig6_a>`. 
+
+.. _lap_theory_dynamo_paper_fig6_a:
+.. figure:: dynamo_paper_figures/fig6_a.png
+   :align: center
+   :width: 400
+
+   The grand problem of predicting OPtimal cell-fate Conversions(OPCs).
+
 
 The transcriptomic vector field encodes dynamical information of
-pathways connecting different cell types. For the development, the
+pathways connecting different cell types. :ref:`This figure from dynamo paper<lap_theory_dynamo_paper_fig6_b>` shows developmental path and transition matrix among cell types in hematopoietic stem cell lineages. For the development, the
 developmental paths, connecting progenitors and stable cell types, such
 as HSCs and megakaryocytes, are
 characterized by vector field streamlines, where cells need to overcome
@@ -52,12 +56,23 @@ worth additional clarification:
    path. Theoretically, this is the time for a single cell to complete
    the cell type conversion once the cell has decided on the commitment.
 
-
+.. _lap_theory_dynamo_paper_fig6_b:
 .. figure:: dynamo_paper_figures/fig6_b.png
 
-  Predicted optimal developmental path (a.k.a. developmental LAP) from HSC to each of
-  the terminal cell types in the UMAP embedding. Color of the node along the paths
-  indicates the LAP transition time.
+  Predicting OPCs for hematopoietic cell types. i) The developmental tree, known dedifferentiation and transdifferentiation events previously reported for the six cell types observed in our data. ii) Matrix representation of subpanel i). The optimal paths for hematopoietic transitions can be found by identifying the LAPs between the fixed points
+  that correspond to each stable cell type.
+
+
+:ref:`An example of LAP transition from state0 (HSC) to state1 (Meg)<lap_theory_dynamo_paper_fig6_c>` More explanation regarding math terms shown in this figure can be found in this introduction below.
+
+.. _lap_theory_dynamo_paper_fig6_c:
+.. figure:: dynamo_paper_figures/fig6_c.png
+   :align: center
+   :width: 400
+
+   Predicted optimal developmental path (a.k.a. developmental LAP) from HSC to Meg in the UMAP embedding. 
+
+
 
 Given the vector field function, :math:`\boldsymbol f`, optimal pathways
 of cell fate conversion can be mathematically analyzed by least action
@@ -94,7 +109,9 @@ tangential velocity can be calculated as
 where :math:`\Delta t = T/n`. The action along the discrete path is
 defined as :cite:t:`Perez-Carrasco2016, Tang2017`:
 
-| :math:`\begin{align*}  S_T(P) = \frac{1}{2D}\sum_{k=1}^{n} \Big(\boldsymbol v_k - \boldsymbol f(\boldsymbol y_k)\Big)^2\Delta t , \end{align*}`\ 
+.. math:
+  \begin{align*}  S_T(P) = \frac{1}{2D}\sum_{k=1}^{n} \Big(\boldsymbol v_k - \boldsymbol f(\boldsymbol y_k)\Big)^2\Delta t , \end{align*}
+
 | where :math:`y_k` are the middle points of the line segments, i.e.,
   :math:`\boldsymbol y_k = (\boldsymbol x_{k-1} + \boldsymbol x_k)/2`.
   Given a traversal time :math:`T`, the LAP is a path such that:
@@ -230,7 +247,3 @@ gene :math:`i` along the optimal path:
 
 | Genes with large MSD are potentially genes that regulate the
   corresponding transitions.
-
-.. bibliography::
-   :style: plain
-   
