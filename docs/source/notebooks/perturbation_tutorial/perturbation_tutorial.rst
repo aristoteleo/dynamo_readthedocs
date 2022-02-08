@@ -109,8 +109,6 @@ Induce hematopoietic stem cells with selected TFs
 Supress GATA1 and SPI1 genes individually
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-todo: explain why GATA/SPI1
-
 Suppression of GATA1 diverts cells from GMP-related lineages to
 MEP-related lineages.
 

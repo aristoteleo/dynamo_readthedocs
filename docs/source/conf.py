@@ -84,7 +84,8 @@ release = "1.0.0"
 
 # specify sphinx version
 needs_sphinx = "4"
-bibtex_bibfiles = ['./notebooks/lap.bib']
+bibtex_bibfiles = ['./notebooks/lap.bib', './notebooks/dynamo_ref.bib']
+bibtex_reference_style = "author_year"
 
 extensions = [
     "nbsphinx",
