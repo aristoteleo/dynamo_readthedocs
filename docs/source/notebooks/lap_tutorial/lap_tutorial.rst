@@ -1,8 +1,8 @@
 Most probably path predictions
-==========================================================
+==============================
 
 Introduction
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~
 
 | The ability to drive conversion between different cell states has
   garnered a great deal of attention as a promising avenue for disease
@@ -25,7 +25,6 @@ Introduction
   transition paths found by LAP on vectorfield - heatmaps of pairwise
   actions and transition times; transcriptomics factor ranking; RoC
   curve of priority scores
-| - :ref:`You can read more about theory part here<lap_theory_tutorial>`.
 
 Import relevant packages
 
@@ -127,10 +126,16 @@ Import relevant packages
 
 
 
+.. parsed-literal::
 
-.. image:: output_9_0.png
-   :width: 510px
-   :height: 346px
+    /Users/random/opt/anaconda3/envs/dynamo-dev/lib/python3.9/site-packages/pandas/core/arrays/categorical.py:2631: FutureWarning: The `inplace` parameter in pandas.Categorical.remove_unused_categories is deprecated and will be removed in a future version.
+      res = method(*args, **kwargs)
+
+
+
+.. image:: output_9_1.png
+   :width: 543px
+   :height: 413px
 
 
 .. code:: ipython3
@@ -187,8 +192,8 @@ Compute neighbor graph based on ``umap_ori``
 
 
 
-Run pairwise least action path among all cell-state
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run pairwise least action path among cell states
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Compute LAP for all cell type transition pairs. The main interface in
 dynamo is ``dyn.pd.least_action``. This function takes ``adata``, start
@@ -268,125 +273,125 @@ detailed parameter explanation.
 .. parsed-literal::
 
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [4.5715s]
+    |-----> [iterating through 1 pairs] finished [4.8274s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [74.9721s]
+    |-----> [iterating through 1 pairs] finished [87.3331s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [5.8210s]
+    |-----> [iterating through 1 pairs] finished [6.1928s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [78.5437s]
+    |-----> [iterating through 1 pairs] finished [87.8599s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [6.0854s]
+    |-----> [iterating through 1 pairs] finished [6.2292s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [74.1068s]
+    |-----> [iterating through 1 pairs] finished [81.9887s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [5.7696s]
+    |-----> [iterating through 1 pairs] finished [5.9224s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [75.6087s]
+    |-----> [iterating through 1 pairs] finished [82.8575s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [4.7836s]
+    |-----> [iterating through 1 pairs] finished [4.7673s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [109.6160s]
+    |-----> [iterating through 1 pairs] finished [120.9742s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.3515s]
+    |-----> [iterating through 1 pairs] finished [0.3654s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [14.1912s]
+    |-----> [iterating through 1 pairs] finished [17.5986s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.3844s]
+    |-----> [iterating through 1 pairs] finished [0.3836s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [13.3950s]
+    |-----> [iterating through 1 pairs] finished [17.3726s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.4217s]
+    |-----> [iterating through 1 pairs] finished [0.4288s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [17.3792s]
+    |-----> [iterating through 1 pairs] finished [20.0245s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.5050s]
+    |-----> [iterating through 1 pairs] finished [0.5213s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [15.2081s]
+    |-----> [iterating through 1 pairs] finished [17.8978s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.4349s]
+    |-----> [iterating through 1 pairs] finished [0.4509s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [22.3280s]
+    |-----> [iterating through 1 pairs] finished [27.8622s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.4803s]
+    |-----> [iterating through 1 pairs] finished [0.4895s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [14.3786s]
+    |-----> [iterating through 1 pairs] finished [16.6043s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.3679s]
+    |-----> [iterating through 1 pairs] finished [0.3779s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [11.1570s]
+    |-----> [iterating through 1 pairs] finished [12.5543s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.4891s]
+    |-----> [iterating through 1 pairs] finished [0.4918s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [15.7169s]
+    |-----> [iterating through 1 pairs] finished [21.3984s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.6016s]
+    |-----> [iterating through 1 pairs] finished [0.6045s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [13.3066s]
+    |-----> [iterating through 1 pairs] finished [18.5405s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.6006s]
+    |-----> [iterating through 1 pairs] finished [0.6157s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [23.1257s]
+    |-----> [iterating through 1 pairs] finished [21.0733s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.6803s]
+    |-----> [iterating through 1 pairs] finished [0.6774s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [25.2597s]
+    |-----> [iterating through 1 pairs] finished [28.5954s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.4929s]
+    |-----> [iterating through 1 pairs] finished [0.4858s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [19.9590s]
+    |-----> [iterating through 1 pairs] finished [22.6107s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.3961s]
+    |-----> [iterating through 1 pairs] finished [0.3991s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [21.3096s]
+    |-----> [iterating through 1 pairs] finished [23.0945s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.5329s]
+    |-----> [iterating through 1 pairs] finished [0.5327s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [21.6956s]
+    |-----> [iterating through 1 pairs] finished [24.0878s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.5991s]
+    |-----> [iterating through 1 pairs] finished [0.6087s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [18.1828s]
+    |-----> [iterating through 1 pairs] finished [24.2374s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.5294s]
+    |-----> [iterating through 1 pairs] finished [0.5198s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [16.2663s]
+    |-----> [iterating through 1 pairs] finished [18.8253s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.6805s]
+    |-----> [iterating through 1 pairs] finished [0.6873s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [12.9644s]
+    |-----> [iterating through 1 pairs] finished [14.9045s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.5693s]
+    |-----> [iterating through 1 pairs] finished [0.5671s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [9.7081s]
+    |-----> [iterating through 1 pairs] finished [10.4933s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.4364s]
+    |-----> [iterating through 1 pairs] finished [0.4429s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [12.1847s]
+    |-----> [iterating through 1 pairs] finished [13.5975s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.3485s]
+    |-----> [iterating through 1 pairs] finished [0.3534s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [16.1362s]
+    |-----> [iterating through 1 pairs] finished [19.1570s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.5369s]
+    |-----> [iterating through 1 pairs] finished [0.5459s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [27.4714s]
+    |-----> [iterating through 1 pairs] finished [30.7210s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.7007s]
+    |-----> [iterating through 1 pairs] finished [0.6741s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [15.3777s]
+    |-----> [iterating through 1 pairs] finished [17.5307s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.5634s]
+    |-----> [iterating through 1 pairs] finished [0.5748s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [20.0874s]
+    |-----> [iterating through 1 pairs] finished [22.9212s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.5219s]
+    |-----> [iterating through 1 pairs] finished [0.5324s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [15.4150s]
+    |-----> [iterating through 1 pairs] finished [18.0897s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [0.4658s]
+    |-----> [iterating through 1 pairs] finished [0.4742s]
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-    |-----> [iterating through 1 pairs] finished [20.1678s]
+    |-----> [iterating through 1 pairs] finished [29.8258s]
 
 
 Developmental LAPs
@@ -408,6 +413,7 @@ Developmental LAPs
         adata_labeling, basis="umap_ori", save_show_or_return="return", ax=ax, color="cell_type", frontier=True
     )
     
+    # TODO: check streamline plot output axes obj or list
     ax = ax[0]
     x, y = 0, 1
     for i in develope_keys:
@@ -519,7 +525,7 @@ Developmental LAPs
 
 .. parsed-literal::
 
-    <matplotlib.legend.Legend at 0x7fc0d9810c70>
+    <matplotlib.legend.Legend at 0x7f7f02026eb0>
 
 
 
@@ -561,13 +567,109 @@ Heatmap of pairwise celltype actions and time of transitions
    :height: 356px
 
 
+Kinetics Heatmap via LAP
+------------------------
+
+In this section we will show how to generate kinetics heatmap based on
+LAP. Dynamo provides you with ``dyn.pd.least_action``, a function
+computing the optimal paths between any two cell states in selected
+basis. Then ``dyn.pl.kinetic_heatmap`` can be used to plot kinetics
+heatmap.
+
+First we assign observation names to ``init_cells`` and ``end_cells``.
+Note that for demonstration and paper figure reproduction, we only store
+1 cell instance in init and end cell list. You may use multiple cells as
+inputs of ``dyn.pd.least_action``.
+
+.. code:: ipython3
+
+    init_cells = [adata_labeling.obs_names[HSC_cells_indices[0][0]]]
+    end_cells = [adata_labeling.obs_names[Bas_cells_indices[0][0]]]
+    print("init cells:", init_cells)
+    print("end cells:", end_cells)
+
+
+.. parsed-literal::
+
+    init cells: ['GGGGGGCGGCCT-JL_10']
+    end cells: ['GCAGCGAAGGCA-JL12_0']
+
+
+Compute via ``least_action`` interface. More information regarding this
+function can be found in API documentation.
+
+.. code:: ipython3
+
+    dyn.configuration.set_pub_style(scaler=0.6)
+    
+    lap = dyn.pd.least_action(
+        adata_labeling,
+        init_cells=init_cells,
+        end_cells=end_cells,
+        basis="pca",
+        adj_key="cosine_transition_matrix",
+    )
+
+
+
+.. parsed-literal::
+
+    |-----> [iterating through 1 pairs] in progress: 100.0000%
+
+.. parsed-literal::
+
+    /Users/random/opt/anaconda3/envs/dynamo-dev/lib/python3.9/site-packages/pandas/core/arrays/categorical.py:2631: FutureWarning: The `inplace` parameter in pandas.Categorical.remove_unused_categories is deprecated and will be removed in a future version.
+      res = method(*args, **kwargs)
+
+
+.. parsed-literal::
+
+    |-----> [iterating through 1 pairs] in progress: 100.0000%
+    |-----> [iterating through 1 pairs] finished [9.2680s]
+
+
+Visualize computed LAP information via ``dyn.pl.kinetic_heatmap``. Note
+x-axis below represents cell type transition path time, LAP time. In
+this case it is ``HSC->Bas``. Y-axis is self-explanatory, representing
+gene names.
+
+.. code:: ipython3
+
+    
+    is_human_tfs = [gene in human_tfs_names for gene in adata_labeling.var_names[adata_labeling.var.use_for_transition]]
+    human_genes = adata_labeling.var_names[adata_labeling.var.use_for_transition][is_human_tfs]
+    dyn.configuration.set_pub_style(scaler=0.6)
+    sns_heatmap = dyn.pl.kinetic_heatmap(
+        adata_labeling,
+        basis="pca",
+        mode="lap",
+        figsize=(200 / 72, 400 / 72),
+        genes=human_genes,
+        project_back_to_high_dim=True,
+        save_show_or_return="return",
+        color_map="bwr",
+    )
+    
+    plt.setp(sns_heatmap.ax_heatmap.yaxis.get_majorticklabels(), rotation=0)
+    plt.tight_layout()
+
+
+
+
+.. image:: output_31_0.png
+   :width: 209px
+   :height: 409px
+
+
 Rank transcriptomics factors (TFs)
 ----------------------------------
 
-| Here we will show how to leverage information we processed and stored
-  in ``transition_graph`` to produce visualization results of ranking of
-  TFs in transition paths.
-| ### Assign TF rankings based on literature review
+Here we will show how to leverage information we processed and stored in
+``transition_graph`` to produce visualization results of ranking of TFs
+in transition paths.
+
+Assign TF rankings based on literature review
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We first prepare ranking dataframes used to plot ranking info in this
 section. This part is specific to your dataset and little dynamo
@@ -809,82 +911,6 @@ inactivation
 
 .. code:: ipython3
 
-    len(all_genes), len(all_rank), len(all_keys)
-
-
-
-
-
-.. parsed-literal::
-
-    (63, 63, 63)
-
-
-
-.. code:: ipython3
-
-    reprogramming_mat_df.iloc[:, :4]
-
-
-
-
-
-.. raw:: html
-
-    <div>
-    <style scoped>
-        .dataframe tbody tr th:only-of-type {
-            vertical-align: middle;
-        }
-    
-        .dataframe tbody tr th {
-            vertical-align: top;
-        }
-    
-        .dataframe thead th {
-            text-align: right;
-        }
-    </style>
-    <table border="1" class="dataframe">
-      <thead>
-        <tr style="text-align: right;">
-          <th></th>
-          <th>HSC-&gt;Meg</th>
-          <th>HSC-&gt;Ery</th>
-          <th>HSC-&gt;Bas</th>
-          <th>HSC-&gt;Mon</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>genes</th>
-          <td>[GATA1, GATA2, ZFPM1, GFI1B, FLI1, NFE2]</td>
-          <td>[GATA1, ZFPM1, GFI1B, KLF1, SPI1, GATA2, LDB1,...</td>
-          <td>[GATA1, ZFPM1, GFI1B, KLF1, SPI1, GATA2, LDB1,...</td>
-          <td>[SPI1, IRF8, IRF5, ZEB2, KLF4]</td>
-        </tr>
-        <tr>
-          <th>rank</th>
-          <td>[3, 16, 17, 5, 6, 8]</td>
-          <td>[1, 30, 37, 9, 61, 14, -1, 16, 30]</td>
-          <td>[1, 30, 37, 9, 61, 14, -1, 16, 30]</td>
-          <td>[92, 113, -1, -1, -1]</td>
-        </tr>
-        <tr>
-          <th>PMID</th>
-          <td>18295580</td>
-          <td>18295580</td>
-          <td>18295580</td>
-          <td>18295580</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-
-
-
-.. code:: ipython3
-
     transition_graph["Ery->Neu"]["TFs2"], transition_graph["Ery->Neu"]["TFs_rank2"]
 
 
@@ -1028,7 +1054,7 @@ transition path shown in y-axis.
     transition = reprogramming_mat_df_p_subset["transition"].values
     genes = reprogramming_mat_df_p_subset["genes"].values
     
-    fig, ax = plt.subplots(1, 1, figsize=(3, 2))
+    fig, ax = plt.subplots(1, 1, figsize=(6, 4))
     sns.scatterplot(
         y="transition",
         x="rank",
@@ -1067,16 +1093,16 @@ transition path shown in y-axis.
 
 .. parsed-literal::
 
-    /var/folders/m5/dc_kmwcs2_3fqkytr_j09wx00000gn/T/ipykernel_76336/1823349271.py:38: UserWarning: FixedFormatter should only be used together with FixedLocator
+    /var/folders/m5/dc_kmwcs2_3fqkytr_j09wx00000gn/T/ipykernel_86890/802221001.py:33: UserWarning: FixedFormatter should only be used together with FixedLocator
       ax.set_yticklabels(list(reprogramming_mat_dict.keys())[6:], rotation=0)
-    /var/folders/m5/dc_kmwcs2_3fqkytr_j09wx00000gn/T/ipykernel_76336/1823349271.py:47: UserWarning: Matplotlib is currently using cairo, which is a non-GUI backend, so cannot show the figure.
+    /var/folders/m5/dc_kmwcs2_3fqkytr_j09wx00000gn/T/ipykernel_86890/802221001.py:42: UserWarning: Matplotlib is currently using cairo, which is a non-GUI backend, so cannot show the figure.
       plt.show()
 
 
 
-.. image:: output_51_1.png
-   :width: 315px
-   :height: 221px
+.. image:: output_55_1.png
+   :width: 545px
+   :height: 373px
 
 
 RoC Curve
@@ -1132,7 +1158,7 @@ area=\ ``0.83`` indicates our ranking scores are reasonable.
     plt.figure(figsize=(1.3, 1))
     
     lw = 0.5
-    plt.figure(figsize=(3, 3))
+    plt.figure(figsize=(5, 5))
     plt.plot(fpr, tpr, color="darkorange", lw=lw, label="ROC curve (area = %0.2f)" % roc_auc)
     plt.plot([0, 1], [0, 1], color="navy", lw=lw, linestyle="--")
     plt.xlim([0.0, 1.0])
@@ -1149,7 +1175,7 @@ area=\ ``0.83`` indicates our ranking scores are reasonable.
 
 .. parsed-literal::
 
-    /var/folders/m5/dc_kmwcs2_3fqkytr_j09wx00000gn/T/ipykernel_76336/1628562262.py:27: UserWarning: Matplotlib is currently using cairo, which is a non-GUI backend, so cannot show the figure.
+    /var/folders/m5/dc_kmwcs2_3fqkytr_j09wx00000gn/T/ipykernel_86890/1424505140.py:26: UserWarning: Matplotlib is currently using cairo, which is a non-GUI backend, so cannot show the figure.
       plt.show()
 
 
@@ -1160,7 +1186,7 @@ area=\ ``0.83`` indicates our ranking scores are reasonable.
 
 
 
-.. image:: output_54_2.png
-   :width: 221px
-   :height: 221px
+.. image:: output_58_2.png
+   :width: 365px
+   :height: 365px
 
