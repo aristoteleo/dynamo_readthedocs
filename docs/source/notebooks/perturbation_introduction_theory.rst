@@ -64,7 +64,3 @@ expression and RNA velocity vector to be further projected onto the UMAP
 or other low dimensional embeddings using the transition matrix
 :cite:p:`Bergen2020-kx, La_Manno2018-vp` and then plotted with
 streamlines (:math:`\textbf{Figure 7 I2, J}`).
-
-.. bibliography::
-   :style: plain
-   
