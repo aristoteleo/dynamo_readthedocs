@@ -1108,10 +1108,10 @@ transition path shown in y-axis.
    :height: 373px
 
 
-RoC Curve
+ROCCurve
 ---------
 
-Last but not least, lets evaluate our ranking via RoC curve.
+Last but not least, lets evaluate our ranking via ROCcurve.
 area=\ ``0.83`` indicates our ranking scores are reasonable.
 
 .. code:: ipython3
@@ -1162,7 +1162,7 @@ area=\ ``0.83`` indicates our ranking scores are reasonable.
     
     lw = 0.5
     plt.figure(figsize=(5, 5))
-    plt.plot(fpr, tpr, color="darkorange", lw=lw, label="ROC curve (area = %0.2f)" % roc_auc)
+    plt.plot(fpr, tpr, color="darkorange", lw=lw, label="ROCcurve (area = %0.2f)" % roc_auc)
     plt.plot([0, 1], [0, 1], color="navy", lw=lw, linestyle="--")
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.05])
