@@ -6,15 +6,13 @@ Introduction
 
 | The ability to drive conversion between different cell states has
   garnered a great deal of attention as a promising avenue for disease
-  modeling (Graf and Enver, 2009). A fundamental challenge in the field
+  modeling. A fundamental challenge in the field
   of stem cell biology is thus to assess the feasibility and identify
   optimal paths and key TFs (transcription factors) of such
-  interconversions (Figure 6A) (Graf and Enver, 2009; Zhou and Huang,
-  2011). The least action path (LAP, action: a functional of the
+  interconversions (Figure 6A :cite:p:`QIU2022`). The least action path (LAP, action: a functional of the
   trajectory) is a principled method that has previously been used in
   theoretical efforts to predict the most probable path a cell will
-  follow during fate transition (Qiu et al., 2012; Wang et al., 2011,
-  2014). Specifically, the optimal path between any two cell states
+  follow during fate transition. Specifically, the optimal path between any two cell states
   (e.g. the fixed point of HSCs and that of megakaryocytes) is searched
   by variating the continuous path connecting the source state to the
   target while minimizing its action and updating the associated
@@ -22,10 +20,10 @@ Introduction
   transition probability and is associated with a particular transition
   time.
 | In this tutorial, we will showcase 
-- how to perform LAP 
-- visualize
+- How to perform LAP 
+- Visualize
   transition paths found by LAP on vectorfield 
-- heatmaps of pairwise
+- Heatmaps of pairwise
   actions and transition times; transcriptomics factor ranking; RoC
   curve of priority scores
 
