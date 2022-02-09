@@ -1,6 +1,6 @@
 .. _lap_theory_tutorial:
 
-Optimal cell fate transitions via most probably path
+Optimal cell fate transitions via most probable path
 ====================================================
 
 

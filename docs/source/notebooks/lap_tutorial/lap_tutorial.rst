@@ -1,4 +1,4 @@
-Most probably path predictions
+Most probable path predictions
 ==============================
 
 Introduction
@@ -676,7 +676,7 @@ Assign TF rankings based on literature review
 
 We first prepare ranking dataframes used to plot ranking info in this
 section. This part is specific to your dataset and little dynamo
-specific API is involved, so if you may skip this part in your own
+specific API is involved, so you may skip this part in your own
 cases.
 
 .. code:: ipython3

@@ -11,7 +11,7 @@
 Time-resolved scRNA-seq
 =======================
 
-RNA velocity
+Seminal RNA velocity limitations
 ------------
 
 Although the seminal RNA velocity work is exciting, it has the following
