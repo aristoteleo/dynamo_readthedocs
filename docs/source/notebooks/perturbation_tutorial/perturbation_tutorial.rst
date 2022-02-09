@@ -188,7 +188,7 @@ Activate KLF1
 ~~~~~~~~~~~~~
 
 Activating KLF1 leads to conversion into erythroid cells, consistent
-with (Orkin and Zon, 2008).
+with :cite:p:`Orkin2008-vp`.
 
 .. code:: ipython3
 
@@ -212,7 +212,7 @@ Promote erythroid lineage: triple activation
 
 Triple activation of GATA1, KLF1, and TAL1, known erythrocyte factors,
 and TFs used for reprogramming fibroblasts into erythrocytes, diverts
-most other cells into the Ery lineage (Capellera-Garcia et al., 2016).
+most other cells into the Ery lineage :cite:p:`Capellera-Garcia2016-qp`.
 
 .. code:: ipython3
 

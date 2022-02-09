@@ -5,12 +5,12 @@ Optimal cell fate transitions via most probable path
 
 
 The least action path (LAP) principle, first proposed as early as 1744
-by Maupertuis :cite:t:`terrall` and famously advocated by Feynman with
+by :cite:p:`terrall` and famously advocated by Feynman with
 his reformulation of quantum mechanics via the path integral of the
-classical Hamilton action :cite:t:`fey65`, has previously been used
+classical Hamilton action :cite:p:`fey65`, has previously been used
 in predicting the optimal transition path of cell fate transition for
 simplistic and designed systems
-:cite:t:`Qiu2012-yt, Wang2014-zc, Wang8257`. We reason that with the
+:cite:p:`Qiu2012-yt, Wang2014-zc, Wang8257`. We reason that with the
 reconstructed continuous, differentiable vector field, we can extend the
 LAP approach to real datasets in transcriptomic space to computationally
 explore optimal paths for differentiation and reprogramming
@@ -41,7 +41,7 @@ transverse into another stable attractor. Overcoming the
 dedifferentiation/transdifferentiation barriers driven by stochasticity
 are :math:`\textit{rare transitions}`, as evidenced by extremely
 low experimental reprogramming efficiency, as low as 0.001–0.01%
-:cite:t:`Merkl2013`. This is why reprogramming factors are
+:cite:p:`Merkl2013`. This is why reprogramming factors are
 generally needed, which reshape the developmental landscape in favor of
 the reprogramming transitions. In the context of cell state transitions,
 there are two seemingly similar but fundamentally different concepts
@@ -78,7 +78,7 @@ that correspond to each stable cell type.
 Given the vector field function, :math:`\boldsymbol f`, optimal pathways
 of cell fate conversion can be mathematically analyzed by least action
 paths (LAPs)
-:cite:t:`freidlin2012random, onsager1953, Maier1997`. The
+:cite:p:`freidlin2012random, onsager1953, Maier1997`. The
 action is defined as:
 
 .. math::
@@ -108,7 +108,7 @@ which forms :math:`n` line segments. For each line segment, the discrete
 tangential velocity can be calculated as
 :math:`\boldsymbol v_k = (\boldsymbol x_k-\boldsymbol x_{k-1})/\Delta t`,
 where :math:`\Delta t = T/n`. The action along the discrete path is
-defined as :cite:t:`Perez-Carrasco2016, Tang2017`:
+defined as :cite:p:`Perez-Carrasco2016, Tang2017`:
 
 .. math:
   \begin{align*}  S_T(P) = \frac{1}{2D}\sum_{k=1}^{n} \Big(\boldsymbol v_k - \boldsymbol f(\boldsymbol y_k)\Big)^2\Delta t , \end{align*}
@@ -204,7 +204,7 @@ per unit time) is proportional to the exponential of actions of all
 paths. The Freidlin–Wentzell theorem dictates that the LAP with the
 minimal traversal time (which will be referred to as the optimal path
 below) contributes the most to this transition rate
-:cite:t:`freidlin2012random, onsager1953, Maier1997, Aurell2002`:
+:cite:p:`freidlin2012random, onsager1953, Maier1997, Aurell2002`:
 
 .. math::
   \begin{align*}  R(A\rightarrow B) \approx C\exp(-S_{T^*}), \end{align*}
@@ -221,7 +221,7 @@ below) contributes the most to this transition rate
   and transition time for such rare transitions. Again, most
   reprogramming experiments take a few weeks or months, depending on the
   exact initial and terminal cell states
-  :cite:t:`takahashi2006induction`.
+  :cite:p:`takahashi2006induction`.
 
 For natural transitions between points that are connected by the vector
 field streamlines (e.g., from a repulsor to an adjacent attractor), the
