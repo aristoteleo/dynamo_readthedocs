@@ -1098,8 +1098,8 @@ transition path shown in y-axis.
 
 
 .. image:: output_55_1.png
-   :width: 1090px
-   :height: 756px
+   :width: 650px
+   :height: 445px
 
 
 ROCCurve
