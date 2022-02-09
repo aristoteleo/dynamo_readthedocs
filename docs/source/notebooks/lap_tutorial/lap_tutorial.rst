@@ -642,15 +642,19 @@ gene names.
     is_human_tfs = [gene in human_tfs_names for gene in adata_labeling.var_names[adata_labeling.var.use_for_transition]]
     human_genes = adata_labeling.var_names[adata_labeling.var.use_for_transition][is_human_tfs]
     dyn.configuration.set_pub_style(scaler=0.6)
+    sns.set(font_scale=0.8)
     sns_heatmap = dyn.pl.kinetic_heatmap(
         adata_labeling,
         basis="pca",
         mode="lap",
-        figsize=(200 / 72, 400 / 72),
+        figsize=(10, 5),
         genes=human_genes,
         project_back_to_high_dim=True,
         save_show_or_return="return",
         color_map="bwr",
+        transpose=True,
+        xticklabels=True,
+        yticklabels=False
     )
     
     plt.setp(sns_heatmap.ax_heatmap.yaxis.get_majorticklabels(), rotation=0)
