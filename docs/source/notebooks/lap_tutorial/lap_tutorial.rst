@@ -21,8 +21,11 @@ Introduction
   transition time. The resultant least action path has the highest
   transition probability and is associated with a particular transition
   time.
-| In this tutorial, we will showcase - how to perform LAP - visualize
-  transition paths found by LAP on vectorfield - heatmaps of pairwise
+| In this tutorial, we will showcase 
+- how to perform LAP 
+- visualize
+  transition paths found by LAP on vectorfield 
+- heatmaps of pairwise
   actions and transition times; transcriptomics factor ranking; RoC
   curve of priority scores
 
