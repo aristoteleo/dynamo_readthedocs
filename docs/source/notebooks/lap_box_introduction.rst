@@ -27,7 +27,7 @@ these paths. The grand problem of prediction OPCs is summarized :ref:`here<lap_t
 
 
 The transcriptomic vector field encodes dynamical information of
-pathways connecting different cell types. :ref:`This figure from dynamo paper<lap_theory_dynamo_paper_fig6_b>` shows developmental path and transition matrix among cell types in hematopoietic stem cell lineages. For the development, the
+pathways connecting different cell types. :ref:`This figure from dynamo paper<lap_theory_dynamo_paper_fig6_b>` :cite:p:`QIU2022` shows developmental path and transition matrix among cell types in hematopoietic stem cell lineages. For the development, the
 developmental paths, connecting progenitors and stable cell types, such
 as HSCs and megakaryocytes, are
 characterized by vector field streamlines, where cells need to overcome
@@ -70,7 +70,8 @@ worth additional clarification:
    :align: center
    :width: 400
 
-   Predicted optimal developmental path (a.k.a. developmental LAP) from HSC to Meg in the UMAP embedding. 
+   The optimal paths for hematopoietic transitions can be found by identifying the LAPs between the fixed points
+that correspond to each stable cell type.
 
 
 

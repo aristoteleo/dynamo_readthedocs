@@ -1,7 +1,7 @@
 *In-silico* perturbation
 =================
 
-In dynamo paper [reference link], we introduce the analytical form of a
+In dynamo Cell paper :cite:p:`QIU2022`, we introduce the analytical form of a
 vector field permits in silico perturbation predictions of expression
 response for each gene in each cell and the cell fate diversions after
 genetic perturbations. In particular, we demonstrated the predictive
@@ -15,11 +15,13 @@ well with those reported in (Rekhtman et al., 1999) and reveal a
 seesaw-effect regulation between SPI1 and GATA1 in driving the GMP and
 the MEP lineages.
 
-In this tutorial, we will cover following topics: - perturbation
-functionality and API in dynamo - perturb gene expression levels
-individually or collectively in hematopoietic scNT-seq dataset -
-visualize gene perturbation effects - reproduce results in dynamo paper
-figure7 [reference]
+In this tutorial, we will cover following topics:
+- perturbation
+functionality and API in dynamo 
+- perturb gene expression levels
+individually or collectively in hematopoietic scNT-seq dataset 
+- visualize gene perturbation effects 
+- reproduce results in dynamo paper :cite:p:`QIU2022` figure7
 
 Similarly, suppressing the HSPC maintenance gene HLF1 triggers cells to
 move away from the progenitors (Lehnertz et al., 2021).
