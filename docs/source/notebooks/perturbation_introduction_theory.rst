@@ -52,7 +52,7 @@ to the PCA space:
 :math:`\begin{align*}  \Delta \boldsymbol g = \boldsymbol Q \Delta \boldsymbol f + \boldsymbol \mu. \end{align*}`
 One can then use :math:`\Delta \boldsymbol f`, a gene by cell matrix, to
 identify the strongest positive or negative responders of the genetic
-perturbation across cells (:math:`\textbf{Figure 7J i}`).
+perturbation across cells.
 
 Importantly, because :math:`\Delta \boldsymbol f` implies how each cell
 state will be affected after genetic perturbations, we can predict the
@@ -63,4 +63,4 @@ visualize the cell fate trajectory, pairs of :math:`\boldsymbol x` and
 expression and RNA velocity vector to be further projected onto the UMAP
 or other low dimensional embeddings using the transition matrix
 :cite:p:`Bergen2020-kx, La_Manno2018-vp` and then plotted with
-streamlines (:math:`\textbf{Figure 7 I2, J}`).
+streamlines.
