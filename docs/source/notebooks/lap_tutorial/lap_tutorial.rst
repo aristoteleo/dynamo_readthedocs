@@ -664,8 +664,8 @@ gene names.
 
 
 .. image:: output_31_0.png
-   :width: 209px
-   :height: 409px
+   :width: 818px
+   :height: 418px
 
 
 Rank transcriptomics factors (TFs)
@@ -1097,19 +1097,9 @@ transition path shown in y-axis.
     plt.show()
 
 
-
-.. parsed-literal::
-
-    /var/folders/m5/dc_kmwcs2_3fqkytr_j09wx00000gn/T/ipykernel_86890/802221001.py:33: UserWarning: FixedFormatter should only be used together with FixedLocator
-      ax.set_yticklabels(list(reprogramming_mat_dict.keys())[6:], rotation=0)
-    /var/folders/m5/dc_kmwcs2_3fqkytr_j09wx00000gn/T/ipykernel_86890/802221001.py:42: UserWarning: Matplotlib is currently using cairo, which is a non-GUI backend, so cannot show the figure.
-      plt.show()
-
-
-
 .. image:: output_55_1.png
-   :width: 545px
-   :height: 373px
+   :width: 1090px
+   :height: 756px
 
 
 ROCCurve
@@ -1180,20 +1170,7 @@ area=\ ``0.83`` indicates our ranking scores are reasonable.
 
 
 
-.. parsed-literal::
-
-    /var/folders/m5/dc_kmwcs2_3fqkytr_j09wx00000gn/T/ipykernel_86890/1424505140.py:26: UserWarning: Matplotlib is currently using cairo, which is a non-GUI backend, so cannot show the figure.
-      plt.show()
-
-
-
-.. parsed-literal::
-
-    <Figure size 130x100 with 0 Axes>
-
-
-
 .. image:: output_58_2.png
-   :width: 365px
-   :height: 365px
+   :width: 500px
+   :height: 500px
 
