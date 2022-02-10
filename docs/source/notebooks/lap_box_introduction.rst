@@ -70,8 +70,7 @@ worth additional clarification:
    :align: center
    :width: 400
 
-   The optimal paths for hematopoietic transitions can be found by identifying the LAPs between the fixed points
-that correspond to each stable cell type.
+   The optimal paths for hematopoietic transitions can be found by identifying the LAPs between the fixed points that correspond to each stable cell type.
 
 
 

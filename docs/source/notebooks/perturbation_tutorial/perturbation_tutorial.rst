@@ -6,14 +6,7 @@ vector field. This permits in silico perturbation predictions of expression
 for each gene in each cell and the cell fate diversions after
 genetic perturbations. In particular, we demonstrated the predictive
 power of hematopoietic fate trajectory predictions after genetic
-perturbations. Interestingly, suppressing the master regulator of the
-GMP lineage, SPI1, diverts cells to megakaryocytes and erythrocytes,
-whereas suppressing the master regulator of the MEP lineage, GATA1,
-diverts cells to monocytes and neutrophils. Suppressing both genes,
-however, traps the cell in the progenitor state. These predictions align
-well with those reported in and reveal a
-seesaw-effect regulation between SPI1 and GATA1 in driving the GMP and
-the MEP lineages.
+perturbations. 
 
 | In this tutorial, we will cover the following topics:
 - Perturbation functionality and API in dynamo 
