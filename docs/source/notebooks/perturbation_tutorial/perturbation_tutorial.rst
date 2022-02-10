@@ -1,9 +1,9 @@
 *In-silico* perturbation
 =================
 
-In the dynamo Cell paper :cite:p:`QIU2022`, we introduce the analytical form of a
-vector field permits in silico perturbation predictions of expression
-response for each gene in each cell and the cell fate diversions after
+In the dynamo Cell paper :cite:p:`QIU2022`, we introduced the analytical form of a
+vector field. This permits in silico perturbation predictions of expression
+for each gene in each cell and the cell fate diversions after
 genetic perturbations. In particular, we demonstrated the predictive
 power of hematopoietic fate trajectory predictions after genetic
 perturbations. Interestingly, suppressing the master regulator of the
@@ -15,13 +15,14 @@ well with those reported in and reveal a
 seesaw-effect regulation between SPI1 and GATA1 in driving the GMP and
 the MEP lineages.
 
-In this tutorial, we will cover following topics:
-- perturbation
+In this tutorial, we will cover the following topics:
+
+- Perturbation
 functionality and API in dynamo 
-- perturb gene expression levels
+- how to perturb gene expression levels
 individually or collectively in hematopoietic scNT-seq dataset 
-- visualize gene perturbation effects 
-- reproduce results in dynamo paper :cite:p:`QIU2022` figure7
+- Visualize gene perturbation effects 
+- Reproduce results in dynamo paper :cite:p:`QIU2022` figure7
 
 Similarly, suppressing the HSPC maintenance gene HLF1 triggers cells to
 move away from the progenitors.
@@ -61,7 +62,7 @@ Import relevant packages
 take a glance at what is in ``adata`` object. All observations,
 embedding layers and other data in ``adata`` are computed within
 ``dynamo``. Please refer to other dynamo tutorials regarding how to
-obtain these values from metadata and raw new/total and (or) raw
+obtain these values from the metadata and the raw new/total and (or) raw
 spliced/unspliced gene expression values.
 
 .. code:: ipython3
@@ -86,17 +87,17 @@ spliced/unspliced gene expression values.
 Perturb gene expression values
 ------------------------------
 
-apply ``dyn.pd.perturbation`` to data, upregulate each gene and show
-visualization results. Multiple genes can be suppressed or activated
+Here we apply ``dyn.pd.perturbation`` to the dataset by upregulating each gene and creating
+visualization plots. In addition, multiple genes can be suppressed or activated
 during perturbation simulation.
 
 Induce hematopoietic stem cells with selected TFs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-| **Define genes**
+| **Define sets of genes**
 | During reprogramming committed murine blood cells to induced
   hematopoietic stem cells with defined factors, six transcription
-  factors including Run1t1, Hlf, Lmo2, Prdm5, Pbx1, and Zfp37 impart
+  factors defined in ``murine_blood_cells`` below impart
   multilineage transplantation potential onto otherwise committed
   lymphoid and myeloid progenitors and myeloid effector cells. Inclusion
   of Mycn and Meis1 and use of polycistronic viruses increase
@@ -108,7 +109,7 @@ Induce hematopoietic stem cells with selected TFs
     gran_lineage_genes = ["CEBPE", "RUNX1T1", "KLF1", "CEBPA", "FOSB", "JUN", "SPI1", "ZC3HAV1"]
     erythroid_differentiation = ["GATA1", "TAL1", "LMO2", "KLF1", "MYB", "LDB1", "NFE2", "GFI1B", "BCL11A"]
 
-Supress GATA1 and SPI1 genes individually
+suppress GATA1 and SPI1 genes individually
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppression of GATA1 diverts cells from GMP-related lineages to
@@ -155,7 +156,7 @@ GMP-related lineages.
    :height: 349px
 
 
-Supress SPI1/GATA at the same time
+suppress SPI1/GATA at the same time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppression of both SPI1 and GATA1 traps cells in the progenitor states.
