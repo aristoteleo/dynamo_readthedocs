@@ -6,17 +6,17 @@
 :math:`\newcommand{\pdv}[2]{\dfrac{\partial #1}{\partial #2}} \newcommand{\trp}{\mathsf{T}}`
 
 We leverage the analytical Jacobian of the reconstructed vector field
-function to make :math:`\textit{in silico}` genetic perturbation
+function to make :math:`\textit{in-silico}` genetic perturbations
 and predict cell-fate outcomes after the perturbation, showcased in :ref:`this figure<dynamo_fig7_a>`. 
 
 .. _dynamo_fig7_a:
 .. figure:: dynamo_paper_figures/fig7_a.png
     :align: center
 
-    In silico genetic perturbation of the velocity vector field. i) In silico perturbation can predict the gene-wise response. ii) In silico perturbation can predict the cell fate trajectory after genetic perturbation by integrating the displacement of velocities across cells.
+    In silico genetic perturbation of the velocity vector field. i) In-silico perturbations can predict the gene-wise response. ii) In silico perturbations can predict the cell fate trajectory after genetic perturbation by integrating the displacement of velocities across cells.
 
 Mathematically, for gene :math:`i` in any cell, the genetic perturbation effects or
-change in its velocity (or more accurately, the vector field) w.r.t. to
+changes in its velocity (or more accurately, the vector field) w.r.t. to
 small perturbations in the expression of all genes in the network
 (encoded by the Jacobian matrix :math:`\boldsymbol J`),
 :math:`\mathrm dx_1`, :math:`\mathrm dx_2`,…, :math:`\mathrm dx_n`, can
@@ -57,7 +57,7 @@ perturbation across cells.
 Importantly, because :math:`\Delta \boldsymbol f` implies how each cell
 state will be affected after genetic perturbations, we can predict the
 cell fate trajectory under genetic perturbations by integrating the
-perturbation effects across cells over gene expression space, To
+perturbation effects across cells over gene expression space. To
 visualize the cell fate trajectory, pairs of :math:`\boldsymbol x` and
 :math:`\Delta \boldsymbol g` are used in the same vein as the gene
 expression and RNA velocity vector to be further projected onto the UMAP
