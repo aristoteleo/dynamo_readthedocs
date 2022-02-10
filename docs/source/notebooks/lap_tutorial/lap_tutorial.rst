@@ -7,9 +7,9 @@ Introduction
 | The ability to drive conversion between different cell states has
   garnered a great deal of attention as a promising avenue for disease
   modeling. A fundamental challenge in the field
-  of stem cell biology is thus to assess the feasibility and identify
+  of stem cell biology is to identify and assess the feasibility of
   optimal paths and key TFs (transcription factors) of such
-  interconversions (Figure 6A :cite:p:`QIU2022`). The least action path (LAP, action: a functional of the
+  interconversions (Figure 6A :cite:p:`QIU2022`). The least action path (LAP, action: a function of the
   trajectory) is a principled method that has previously been used in
   theoretical efforts to predict the most probable path a cell will
   follow during fate transition. Specifically, the optimal path between any two cell states
@@ -19,11 +19,11 @@ Introduction
   transition time. The resultant least action path has the highest
   transition probability and is associated with a particular transition
   time.
-| In this tutorial, we will showcase 
-- How to perform LAP 
-- Visualize
+| In this tutorial, we will showcase how to 
+- perform LAP 
+- visualize
   transition paths found by LAP on vectorfield 
-- Heatmaps of pairwise
+- plot heatmaps of pairwise
   actions and transition times; transcriptomics factor ranking; RoC
   curve of priority scores
 
@@ -52,6 +52,8 @@ Import relevant packages
 
     |-----> setting visualization default mode in dynamo. Your customized matplotlib settings might be overritten.
 
+
+Load hematopoietic scNT-seq dataset. This this tutorial we are going to perform LAP on and visualize hematopoietic scNT-seq dataset.
 
 .. code:: ipython3
 
@@ -126,19 +128,12 @@ Import relevant packages
         plt.scatter(*adata_labeling[indices[0]].obsm["X_umap_ori"].T)
 
 
-
-.. parsed-literal::
-
-    /Users/random/opt/anaconda3/envs/dynamo-dev/lib/python3.9/site-packages/pandas/core/arrays/categorical.py:2631: FutureWarning: The `inplace` parameter in pandas.Categorical.remove_unused_categories is deprecated and will be removed in a future version.
-      res = method(*args, **kwargs)
-
-
-
 .. image:: output_9_1.png
    :width: 543px
    :height: 413px
 
 
+Example of what are in ``HSC_cell_indices``.
 .. code:: ipython3
 
     HSC_cells_indices
@@ -153,8 +148,10 @@ Import relevant packages
 
 
 
-Development path for Meg, Ery, Bas, Mon and Neu cells
------------------------------------------------------
+.. 
+    Development path for Meg, Ery, Bas, Mon and Neu cells
+    -----------------------------------------------------
+
 
 Compute neighbor graph based on ``umap_ori``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -196,9 +193,9 @@ Compute neighbor graph based on ``umap_ori``
 Run pairwise least action path among cell states
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Compute LAP for all cell type transition pairs. The main interface in
+This section will compute LAP for all cell type transition pairs. The corresponding function in
 dynamo is ``dyn.pd.least_action``. This function takes ``adata``, start
-cell type and end cell type to compute least action path. As shown
+cells and end cells to compute least action path. As shown
 below, different basis can be used. Here we use PCA basis to compute LAP
 for downstream analysis. Please refer to specific API documentation for
 detailed parameter explanation.
@@ -395,7 +392,7 @@ detailed parameter explanation.
     |-----> [iterating through 1 pairs] finished [29.8258s]
 
 
-Developmental LAPs
+Obtain developmental LAPs
 ------------------
 
 .. code:: ipython3
@@ -414,7 +411,6 @@ Developmental LAPs
         adata_labeling, basis="umap_ori", save_show_or_return="return", ax=ax, color="cell_type", frontier=True
     )
     
-    # TODO: check streamline plot output axes obj or list
     ax = ax[0]
     x, y = 0, 1
     for i in develope_keys:
@@ -509,7 +505,8 @@ Developmental LAPs
     plt.tight_layout()
     plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
 
-
+The integration time of HSC to Meg lineage LAP (28 hour) is the shortest among all
+developmental LAPs.
 
 .. parsed-literal::
 
@@ -572,15 +569,14 @@ Kinetics Heatmap via LAP
 ------------------------
 
 In this section we will show how to generate kinetics heatmap based on
-LAP. Dynamo provides you with ``dyn.pd.least_action``, a function
-computing the optimal paths between any two cell states in selected
-basis. Then ``dyn.pl.kinetic_heatmap`` can be used to plot kinetics
+LAP. ``dyn.pd.least_action`` is a function which computes the optimal paths between any two cell states in selected
+basis. ``dyn.pl.kinetic_heatmap`` can be used to plot kinetics
 heatmap.
 
 First we assign observation names to ``init_cells`` and ``end_cells``.
-Note that for demonstration and paper figure reproduction, we only store
-1 cell instance in init and end cell list. You may use multiple cells as
-inputs of ``dyn.pd.least_action``.
+Note that for demonstration purses and paper figure reproduction, we only store
+1 cell instance in the init and end cell lists. You may use multiple cells as
+inputs for ``dyn.pd.least_action``.
 
 .. code:: ipython3
 
@@ -596,7 +592,7 @@ inputs of ``dyn.pd.least_action``.
     end cells: ['GCAGCGAAGGCA-JL12_0']
 
 
-Compute via ``least_action`` interface. More information regarding this
+Compute via ``least_action`` interface and store results, including embeddings for kinetics heatmap, in ``adata``. More information regarding this
 function can be found in API documentation.
 
 .. code:: ipython3
@@ -617,11 +613,6 @@ function can be found in API documentation.
 
     |-----> [iterating through 1 pairs] in progress: 100.0000%
 
-.. parsed-literal::
-
-    /Users/random/opt/anaconda3/envs/dynamo-dev/lib/python3.9/site-packages/pandas/core/arrays/categorical.py:2631: FutureWarning: The `inplace` parameter in pandas.Categorical.remove_unused_categories is deprecated and will be removed in a future version.
-      res = method(*args, **kwargs)
-
 
 .. parsed-literal::
 
@@ -629,10 +620,9 @@ function can be found in API documentation.
     |-----> [iterating through 1 pairs] finished [9.2680s]
 
 
-Visualize computed LAP information via ``dyn.pl.kinetic_heatmap``. Note
-x-axis below represents cell type transition path time, LAP time. In
-this case it is ``HSC->Bas``. Y-axis is self-explanatory, representing
-gene names.
+The computed LAP information can be visualized via ``dyn.pl.kinetic_heatmap``. Note
+that the x-axis below represents the cell type transition path time, LAP time. In
+this case it is ``HSC->Bas``. While the y-axis represents gene names.
 
 .. code:: ipython3
 
@@ -670,14 +660,14 @@ Rank transcriptomics factors (TFs)
 ----------------------------------
 
 Here we will show how to leverage information we processed and stored in
-``transition_graph`` to produce visualization results of ranking of TFs
-in transition paths.
+``transition_graph`` to produce visualization results for ranking the TFs
+in the transition paths.
 
-Assign TF rankings based on literature review
+Assigning TF rankings based on literature review
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-We first prepare ranking dataframes used to plot ranking info in this
-section. This part is specific to your dataset and little dynamo
+We first prepare TF ranking dataframes used to plot ranking information in this
+section. This part is specific to your dataset and very little of dynamo
 specific API is involved, so you may skip this part in your own
 cases.
 
@@ -796,11 +786,11 @@ cases.
     adata_labeling.uns["LAP_pca"] = lap_dict
 
 
-Assign TF Rankings
+Assigning TF Rankings
 ~~~~~~~~~~~~~~~~~~
 
-Lets prepare ranking data for visualization later. We obtain TFs’
-ranking in each transition by using a helper function
+Let's prepare TF ranking data for visualization later. We obtain TFs’
+rankings in each transition by using the helper function
 ``assign_tf_ranks`` defined below.
 
 .. code:: ipython3
@@ -857,17 +847,9 @@ ranking in each transition by using a helper function
     assign_tf_ranks(transition_graph, "HSC->Neu", ["GFI1", "PER3", "GATA1", "ETS3"])
 
 
-Further adding rankings from literature and our perturbation analysis.
-With perturbation analysis, we can show that transient expression of six
-transcription factors Run1t1, Hlf, Lmo2GATA-1 Converts Lymphoid and
-Myelomonocytic Progenitors into the Megakaryocyte/Erythrocyte lineages,
-while Prdm5, Pbx1, and Zfp37 imparts multilineage transplantation
-potential onto otherwise committed lymphoid and myeloid progenitors and
-myeloid effector cells. Inclusion of Mycn and Meis1 and use of
-polycistronic viruses increase reprogramming efficacy. The above
-predictions shows the HLF and MYCN is already sufficient to
-reprogramming back to HSC. The following ranking is for the cases in
-which we activate HLF1, PDX1, MYCN and MEIS1 together.
+Here lets add more rankings from literature and our perturbation analysis.
+Through perturbation analysis, we can show that transient expression of six transcription factors Run1t1, Hlf, Lmo2GATA-1 converts lymphoid and myelomonocytic progenitors into the megakaryocyte/erythrocyte lineages, while Prdm5, Pbx1, and Zfp37 imparts multilineage transplantation potential onto otherwise committed lymphoid and myeloid progenitors and myeloid effector cells. Inclusion of Mycn and Meis1 and use of polycistronic viruses increase reprogramming efficacy. The above predictions show that HLF and MYCN is already sufficient in reprogramming the cell back to HSC. The following ranking is for the cases in which we activate HLF1, PDX1, MYCN and MEIS1 together.
+
 
 .. code:: ipython3
 
@@ -1043,11 +1025,10 @@ inactivation
     reprogramming_mat_df_p["rank"] = 1 - reprogramming_mat_df_p["rank"]
 
 
-Plot ranking of TFs with scatter plot
+Plotting TF rankings with a scatter plot
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Y-axis is transition path. X-axis shows TFs’ scores of the specific
-transition path shown in y-axis.
+The y-axis is the transition path and the x-axis shows the TF scores for a specific transition path.
 
 .. code:: ipython3
 
@@ -1103,8 +1084,7 @@ transition path shown in y-axis.
 ROCCurve
 ---------
 
-Last but not least, lets evaluate our ranking via ROCcurve.
-area=\ ``0.83`` indicates our ranking scores are reasonable.
+Last but not least, lets evaluate our TF ranking via a ROC curve. The area=``0.83`` we obtained, indicates our ranking scores are reasonable.
 
 .. code:: ipython3
 
