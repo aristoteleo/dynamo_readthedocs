@@ -11,12 +11,12 @@ classical Hamilton action :cite:p:`fey65`, has previously been used
 in predicting the optimal transition path of cell fate transition for
 simplistic and designed systems
 :cite:p:`Qiu2012-yt, Wang2014-zc, Wang8257`. We reason that with the
-reconstructed continuous, differentiable vector field, we can extend the
+reconstructed continuous and differentiable vector field, we can extend the
 LAP approach to real datasets in transcriptomic space to computationally
 explore optimal paths for differentiation and reprogramming
-(dedifferentiation and transdifferentiation), which then helps identify
+(dedifferentiation and transdifferentiation), which then helps us identify
 key transcription factors whose expression levels vary strongest along
-these paths. The grand problem of prediction OPCs is summarized :ref:`here<lap_theory_dynamo_paper_fig6_a>`. 
+these paths. The grand problem of predicting optimal cell fate conversions, OPCs is summarized :ref:`here<lap_theory_dynamo_paper_fig6_a>`. 
 
 .. _lap_theory_dynamo_paper_fig6_a:
 .. figure:: dynamo_paper_figures/fig6_a.png
@@ -27,15 +27,15 @@ these paths. The grand problem of prediction OPCs is summarized :ref:`here<lap_t
 
 
 The transcriptomic vector field encodes dynamical information of
-pathways connecting different cell types. :ref:`This figure from dynamo paper<lap_theory_dynamo_paper_fig6_b>` :cite:p:`QIU2022` shows developmental path and transition matrix among cell types in hematopoietic stem cell lineages. For the development, the
+pathways connecting different cell types. :ref:`This figure from the dynamo paper<lap_theory_dynamo_paper_fig6_b>` :cite:p:`QIU2022` shows developmental paths and transition matrix among cell types in hematopoietic stem cell lineages. For the developmental paths, the
 developmental paths, connecting progenitors and stable cell types, such
-as HSCs and megakaryocytes, are
+as hematopoietic stem cells, HSCs and megakaryocytes, Meg, are
 characterized by vector field streamlines, where cells need to overcome
-little to no dynamical barrier. On the contrary, the reversed process,
+little to no dynamical barrier. However, the reversed process,
 dedifferentiation, requires cells to migrate against the streamline,
-overcome the developmental barrier to eventually become progenitors and
+overcome the developmental barrier to eventually become progenitors, and finally 
 reacquire multipotency. Stable cell types are attractors that are
-separated by attractor barriers, and during transdifferentiation
+separated by attractor barriers, and during the transdifferentiation
 processes, cells from one stable attractor overcome these barriers and
 transverse into another stable attractor. Overcoming the
 dedifferentiation/transdifferentiation barriers driven by stochasticity
@@ -47,23 +47,22 @@ the reprogramming transitions. In the context of cell state transitions,
 there are two seemingly similar but fundamentally different concepts
 worth additional clarification:
 
--  transition time: The expected waiting time for a cell to initiate and
+-  Transition time: the expected waiting time for a cell to initiate and
    finish the transition between two states, regardless of the path it
    takes. This corresponds to the experimentally measured time for one
    cell type to commit into another.
 
--  traversal time: The time the cell spends traveling along a specific
+-  Traversal time: the time the cell spends traveling along a specific
    path. Theoretically, this is the time for a single cell to complete
    the cell type conversion once the cell has decided on the commitment.
 
 .. _lap_theory_dynamo_paper_fig6_b:
 .. figure:: dynamo_paper_figures/fig6_b.png
 
-  Predicting OPCs for hematopoietic cell types. i) The developmental tree, known dedifferentiation and transdifferentiation events previously reported for the six cell types observed in our data. ii) Matrix representation of subpanel i). The optimal paths for hematopoietic transitions can be found by identifying the LAPs between the fixed points
-  that correspond to each stable cell type.
+  Predicting OPCs for hematopoietic cell types. i) The developmental tree, known dedifferentiation and transdifferentiation events previously reported for the six cell types observed in our data. ii) Matrix representation of subpanel i). The optimal paths for hematopoietic transitions can be found by identifying the LAPs between the fixed points that correspond to each stable cell type.
 
 
-:ref:`An example of LAP transition from state0 (HSC) to state1 (Meg)<lap_theory_dynamo_paper_fig6_c>` More explanation regarding math terms shown in this figure can be found in this introduction below.
+:ref:`An example of LAP transition from state0 (HSC) to state1 (Meg)<lap_theory_dynamo_paper_fig6_c>` More explanation regarding the math terms shown in this figure can be found in this introduction below.
 
 .. _lap_theory_dynamo_paper_fig6_c:
 .. figure:: dynamo_paper_figures/fig6_c.png
@@ -83,7 +82,7 @@ action is defined as:
 .. math::
   \begin{align*}  \newcommand{\trp}{\mathsf{T}}  S_T(\boldsymbol x) = \frac{1}{2} \int_{0}^{T}\mathrm dt {\Big(\boldsymbol v(t) - \boldsymbol f\big(\boldsymbol x(t)\big)\Big)}^\trp \boldsymbol{D}^{-1}  \Big(\boldsymbol v(t) - \boldsymbol f\big(\boldsymbol x(t)\big)\Big), \end{align*}`
 
-:math:`\boldsymbol x` is a path and :math:`\boldsymbol v` its tangential
+:math:`\boldsymbol x` is a path and :math:`\boldsymbol v` is :math:`\boldsymbol x` 's tangential
 velocity (the path is parametrized by time :math:`t`, so
 :math:`\boldsymbol v(t) = \dot{\boldsymbol x}(t)`).
 :math:`\boldsymbol{D}` is the diffusion coefficient matrix accounting
