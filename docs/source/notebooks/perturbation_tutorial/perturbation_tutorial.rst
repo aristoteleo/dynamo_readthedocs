@@ -15,14 +15,11 @@ well with those reported in and reveal a
 seesaw-effect regulation between SPI1 and GATA1 in driving the GMP and
 the MEP lineages.
 
-In this tutorial, we will cover the following topics:
-
-- Perturbation
-functionality and API in dynamo 
-- how to perturb gene expression levels
-individually or collectively in hematopoietic scNT-seq dataset 
+| In this tutorial, we will cover the following topics:
+- Perturbation functionality and API in dynamo 
+- How to perturb gene expression levels individually or collectively in hematopoietic scNT-seq dataset 
 - Visualize gene perturbation effects 
-- Reproduce results in dynamo paper :cite:p:`QIU2022` figure7
+- Reproduce results in dynamo paper Fig.7 :cite:p:`QIU2022` 
 
 Similarly, suppressing the HSPC maintenance gene HLF1 triggers cells to
 move away from the progenitors.
