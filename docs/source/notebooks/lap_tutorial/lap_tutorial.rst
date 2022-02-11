@@ -20,7 +20,7 @@ Introduction
   transition probability and is associated with a particular transition
   time.
 | In this tutorial, we will showcase how to 
-- perform LAP 
+- perform LAP analyses
 - visualize
   transition paths found by LAP on vectorfield 
 - plot heatmaps of pairwise actions and transition times
@@ -53,7 +53,7 @@ Import relevant packages
     |-----> setting visualization default mode in dynamo. Your customized matplotlib settings might be overritten.
 
 
-Load hematopoietic scNT-seq dataset. This this tutorial we are going to perform LAP on and visualize hematopoietic scNT-seq dataset.
+Load hematopoietic scNT-seq dataset. This this tutorial we are going to perform LAP analyses on and visualize hematopoietic scNT-seq dataset.
 
 .. code:: ipython3
 
