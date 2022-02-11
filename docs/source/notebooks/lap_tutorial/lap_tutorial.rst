@@ -23,9 +23,9 @@ Introduction
 - perform LAP 
 - visualize
   transition paths found by LAP on vectorfield 
-- plot heatmaps of pairwise
-  actions and transition times; transcriptomics factor ranking; RoC
-  curve of priority scores
+- plot heatmaps of pairwise actions and transition times
+- rank transcriptomics factor
+- plot ROC curve of priority scores
 
 Import relevant packages
 
@@ -57,7 +57,7 @@ Load hematopoietic scNT-seq dataset. This this tutorial we are going to perform 
 
 .. code:: ipython3
 
-    adata_labeling = dyn.read_h5ad("adata_labeling_cleanedup.h5ad")
+    adata_labeling = dyn.sample_data.hematopoietic_processed()
 
 take a glance at what is in ``adata`` object. All observations,
 embedding layers and other data in ``adata`` are computed within
@@ -224,7 +224,7 @@ Compute neighbor graph based on ``umap_ori``
 Run pairwise least action path among cell states
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This section will compute LAP for all cell type transition pairs. The corresponding function in
+This section will compute LAPs for all cell type transition pairs. The corresponding function in
 dynamo is ``dyn.pd.least_action``. This function takes ``adata``, start
 cells and end cells to compute least action path. As shown
 below, different basis can be used. Here we use PCA basis to compute LAP
@@ -460,7 +460,7 @@ Obtain developmental LAPs
 
 .. code:: ipython3
 
-    human_tfs = pd.read_csv("./Homo_sapiens_TF.txt", sep="\t")
+    human_tfs = dyn.sample_data.human_tfs()
     human_tfs_names = list(human_tfs["Symbol"])
 
 
@@ -1112,7 +1112,7 @@ The y-axis is the transition path and the x-axis shows the TF scores for a speci
    :height: 445px
 
 
-ROCCurve
+Plotting ROC Curve
 ---------
 
 Last but not least, lets evaluate our TF ranking via a ROC curve. The area=``0.83`` we obtained, indicates our ranking scores are reasonable.
@@ -1165,7 +1165,7 @@ Last but not least, lets evaluate our TF ranking via a ROC curve. The area=``0.8
     
     lw = 0.5
     plt.figure(figsize=(5, 5))
-    plt.plot(fpr, tpr, color="darkorange", lw=lw, label="ROCcurve (area = %0.2f)" % roc_auc)
+    plt.plot(fpr, tpr, color="darkorange", lw=lw, label="ROC curve (area = %0.2f)" % roc_auc)
     plt.plot([0, 1], [0, 1], color="navy", lw=lw, linestyle="--")
     plt.xlim([0.0, 1.0])
     plt.ylim([0.0, 1.05])

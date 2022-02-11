@@ -1,8 +1,8 @@
-*In-silico* perturbation
+*in silico* perturbation
 =================
 
 In the dynamo Cell paper :cite:p:`QIU2022`, we introduced the analytical form of a
-vector field. This permits in silico perturbation predictions of expression
+vector field. This permits *in silico* perturbation predictions of expression
 for each gene in each cell and the cell fate diversions after
 genetic perturbations. In particular, we demonstrated the predictive
 power of hematopoietic fate trajectory predictions after genetic
@@ -13,9 +13,6 @@ perturbations.
 - How to perturb gene expression levels individually or collectively in hematopoietic scNT-seq dataset 
 - Visualize gene perturbation effects 
 - Reproduce results in dynamo paper Fig.7 :cite:p:`QIU2022` 
-
-Similarly, suppressing the HSPC maintenance gene HLF1 triggers cells to
-move away from the progenitors.
 
 | - :ref:`You can read more about theory part here<perturbation_theory_tutorial>`.
 Perturbation method introduction
@@ -46,7 +43,7 @@ Import relevant packages
 
 .. code:: ipython3
 
-    adata_labeling = dyn.read_h5ad("adata_labeling_cleanedup.h5ad")
+    adata_labeling = dyn.sample_data.hematopoietic_processed()
 
 
 take a glance at what is in ``adata`` object. All observations,
@@ -85,13 +82,11 @@ Induce hematopoietic stem cells with selected TFs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 | **Define sets of genes**
-| During reprogramming committed murine blood cells to induced
+| Let's define three sets of genes we explored in :cite:p:`QIU2022`. For example, during reprogramming committed murine blood cells to induced
   hematopoietic stem cells with defined factors, six transcription
   factors defined in ``murine_blood_cells`` below impart
   multilineage transplantation potential onto otherwise committed
-  lymphoid and myeloid progenitors and myeloid effector cells. Inclusion
-  of Mycn and Meis1 and use of polycistronic viruses increase
-  reprogramming efficacy.
+  lymphoid and myeloid progenitors and myeloid effector cells. You can refer to :cite:p:`QIU2022` for more information about these genes.
 
 .. code:: ipython3
 
@@ -101,6 +96,8 @@ Induce hematopoietic stem cells with selected TFs
 
 suppress GATA1 and SPI1 genes individually
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the dynamo Cell paper :cite:p:`QIU2022`, we explored and reported the canonical PU.1/SPI1-GATA1 network motif with new strategies. The streamlines of SPI1 and GATA1 show that HSPCs bifurcate into GMP-like and MEP-like branches. Meanwhile, GATA1 is the master regulator of the GMP lineage. Here we select GATA1 and SPI1 for perturbation analysis example.
 
 Suppression of GATA1 diverts cells from GMP-related lineages to
 MEP-related lineages.
@@ -178,8 +175,7 @@ GATA1 individually.
 Activate KLF1
 ~~~~~~~~~~~~~
 
-Activating KLF1 leads to conversion into erythroid cells, consistent
-with :cite:p:`Orkin2008-vp`.
+Dynamo *in silico* perturbation can correctly predicts other cellular transitions, showcased in :cite:p:`QIU2022`. Here is another example: activating KLF1 leads to conversion into erythroid cells, consistent with :cite:p:`Orkin2008-vp`.
 
 .. code:: ipython3
 

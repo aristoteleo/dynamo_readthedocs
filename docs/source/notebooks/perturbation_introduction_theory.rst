@@ -1,19 +1,19 @@
 .. _perturbation_theory_tutorial:
 
-*In-silico* perturbation
+*in silico* perturbation
 =========================================================================================
 
 :math:`\newcommand{\pdv}[2]{\dfrac{\partial #1}{\partial #2}} \newcommand{\trp}{\mathsf{T}}`
 
 We leverage the analytical Jacobian of the reconstructed vector field
-function to make :math:`\textit{in-silico}` genetic perturbations
+function to make :math:`\textit{in silico}` genetic perturbations
 and predict cell-fate outcomes after the perturbation, showcased in :ref:`this figure<dynamo_fig7_a>`. 
 
 .. _dynamo_fig7_a:
 .. figure:: dynamo_paper_figures/fig7_a.png
     :align: center
 
-    In silico genetic perturbation of the velocity vector field. i) In-silico perturbations can predict the gene-wise response. ii) In silico perturbations can predict the cell fate trajectory after genetic perturbation by integrating the displacement of velocities across cells.
+    In silico genetic perturbation of the velocity vector field. i) in silico perturbations can predict the gene-wise response. ii) In silico perturbations can predict the cell fate trajectory after genetic perturbation by integrating the displacement of velocities across cells.
 
 Mathematically, for gene :math:`i` in any cell, the genetic perturbation effects or
 changes in its velocity (or more accurately, the vector field) w.r.t. to
