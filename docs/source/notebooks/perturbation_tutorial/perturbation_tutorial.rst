@@ -94,7 +94,7 @@ Induce hematopoietic stem cells with selected TFs
     gran_lineage_genes = ["CEBPE", "RUNX1T1", "KLF1", "CEBPA", "FOSB", "JUN", "SPI1", "ZC3HAV1"]
     erythroid_differentiation = ["GATA1", "TAL1", "LMO2", "KLF1", "MYB", "LDB1", "NFE2", "GFI1B", "BCL11A"]
 
-suppress GATA1 and SPI1 genes individually
+Suppress GATA1 and SPI1 genes individually
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the dynamo Cell paper :cite:p:`QIU2022`, we explored and reported the canonical PU.1/SPI1-GATA1 network motif with new strategies. The streamlines of SPI1 and GATA1 show that HSPCs bifurcate into GMP-like and MEP-like branches. Meanwhile, GATA1 is the master regulator of the GMP lineage. Here we select GATA1 and SPI1 for perturbation analysis example.
@@ -143,7 +143,7 @@ GMP-related lineages.
    :height: 349px
 
 
-suppress SPI1/GATA at the same time
+Suppress SPI1/GATA at the same time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppression of both SPI1 and GATA1 traps cells in the progenitor states.
