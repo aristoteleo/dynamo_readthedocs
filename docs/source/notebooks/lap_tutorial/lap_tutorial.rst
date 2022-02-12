@@ -9,8 +9,7 @@ Introduction
   modeling. A fundamental challenge in the field
   of stem cell biology is to identify and assess the feasibility of
   optimal paths and key TFs (transcription factors) of such
-  interconversions (Figure 6A :cite:p:`QIU2022`). The least action path (LAP, action: a function of the
-  trajectory) is a principled method that has previously been used in
+  interconversions (Figure 6A :cite:p:`QIU2022`). The least action path (LAP) is a principled method that has previously been used in
   theoretical efforts to predict the most probable path a cell will
   follow during fate transition. Specifically, the optimal path between any two cell states
   (e.g. the fixed point of HSCs and that of megakaryocytes) is searched
@@ -37,11 +36,9 @@ Import relevant packages
     import matplotlib.pyplot
     import matplotlib.pyplot as plt
     
-    # import Scribe as sb
     import sys
     import os
     
-    # import scanpy as sc
     import dynamo as dyn
     
     dyn.dynamo_logger.main_silence()
@@ -59,17 +56,7 @@ Load hematopoietic scNT-seq dataset. This this tutorial we are going to perform 
 
     adata_labeling = dyn.sample_data.hematopoietic_processed()
 
-take a glance at what is in ``adata`` object. All observations,
-embedding layers and other data in ``adata`` are computed within
-``dynamo``. Please refer to other dynamo tutorials regarding how to
-obtain these values from the metadata and the raw new/total and (or) raw
-spliced/unspliced gene expression values.
-
-.. code:: ipython3
-
-    adata_labeling
-
-take a glance at what is in ``adata`` object. All observations,
+Take a glance at what is in ``adata`` object. All observations,
 embedding layers and other data in ``adata`` are computed within
 ``dynamo``. Please refer to other dynamo tutorials regarding how to
 obtain these values from the metadata and the raw new/total and (or) raw
@@ -643,11 +630,6 @@ function can be found in API documentation.
 .. parsed-literal::
 
     |-----> [iterating through 1 pairs] in progress: 100.0000%
-
-
-.. parsed-literal::
-
-    |-----> [iterating through 1 pairs] in progress: 100.0000%
     |-----> [iterating through 1 pairs] finished [9.2680s]
 
 
@@ -694,13 +676,16 @@ Here we will show how to leverage information we processed and stored in
 ``transition_graph`` to produce visualization results for ranking the TFs
 in the transition paths.
 
-Assigning TF rankings based on literature review
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Evaluate TF rankings based on LAP analyses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the dynamo paper :cite:p:`QIU2022`, we introduce using the mean square displacement (MSD) of LAP to rank TFs. In this section, we are going to evaluate rankings from LAP analyses by comparing them with those from literature.
 
 We first prepare TF ranking dataframes used to plot ranking information in this
 section. This part is specific to your dataset and very little of dynamo
 specific API is involved, so you may skip this part in your own
 cases.
+
+To the best of our ability, we manually compiled a complete table of known hematopoietic cell fate transitions (including developmental process) and the key TFs corresponding to each transition.
 
 .. code:: ipython3
 
@@ -818,7 +803,7 @@ cases.
 
 
 Assigning TF Rankings
-~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 Let's prepare TF ranking data for visualization later. We obtain TFs’
 rankings in each transition by using the helper function
@@ -1057,7 +1042,7 @@ inactivation
 
 
 Plotting TF rankings with a scatter plot
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------------------------------
 
 The y-axis is the transition path and the x-axis shows the TF scores for a specific transition path.
 
@@ -1113,7 +1098,7 @@ The y-axis is the transition path and the x-axis shows the TF scores for a speci
 
 
 Plotting ROC Curve
----------
+----------------------------------
 
 Last but not least, lets evaluate our TF ranking via a ROC curve. The area= ``0.83`` we obtained, indicates our ranking scores are reasonable.
 

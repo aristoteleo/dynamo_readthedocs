@@ -27,11 +27,9 @@ Import relevant packages
     import pandas as pd
     import matplotlib.pyplot as plt
     
-    # import Scribe as sb
     import sys
     import os
     
-    # import scanpy as sc
     import dynamo as dyn
     dyn.dynamo_logger.main_silence()
 
@@ -46,7 +44,7 @@ Import relevant packages
     adata_labeling = dyn.sample_data.hematopoietic_processed()
 
 
-take a glance at what is in ``adata`` object. All observations,
+Take a glance at what is in ``adata`` object. All observations,
 embedding layers and other data in ``adata`` are computed within
 ``dynamo``. Please refer to other dynamo tutorials regarding how to
 obtain these values from the metadata and the raw new/total and (or) raw
