@@ -1115,7 +1115,7 @@ The y-axis is the transition path and the x-axis shows the TF scores for a speci
 Plotting ROC Curve
 ---------
 
-Last but not least, lets evaluate our TF ranking via a ROC curve. The area=``0.83`` we obtained, indicates our ranking scores are reasonable.
+Last but not least, lets evaluate our TF ranking via a ROC curve. The area= ``0.83`` we obtained, indicates our ranking scores are reasonable.
 
 .. code:: ipython3
 
