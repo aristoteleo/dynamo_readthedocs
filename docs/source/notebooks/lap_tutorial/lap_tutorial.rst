@@ -738,7 +738,6 @@ To the best of our ability, we manually compiled a complete table of known hemat
     ]
     
     
-    # An erythroid to myeloid cell fate conversion is elicited by LSD1 inactivation
     Ery_Mon_ranking = transition_graph["Ery->Mon"]["ranking"]
     Ery_Mon_ranking["TF"] = [i in human_tfs_names for i in list(Ery_Mon_ranking["all"])]
     
