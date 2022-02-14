@@ -70,12 +70,12 @@ spliced/unspliced gene expression values.
 .. parsed-literal::
 
     AnnData object with n_obs × n_vars = 1947 × 1956
-        obs: 'batch', 'time', 'cell_type', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'new_Size_Factor', 'initial_new_cell_size', 'total_Size_Factor', 'initial_total_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'Size_Factor', 'initial_cell_size', 'ntr', 'cell_cycle_phase', 'leiden', 'umap_leiden', 'umap_louvain', 'control_point_pca', 'inlier_prob_pca', 'obs_vf_angle_pca', 'pca_ddhodge_div', 'pca_ddhodge_potential', 'umap_ori_ddhodge_div', 'umap_ori_ddhodge_potential', 'curl_umap_ori', 'divergence_umap_ori', 'control_point_umap_ori', 'inlier_prob_umap_ori', 'obs_vf_angle_umap_ori', 'acceleration_pca', 'curvature_pca', 'n_counts', 'mt_frac', 'jacobian_det_pca', 'manual_selection', 'divergence_pca', 'curvature_umap_ori', 'acceleration_umap_ori', 'control_point_umap', 'inlier_prob_umap', 'obs_vf_angle_umap', 'curvature_umap', 'curv_leiden', 'curv_louvain', 'SPI1->GATA1_jacobian', 'jacobian'
+        obs: 'batch', 'time', 'cell_type', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'new_Size_Factor', 'initial_new_cell_size', 'total_Size_Factor', 'initial_total_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'Size_Factor', 'initial_cell_size', 'ntr', 'cell_cycle_phase', 'leiden', 'umap_leiden', 'umap_louvain', 'control_point_pca', 'inlier_prob_pca', 'obs_vf_angle_pca', 'pca_ddhodge_div', 'pca_ddhodge_potential', 'umap_ddhodge_div', 'umap_ddhodge_potential', 'curl_umap', 'divergence_umap', 'control_point_umap', 'inlier_prob_umap', 'obs_vf_angle_umap', 'acceleration_pca', 'curvature_pca', 'n_counts', 'mt_frac', 'jacobian_det_pca', 'manual_selection', 'divergence_pca', 'curvature_umap', 'acceleration_umap', 'control_point_umap', 'inlier_prob_umap', 'obs_vf_angle_umap', 'curvature_umap', 'curv_leiden', 'curv_louvain', 'SPI1->GATA1_jacobian', 'jacobian'
         var: 'gene_name', 'gene_id', 'nCells', 'nCounts', 'pass_basic_filter', 'use_for_pca', 'frac', 'ntr', 'time_3_alpha', 'time_3_beta', 'time_3_gamma', 'time_3_half_life', 'time_3_alpha_b', 'time_3_alpha_r2', 'time_3_gamma_b', 'time_3_gamma_r2', 'time_3_gamma_logLL', 'time_3_delta_b', 'time_3_delta_r2', 'time_3_bs', 'time_3_bf', 'time_3_uu0', 'time_3_ul0', 'time_3_su0', 'time_3_sl0', 'time_3_U0', 'time_3_S0', 'time_3_total0', 'time_3_beta_k', 'time_3_gamma_k', 'time_5_alpha', 'time_5_beta', 'time_5_gamma', 'time_5_half_life', 'time_5_alpha_b', 'time_5_alpha_r2', 'time_5_gamma_b', 'time_5_gamma_r2', 'time_5_gamma_logLL', 'time_5_bs', 'time_5_bf', 'time_5_uu0', 'time_5_ul0', 'time_5_su0', 'time_5_sl0', 'time_5_U0', 'time_5_S0', 'time_5_total0', 'time_5_beta_k', 'time_5_gamma_k', 'use_for_dynamics', 'gamma', 'gamma_r2', 'use_for_transition', 'gamma_k', 'gamma_b'
-        uns: 'PCs', 'VecFld_pca', 'VecFld_umap', 'VecFld_umap_ori', 'X_umap_ori_neighbors', 'cell_phase_genes', 'cell_type_colors', 'dynamics', 'explained_variance_ratio_', 'feature_selection', 'grid_velocity_pca', 'grid_velocity_umap', 'grid_velocity_umap_ori', 'grid_velocity_umap_ori_perturbation', 'grid_velocity_umap_ori_test', 'grid_velocity_umap_perturbation', 'jacobian_pca', 'leiden', 'neighbors', 'pca_mean', 'pp', 'response'
-        obsm: 'X', 'X_pca', 'X_pca_SparseVFC', 'X_umap', 'X_umap_SparseVFC', 'X_umap_ori', 'X_umap_ori_SparseVFC', 'X_umap_ori_perturbation', 'X_umap_ori_test', 'X_umap_perturbation', 'acceleration_pca', 'acceleration_umap_ori', 'cell_cycle_scores', 'curvature_pca', 'curvature_umap', 'curvature_umap_ori', 'j_delta_x_perturbation', 'velocity_pca', 'velocity_pca_SparseVFC', 'velocity_umap', 'velocity_umap_SparseVFC', 'velocity_umap_ori', 'velocity_umap_ori_SparseVFC', 'velocity_umap_ori_perturbation', 'velocity_umap_ori_test', 'velocity_umap_perturbation'
+        uns: 'PCs', 'VecFld_pca', 'VecFld_umap', 'VecFld_umap', 'X_umap_neighbors', 'cell_phase_genes', 'cell_type_colors', 'dynamics', 'explained_variance_ratio_', 'feature_selection', 'grid_velocity_pca', 'grid_velocity_umap', 'grid_velocity_umap', 'grid_velocity_umap_perturbation', 'grid_velocity_umap_test', 'grid_velocity_umap_perturbation', 'jacobian_pca', 'leiden', 'neighbors', 'pca_mean', 'pp', 'response'
+        obsm: 'X', 'X_pca', 'X_pca_SparseVFC', 'X_umap', 'X_umap_SparseVFC', 'X_umap', 'X_umap_SparseVFC', 'X_umap_perturbation', 'X_umap_test', 'X_umap_perturbation', 'acceleration_pca', 'acceleration_umap', 'cell_cycle_scores', 'curvature_pca', 'curvature_umap', 'curvature_umap', 'j_delta_x_perturbation', 'velocity_pca', 'velocity_pca_SparseVFC', 'velocity_umap', 'velocity_umap_SparseVFC', 'velocity_umap', 'velocity_umap_SparseVFC', 'velocity_umap_perturbation', 'velocity_umap_test', 'velocity_umap_perturbation'
         layers: 'M_n', 'M_nn', 'M_t', 'M_tn', 'M_tt', 'X_new', 'X_total', 'velocity_alpha_minus_gamma_s'
-        obsp: 'X_umap_ori_connectivities', 'X_umap_ori_distances', 'connectivities', 'cosine_transition_matrix', 'distances', 'fp_transition_rate', 'moments_con', 'pca_ddhodge', 'perturbation_transition_matrix', 'umap_ori_ddhodge'
+        obsp: 'X_umap_connectivities', 'X_umap_distances', 'connectivities', 'cosine_transition_matrix', 'distances', 'fp_transition_rate', 'moments_con', 'pca_ddhodge', 'perturbation_transition_matrix', 'umap_ddhodge'
 
 
 Here we select cells via ``dyn.tl.select_cell``.
@@ -89,7 +89,7 @@ Here we select cells via ``dyn.tl.select_cell``.
     Mon_cells = dyn.tl.select_cell(adata_labeling, "cell_type", "Mon")
     Neu_cells = dyn.tl.select_cell(adata_labeling, "cell_type", "Neu")
     
-    dyn.pl.streamline_plot(adata_labeling, basis="umap_ori", color="cell_type")
+    dyn.pl.streamline_plot(adata_labeling, basis="umap", color="cell_type")
 
 
 
@@ -121,12 +121,12 @@ Here we select cells via ``dyn.tl.select_cell``.
         ]
     )
     
-    HSC_cells_indices = nearest_neighbors(extreme_points[0], adata_labeling.obsm["X_umap_ori"])
-    Meg_cells_indices = nearest_neighbors(extreme_points[1], adata_labeling.obsm["X_umap_ori"])
-    Ery_cells_indices = nearest_neighbors(extreme_points[2], adata_labeling.obsm["X_umap_ori"])
-    Bas_cells_indices = nearest_neighbors(extreme_points[3], adata_labeling.obsm["X_umap_ori"])
-    Mon_cells_indices = nearest_neighbors(extreme_points[4], adata_labeling.obsm["X_umap_ori"])
-    Neu_cells_indices = nearest_neighbors(extreme_points[5], adata_labeling.obsm["X_umap_ori"])
+    HSC_cells_indices = nearest_neighbors(extreme_points[0], adata_labeling.obsm["X_umap"])
+    Meg_cells_indices = nearest_neighbors(extreme_points[1], adata_labeling.obsm["X_umap"])
+    Ery_cells_indices = nearest_neighbors(extreme_points[2], adata_labeling.obsm["X_umap"])
+    Bas_cells_indices = nearest_neighbors(extreme_points[3], adata_labeling.obsm["X_umap"])
+    Mon_cells_indices = nearest_neighbors(extreme_points[4], adata_labeling.obsm["X_umap"])
+    Neu_cells_indices = nearest_neighbors(extreme_points[5], adata_labeling.obsm["X_umap"])
 
 
 .. code:: ipython3
@@ -135,7 +135,7 @@ Here we select cells via ``dyn.tl.select_cell``.
     
     # plt.figure(figsize=(4, 4))
     
-    plt.scatter(*adata_labeling.obsm["X_umap_ori"].T)
+    plt.scatter(*adata_labeling.obsm["X_umap"].T)
     for indices in [
         HSC_cells_indices,
         Meg_cells_indices,
@@ -144,7 +144,7 @@ Here we select cells via ``dyn.tl.select_cell``.
         Mon_cells_indices,
         Neu_cells_indices,
     ]:
-        plt.scatter(*adata_labeling[indices[0]].obsm["X_umap_ori"].T)
+        plt.scatter(*adata_labeling[indices[0]].obsm["X_umap"].T)
 
 
 .. image:: output_9_1.png
@@ -169,12 +169,12 @@ Showing what is in ``HSC_cell_indices``
     -----------------------------------------------------
 
 
-Compute neighbor graph based on ``umap_ori``
+Compute neighbor graph based on ``umap``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: ipython3
 
-    dyn.tl.neighbors(adata_labeling, basis="umap_ori", result_prefix="umap_ori")
+    dyn.tl.neighbors(adata_labeling, basis="umap", result_prefix="umap")
 
 
 
@@ -182,27 +182,14 @@ Compute neighbor graph based on ``umap_ori``
 
     |-----> Start computing neighbor graph...
     |-----------> X_data is None, fetching or recomputing...
-    |-----> fetching X data from layer:None, basis:umap_ori
+    |-----> fetching X data from layer:None, basis:umap
     |-----> method arg is None, choosing methods automatically...
     |-----------> method kd_tree selected
-    |-----> <insert> umap_ori_connectivities to obsp in AnnData Object.
-    |-----> <insert> umap_ori_distances to obsp in AnnData Object.
-    |-----> <insert> umap_ori_neighbors to uns in AnnData Object.
-    |-----> <insert> umap_ori_neighbors.indices to uns in AnnData Object.
-    |-----> <insert> umap_ori_neighbors.params to uns in AnnData Object.
-
-
-
-
-.. parsed-literal::
-
-    AnnData object with n_obs × n_vars = 1947 × 1956
-        obs: 'batch', 'time', 'cell_type', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'new_Size_Factor', 'initial_new_cell_size', 'total_Size_Factor', 'initial_total_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'Size_Factor', 'initial_cell_size', 'ntr', 'cell_cycle_phase', 'leiden', 'umap_leiden', 'umap_louvain', 'control_point_pca', 'inlier_prob_pca', 'obs_vf_angle_pca', 'pca_ddhodge_div', 'pca_ddhodge_potential', 'umap_ori_ddhodge_div', 'umap_ori_ddhodge_potential', 'curl_umap_ori', 'divergence_umap_ori', 'control_point_umap_ori', 'inlier_prob_umap_ori', 'obs_vf_angle_umap_ori', 'acceleration_pca', 'curvature_pca', 'n_counts', 'mt_frac', 'jacobian_det_pca', 'manual_selection', 'divergence_pca', 'curvature_umap_ori', 'acceleration_umap_ori', 'control_point_umap', 'inlier_prob_umap', 'obs_vf_angle_umap', 'curvature_umap', 'curv_leiden', 'curv_louvain', 'SPI1->GATA1_jacobian', 'jacobian'
-        var: 'gene_name', 'gene_id', 'nCells', 'nCounts', 'pass_basic_filter', 'use_for_pca', 'frac', 'ntr', 'time_3_alpha', 'time_3_beta', 'time_3_gamma', 'time_3_half_life', 'time_3_alpha_b', 'time_3_alpha_r2', 'time_3_gamma_b', 'time_3_gamma_r2', 'time_3_gamma_logLL', 'time_3_delta_b', 'time_3_delta_r2', 'time_3_bs', 'time_3_bf', 'time_3_uu0', 'time_3_ul0', 'time_3_su0', 'time_3_sl0', 'time_3_U0', 'time_3_S0', 'time_3_total0', 'time_3_beta_k', 'time_3_gamma_k', 'time_5_alpha', 'time_5_beta', 'time_5_gamma', 'time_5_half_life', 'time_5_alpha_b', 'time_5_alpha_r2', 'time_5_gamma_b', 'time_5_gamma_r2', 'time_5_gamma_logLL', 'time_5_bs', 'time_5_bf', 'time_5_uu0', 'time_5_ul0', 'time_5_su0', 'time_5_sl0', 'time_5_U0', 'time_5_S0', 'time_5_total0', 'time_5_beta_k', 'time_5_gamma_k', 'use_for_dynamics', 'gamma', 'gamma_r2', 'use_for_transition', 'gamma_k', 'gamma_b'
-        uns: 'PCs', 'VecFld_pca', 'VecFld_umap', 'VecFld_umap_ori', 'X_umap_ori_neighbors', 'cell_phase_genes', 'cell_type_colors', 'dynamics', 'explained_variance_ratio_', 'feature_selection', 'grid_velocity_pca', 'grid_velocity_umap', 'grid_velocity_umap_ori', 'grid_velocity_umap_ori_perturbation', 'grid_velocity_umap_ori_test', 'grid_velocity_umap_perturbation', 'jacobian_pca', 'leiden', 'neighbors', 'pca_mean', 'pp', 'response', 'umap_ori_neighbors'
-        obsm: 'X', 'X_pca', 'X_pca_SparseVFC', 'X_umap', 'X_umap_SparseVFC', 'X_umap_ori', 'X_umap_ori_SparseVFC', 'X_umap_ori_perturbation', 'X_umap_ori_test', 'X_umap_perturbation', 'acceleration_pca', 'acceleration_umap_ori', 'cell_cycle_scores', 'curvature_pca', 'curvature_umap', 'curvature_umap_ori', 'j_delta_x_perturbation', 'velocity_pca', 'velocity_pca_SparseVFC', 'velocity_umap', 'velocity_umap_SparseVFC', 'velocity_umap_ori', 'velocity_umap_ori_SparseVFC', 'velocity_umap_ori_perturbation', 'velocity_umap_ori_test', 'velocity_umap_perturbation'
-        layers: 'M_n', 'M_nn', 'M_t', 'M_tn', 'M_tt', 'X_new', 'X_total', 'velocity_alpha_minus_gamma_s'
-        obsp: 'X_umap_ori_connectivities', 'X_umap_ori_distances', 'connectivities', 'cosine_transition_matrix', 'distances', 'fp_transition_rate', 'moments_con', 'pca_ddhodge', 'perturbation_transition_matrix', 'umap_ori_ddhodge', 'umap_ori_distances', 'umap_ori_connectivities'
+    |-----> <insert> umap_connectivities to obsp in AnnData Object.
+    |-----> <insert> umap_distances to obsp in AnnData Object.
+    |-----> <insert> umap_neighbors to uns in AnnData Object.
+    |-----> <insert> umap_neighbors.indices to uns in AnnData Object.
+    |-----> <insert> umap_neighbors.params to uns in AnnData Object.
 
 
 
@@ -240,12 +227,12 @@ detailed parameter explanation.
                     adata_labeling,
                     [adata_labeling.obs_names[start[0]][0]],
                     [adata_labeling.obs_names[end[0]][0]],
-                    basis="umap_ori",
-                    adj_key="X_umap_ori_distances",
+                    basis="umap",
+                    adj_key="X_umap_distances",
                     min_lap_t= min_lap_t,
                     EM_steps=2,
                 )
-                dyn.pl.least_action(adata_labeling, basis="umap_ori")
+                dyn.pl.least_action(adata_labeling, basis="umap")
                 lap = dyn.pd.least_action(
                     adata_labeling,
                     [adata_labeling.obs_names[start[0]][0]],
@@ -276,7 +263,7 @@ detailed parameter explanation.
     
                 transition_graph[cell_type[i] + "->" + cell_type[j]] = {
                     "lap": lap,
-                    "LAP_umap_ori": adata_labeling.uns["LAP_umap_ori"],
+                    "LAP_umap": adata_labeling.uns["LAP_umap"],
                     "LAP_pca": adata_labeling.uns["LAP_pca"],
                     "ranking": ranking,
                     "gtraj": gtraj,
@@ -424,13 +411,13 @@ Obtain developmental LAPs
     fig, ax = plt.subplots(figsize=(5, 4))
     
     ax = dyn.pl.streamline_plot(
-        adata_labeling, basis="umap_ori", save_show_or_return="return", ax=ax, color="cell_type", frontier=True
+        adata_labeling, basis="umap", save_show_or_return="return", ax=ax, color="cell_type", frontier=True
     )
     
     ax = ax[0]
     x, y = 0, 1
     for i in develope_keys:
-        lap_dict = transition_graph[i]["LAP_umap_ori"]
+        lap_dict = transition_graph[i]["LAP_umap"]
         for j, k in zip(lap_dict["prediction"], lap_dict["action"]):
             ax.scatter(*j[:, [x, y]].T, c=map2color(k))
             ax.plot(*j[:, [x, y]].T, c="k")
