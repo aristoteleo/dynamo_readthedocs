@@ -4,6 +4,15 @@ Optimal cell fate transitions via most probable path
 ====================================================
 
 
+The ability to drive conversion between different cell states has garnered a great deal of attention as a promising avenue for disease modeling. A fundamental challenge in the field of stem cell biology is, thus, to assess the feasibility and identify optimal paths and key transcription factors (TFs) of such inter-conversions.  We summarize this grand problem of predicting optimal cell fate conversions (OPCs) in the figure below :ref:`here<lap_theory_dynamo_paper_fig6_a>`.
+
+.. _lap_theory_dynamo_paper_fig6_a:
+.. figure:: dynamo_paper_figures/fig6_a.png
+   :align: center
+   :width: 400
+
+   The grand problem of predicting OPtimal cell-fate Conversions(OPCs).
+
 The least action path (LAP) principle, first proposed as early as 1744
 by :cite:p:`terrall` and famously advocated by Feynman with
 his reformulation of quantum mechanics via the path integral of the
@@ -16,45 +25,9 @@ LAP approach to real datasets in transcriptomic space to computationally
 explore optimal paths for differentiation and reprogramming
 (dedifferentiation and transdifferentiation), which then helps us identify
 key transcription factors whose expression levels vary strongest along
-these paths. The grand problem of predicting optimal cell fate conversions, OPCs is summarized :ref:`here<lap_theory_dynamo_paper_fig6_a>`. 
+these paths.  
 
-.. _lap_theory_dynamo_paper_fig6_a:
-.. figure:: dynamo_paper_figures/fig6_a.png
-   :align: center
-   :width: 400
-
-   The grand problem of predicting OPtimal cell-fate Conversions(OPCs).
-
-
-The transcriptomic vector field encodes dynamical information of
-pathways connecting different cell types. :ref:`This figure from the dynamo paper<lap_theory_dynamo_paper_fig6_b>` :cite:p:`QIU2022` shows developmental paths and transition matrix among cell types in hematopoietic stem cell lineages. For the developmental paths, the
-developmental paths, connecting progenitors and stable cell types, such
-as hematopoietic stem cells, HSCs and megakaryocytes, Meg, are
-characterized by vector field streamlines, where cells need to overcome
-little to no dynamical barrier. However, the reversed process,
-dedifferentiation, requires cells to migrate against the streamline,
-overcome the developmental barrier to eventually become progenitors, and finally 
-reacquire multipotency. Stable cell types are attractors that are
-separated by attractor barriers, and during the transdifferentiation
-processes, cells from one stable attractor overcome these barriers and
-transverse into another stable attractor. Overcoming the
-dedifferentiation/transdifferentiation barriers driven by stochasticity
-are :math:`\textit{rare transitions}`, as evidenced by extremely
-low experimental reprogramming efficiency, as low as 0.001–0.01%
-:cite:p:`Merkl2013`. This is why reprogramming factors are
-generally needed, which reshape the developmental landscape in favor of
-the reprogramming transitions. In the context of cell state transitions,
-there are two seemingly similar but fundamentally different concepts
-worth additional clarification:
-
--  Transition time: the expected waiting time for a cell to initiate and
-   finish the transition between two states, regardless of the path it
-   takes. This corresponds to the experimentally measured time for one
-   cell type to commit into another.
-
--  Traversal time: the time the cell spends traveling along a specific
-   path. Theoretically, this is the time for a single cell to complete
-   the cell type conversion once the cell has decided on the commitment.
+The hematopoietic scNT-seq dataset we generated in this study is well suited for testing LAP. Among the cell types from our tscRNA-seq data (:ref:`developmental tree<lap_theory_dynamo_paper_fig6_b>`), there are five developmental events (from HSC to each of the terminal cell type), one reported dedifferentiation event (from Meg to HSC), and a total of eight reported transdifferentiation events. Considering all-against-all conversions, we are left with 18 unreported transitions between different mature cell types (:ref:`transition matrix<lap_theory_dynamo_paper_fig6_b>`). 
 
 .. _lap_theory_dynamo_paper_fig6_b:
 .. figure:: dynamo_paper_figures/fig6_b.png
@@ -62,7 +35,7 @@ worth additional clarification:
   Predicting OPCs for hematopoietic cell types. i) The developmental tree, known dedifferentiation and transdifferentiation events previously reported for the six cell types observed in our data. ii) Matrix representation of subpanel i). The optimal paths for hematopoietic transitions can be found by identifying the LAPs between the fixed points that correspond to each stable cell type.
 
 
-:ref:`An example of LAP transition from state0 (HSC) to state1 (Meg)<lap_theory_dynamo_paper_fig6_c>` More explanation regarding the math terms shown in this figure can be found in this introduction below.
+Here we first briefly introduce the intuition of the LAP and what we can do with it. Intuitively, the optimal path between any two cell states (e.g., the fixed point of HSCs and that of megakaryocytes) is searched by variating the continuous path connecting the source state to the target while minimizing its action and updating the associated transition time (:ref:`LAP<lap_theory_dynamo_paper_fig6_c>`). The resultant LAP has the highest transition probability and is associated with a particular transition time. In order to identify the associated key regulators, we focus only on TFs and rank them by the path integral of the mean square displacement (MSD) of gene expression with respect to the initial expression.
 
 .. _lap_theory_dynamo_paper_fig6_c:
 .. figure:: dynamo_paper_figures/fig6_c.png
@@ -70,8 +43,6 @@ worth additional clarification:
    :width: 400
 
    The optimal paths for hematopoietic transitions can be found by identifying the LAPs between the fixed points that correspond to each stable cell type.
-
-
 
 Given the vector field function, :math:`\boldsymbol f`, optimal pathways
 of cell fate conversion can be mathematically analyzed by least action
@@ -235,10 +206,21 @@ for the cell to initiate the transition is negligible in this case, so
 the transition time can be approximated by the traversal time of the
 LAP.
 
-In addition to the computation of transition time and traversal time,
+In addition to the computation of transition time and traversal time (see below),
 analyzing gene expression variations along LAPs provides essential
 information on regulatory genes, and their dynamics, during cell fate
-transitions. We calculate the mean squared displacement (MSD) for every
+transitions. 
+
+-  Transition time: the expected waiting time for a cell to initiate and
+   finish the transition between two states, regardless of the path it
+   takes. This corresponds to the experimentally measured time for one
+   cell type to commit into another.
+
+-  Traversal time: the time the cell spends traveling along a specific
+   path. Theoretically, this is the time for a single cell to complete
+   the cell type conversion once the cell has decided on the commitment.
+
+We calculate the mean squared displacement (MSD) for every
 gene :math:`i` along the optimal path:
 
 .. math::
