@@ -96,7 +96,6 @@ Here we select cells via ``dyn.tl.select_cell``.
 
 .. image:: output_6_0.png
    :width: 487px
-   :height: 340px
 
 
 | We select the most extreme cells from alpha and beta cells as the
@@ -150,7 +149,6 @@ Here we select cells via ``dyn.tl.select_cell``.
 
 .. image:: output_9_1.png
    :width: 543px
-   :height: 413px
 
 
 Showing what is in ``HSC_cell_indices``
@@ -442,7 +440,6 @@ Obtain developmental LAPs
 
 .. image:: output_19_0.png
    :width: 407px
-   :height: 349px
 
 
 .. code:: ipython3
@@ -548,7 +545,6 @@ developmental LAPs.
 
 .. image:: output_22_2.png
    :width: 449px
-   :height: 302px
 
 
 Heatmap of pairwise celltype actions and time of transitions
@@ -566,7 +562,6 @@ Heatmap of pairwise celltype actions and time of transitions
 
 .. image:: output_24_0.png
    :width: 448px
-   :height: 421px
 
 
 .. code:: ipython3
@@ -580,7 +575,6 @@ Heatmap of pairwise celltype actions and time of transitions
 
 .. image:: output_25_0.png
    :width: 515px
-   :height: 356px
 
 
 Kinetics Heatmap via LAP
@@ -666,8 +660,6 @@ this case it is ``HSC->Bas``. While the y-axis represents gene names.
 
 .. image:: output_31_0.png
    :width: 818px
-   :height: 418px
-
 
 Rank transcriptomics factors (TFs)
 ----------------------------------
@@ -1093,7 +1085,6 @@ The y-axis is the transition path and the x-axis shows the TF scores for a speci
 
 .. image:: output_55_1.png
    :width: 650px
-   :height: 445px
 
 
 Plotting ROC Curve
@@ -1165,5 +1156,4 @@ Last but not least, lets evaluate our TF ranking via a ROC curve. The area= ``0.
 
 .. image:: output_58_2.png
    :width: 500px
-   :height: 500px
 

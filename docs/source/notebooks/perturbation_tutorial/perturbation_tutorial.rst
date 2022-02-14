@@ -116,7 +116,6 @@ MEP-related lineages.
 
 .. image:: output_14_1.png
    :width: 955px
-   :height: 349px
 
 
 Suppression of SPI1 diverts cells from MEP-related lineages to
@@ -138,7 +137,6 @@ GMP-related lineages.
 
 .. image:: output_16_1.png
    :width: 962px
-   :height: 349px
 
 
 Suppress SPI1/GATA at the same time
@@ -167,7 +165,6 @@ GATA1 individually.
 
 .. image:: output_18_1.png
    :width: 954px
-   :height: 349px
 
 
 Activate KLF1
@@ -217,5 +214,4 @@ most other cells into the Ery lineage :cite:p:`Capellera-Garcia2016-qp`.
 
 .. image:: output_22_1.png
    :width: 954px
-   :height: 349px
 
