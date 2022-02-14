@@ -585,7 +585,7 @@ LAP. ``dyn.pd.least_action`` is a function which computes the optimal paths betw
 basis. ``dyn.pl.kinetic_heatmap`` can be used to plot kinetics
 heatmap.
 
-First we assign observation names to ``init_cells`` and ``end_cells``.
+First we assign observation names to ``init_cells`` and ``target_cells``.
 Note that for demonstration purses and paper figure reproduction, we only store
 1 cell instance in the init and end cell lists. You may use multiple cells as
 inputs for ``dyn.pd.least_action``.
@@ -593,9 +593,9 @@ inputs for ``dyn.pd.least_action``.
 .. code:: ipython3
 
     init_cells = [adata_labeling.obs_names[HSC_cells_indices[0][0]]]
-    end_cells = [adata_labeling.obs_names[Bas_cells_indices[0][0]]]
+    target_cells = [adata_labeling.obs_names[Bas_cells_indices[0][0]]]
     print("init cells:", init_cells)
-    print("end cells:", end_cells)
+    print("end cells:", target_cells)
 
 
 .. parsed-literal::
@@ -614,7 +614,7 @@ function can be found in API documentation.
     lap = dyn.pd.least_action(
         adata_labeling,
         init_cells=init_cells,
-        end_cells=end_cells,
+        target_cells=target_cells,
         basis="pca",
         adj_key="cosine_transition_matrix",
     )
