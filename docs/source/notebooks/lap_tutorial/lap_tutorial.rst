@@ -54,7 +54,7 @@ Load hematopoietic scNT-seq dataset. This this tutorial we are going to perform 
 
 .. code:: ipython3
 
-    adata_labeling = dyn.sample_data.hematopoietic_processed()
+    adata_labeling = dyn.sample_data.hematopoietic()
 
 Take a glance at what is in ``adata`` object. All observations,
 embedding layers and other data in ``adata`` are computed within

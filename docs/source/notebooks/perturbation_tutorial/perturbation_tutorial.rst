@@ -41,7 +41,7 @@ Import relevant packages
 
 .. code:: ipython3
 
-    adata_labeling = dyn.sample_data.hematopoietic_processed()
+    adata_labeling = dyn.sample_data.hematopoietic()
 
 
 Take a glance at what is in ``adata`` object. All observations,
