@@ -10,7 +10,7 @@ perturbations.
 
 | In this tutorial, we will cover the following topics:
 - Perturbation functionality and API in dynamo 
-- How to perturb gene expression levels individually or collectively in hematopoietic scNT-seq dataset 
+- How to single or combinatorial perturbation (either repression or activation) in hematopoietic scNT-seq dataset 
 - Visualize gene perturbation effects 
 - Reproduce results in dynamo paper Fig.7 :cite:p:`QIU2022` 
 
@@ -44,11 +44,7 @@ Import relevant packages
     adata_labeling = dyn.sample_data. hematopoiesis()
 
 
-Take a glance at what is in ``adata`` object. All observations,
-embedding layers and other data in ``adata`` are computed within
-``dynamo``. Please refer to other dynamo tutorials regarding how to
-obtain these values from the metadata and the raw new/total and (or) raw
-spliced/unspliced gene expression values.
+Let us take a glance at what is in ``adata`` object. Preprocessing, normalization, umap dimension reduction, total RNA velocity, as well as the continous RNA velocity vector field are computed (notebooks on these operations will be released shortly. Please also check other existing notebooks for these operations). 
 
 .. code:: ipython3
 
@@ -68,36 +64,20 @@ spliced/unspliced gene expression values.
         obsp: 'X_umap_ori_connectivities', 'X_umap_ori_distances', 'connectivities', 'cosine_transition_matrix', 'distances', 'fp_transition_rate', 'moments_con', 'pca_ddhodge', 'perturbation_transition_matrix', 'umap_ori_ddhodge'
 
 
-Perturb gene expression values
-------------------------------
+*In silico* perturbation with ``dyn.pd.perturbation``
+----------------------------------------------------
 
-Here we apply ``dyn.pd.perturbation`` to the dataset by upregulating each gene and creating
-visualization plots. In addition, multiple genes can be suppressed or activated
-during perturbation simulation.
+The ``dyn.pd.perturbation``  function from *dynamo* can be used to either upregulating or suppressing a single or multiple genes in a particular cell or across all cells to perform *in silico* genetic perturbation. 
+When integrating the perturbation vectors across cells we can then also predict cell-fate outcomes after the perturbation which can be visualized as the perturbation streamlines. 
 
-Induce hematopoietic stem cells with selected TFs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the following, we will first delve into the *in silico* perturbations of the canonical PU.1/SPI1-GATA1 network motif that specifies the GMP or MEP lineage during hematopoiesis, respectively. 
 
-| **Define sets of genes**
-| Let's define three sets of genes we explored in :cite:p:`QIU2022`. For example, during reprogramming committed murine blood cells to induced
-  hematopoietic stem cells with defined factors, six transcription
-  factors defined in ``murine_blood_cells`` below impart
-  multilineage transplantation potential onto otherwise committed
-  lymphoid and myeloid progenitors and myeloid effector cells. You can refer to :cite:p:`QIU2022` for more information about these genes.
+Mutual exclusive effects after perturbing either GATA1 or SPI1 gene
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code:: ipython3
+As we all know, GATA1 is the master regulator of the GMP lineage while SPI1 is the master regulator for the MEP lineage and GATA1 and PU1 forms a mutual inhibition and self-activation network motif. 
 
-    murine_blood_cells = ["RUN1T1", "HLF", "LMO2", "PRDM5", "PBX1", "ZFP37", "MYCN", "MEIS1"]
-    gran_lineage_genes = ["CEBPE", "RUNX1T1", "KLF1", "CEBPA", "FOSB", "JUN", "SPI1", "ZC3HAV1"]
-    erythroid_differentiation = ["GATA1", "TAL1", "LMO2", "KLF1", "MYB", "LDB1", "NFE2", "GFI1B", "BCL11A"]
-
-Suppress GATA1 and SPI1 genes individually
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In the dynamo Cell paper :cite:p:`QIU2022`, we explored and reported the canonical PU.1/SPI1-GATA1 network motif with new strategies. The streamlines of SPI1 and GATA1 show that HSPCs bifurcate into GMP-like and MEP-like branches. Meanwhile, GATA1 is the master regulator of the GMP lineage. Here we select GATA1 and SPI1 for perturbation analysis example.
-
-Suppression of GATA1 diverts cells from GMP-related lineages to
-MEP-related lineages.
+We first suppress the expression of GATA1 and it can divert cells from GMP-related lineages to MEP-related lineages.
 
 .. code:: ipython3
 
@@ -117,8 +97,7 @@ MEP-related lineages.
    :width: 955px
 
 
-Suppression of SPI1 diverts cells from MEP-related lineages to
-GMP-related lineages.
+When suppressing the expression of SPI1, we find that cells from MEP-related lineages are diverted to GMP-related lineages.
 
 .. code:: ipython3
 
@@ -138,12 +117,11 @@ GMP-related lineages.
    :width: 962px
 
 
-Suppress SPI1/GATA at the same time
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Double suppression of SPI1/GATA trap cell in the middle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppression of both SPI1 and GATA1 traps cells in the progenitor states.
-This behavior is different from the cases in which we perturb SPI1 and
-GATA1 individually.
+These predictions align well with those reported in (Rekhtman et al., 1999) and reveal a seesaw-effect regulation between SPI1 and GATA1 in driving the GMP and the MEP lineages. 
 
 .. code:: ipython3
 
@@ -169,7 +147,7 @@ GATA1 individually.
 Activate KLF1
 ~~~~~~~~~~~~~
 
-Dynamo *in silico* perturbation can correctly predicts other cellular transitions, showcased in :cite:p:`QIU2022`. Here is another example: activating KLF1 leads to conversion into erythroid cells, consistent with :cite:p:`Orkin2008-vp`.
+Dynamo *in silico* perturbation can correctly predicts other cellular transitions, showcased in :cite:p:`QIU2022`. Here we show that activation of KLF1 leads other cells convert into erythroid cells, consistent with :cite:p:`Orkin2008-vp`.
 
 .. code:: ipython3
 
@@ -188,7 +166,7 @@ Dynamo *in silico* perturbation can correctly predicts other cellular transition
 .. image:: output_20_1.png
 
 
-Promote erythroid lineage: triple activation
+Triple activation of "GATA1", "KLF1", "TAL1"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Triple activation of GATA1, KLF1, and TAL1, known erythrocyte factors,
