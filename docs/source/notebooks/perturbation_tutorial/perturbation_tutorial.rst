@@ -41,7 +41,7 @@ Import relevant packages
 
 .. code:: ipython3
 
-    adata_labeling = dyn.sample_data.hematopoietic_processed()
+    adata_labeling = dyn.sample_data. hematopoiesis()
 
 
 Take a glance at what is in ``adata`` object. All observations,
@@ -66,7 +66,6 @@ spliced/unspliced gene expression values.
         obsm: 'X', 'X_pca', 'X_pca_SparseVFC', 'X_umap', 'X_umap_SparseVFC', 'X_umap_ori', 'X_umap_ori_SparseVFC', 'X_umap_ori_perturbation', 'X_umap_ori_test', 'X_umap_perturbation', 'acceleration_pca', 'acceleration_umap_ori', 'cell_cycle_scores', 'curvature_pca', 'curvature_umap', 'curvature_umap_ori', 'j_delta_x_perturbation', 'velocity_pca', 'velocity_pca_SparseVFC', 'velocity_umap', 'velocity_umap_SparseVFC', 'velocity_umap_ori', 'velocity_umap_ori_SparseVFC', 'velocity_umap_ori_perturbation', 'velocity_umap_ori_test', 'velocity_umap_perturbation'
         layers: 'M_n', 'M_nn', 'M_t', 'M_tn', 'M_tt', 'X_new', 'X_total', 'velocity_alpha_minus_gamma_s'
         obsp: 'X_umap_ori_connectivities', 'X_umap_ori_distances', 'connectivities', 'cosine_transition_matrix', 'distances', 'fp_transition_rate', 'moments_con', 'pca_ddhodge', 'perturbation_transition_matrix', 'umap_ori_ddhodge'
-
 
 
 Perturb gene expression values
@@ -103,8 +102,8 @@ MEP-related lineages.
 .. code:: ipython3
 
     gene = "GATA1"
-    dyn.pd.perturbation(adata_labeling, gene, [-100], emb_basis="umap_ori")
-    dyn.pl.streamline_plot(adata_labeling, color=["cell_type", gene], basis="umap_ori_perturbation")
+    dyn.pd.perturbation(adata_labeling, gene, [-100], emb_basis="umap")
+    dyn.pl.streamline_plot(adata_labeling, color=["cell_type", gene], basis="umap_perturbation")
 
 
 .. parsed-literal::
@@ -124,8 +123,8 @@ GMP-related lineages.
 .. code:: ipython3
 
     gene = "SPI1"
-    dyn.pd.perturbation(adata_labeling, gene, [-100], emb_basis="umap_ori")
-    dyn.pl.streamline_plot(adata_labeling, color=["cell_type", gene], basis="umap_ori_perturbation")
+    dyn.pd.perturbation(adata_labeling, gene, [-100], emb_basis="umap")
+    dyn.pl.streamline_plot(adata_labeling, color=["cell_type", gene], basis="umap_perturbation")
 
 
 .. parsed-literal::
@@ -151,8 +150,8 @@ GATA1 individually.
     selected_genes =  [ "SPI1", "GATA1"]
     # expr_vals = [-100, -100]
     expr_vals = [-100, -15]
-    dyn.pd.perturbation(adata_labeling, selected_genes, expr_vals, emb_basis="umap_ori")
-    dyn.pl.streamline_plot(adata_labeling, color=["cell_type", gene], basis="umap_ori_perturbation")
+    dyn.pd.perturbation(adata_labeling, selected_genes, expr_vals, emb_basis="umap")
+    dyn.pl.streamline_plot(adata_labeling, color=["cell_type", gene], basis="umap_perturbation")
 
 
 
@@ -175,8 +174,8 @@ Dynamo *in silico* perturbation can correctly predicts other cellular transition
 .. code:: ipython3
 
     gene = "KLF1"
-    dyn.pd.perturbation(adata_labeling, gene, [100], emb_basis="umap_ori")
-    dyn.pl.streamline_plot(adata_labeling, color=["cell_type", gene], basis="umap_ori_perturbation")
+    dyn.pd.perturbation(adata_labeling, gene, [100], emb_basis="umap")
+    dyn.pl.streamline_plot(adata_labeling, color=["cell_type", gene], basis="umap_perturbation")
 
 
 .. parsed-literal::
@@ -200,8 +199,8 @@ most other cells into the Ery lineage :cite:p:`Capellera-Garcia2016-qp`.
 
     selected_genes =  ["GATA1", "KLF1", "TAL1"]
     expr_vals = [100, 100, 100]
-    dyn.pd.perturbation(adata_labeling, selected_genes, expr_vals, emb_basis="umap_ori")
-    dyn.pl.streamline_plot(adata_labeling, color=["cell_type", gene], basis="umap_ori_perturbation")
+    dyn.pd.perturbation(adata_labeling, selected_genes, expr_vals, emb_basis="umap")
+    dyn.pl.streamline_plot(adata_labeling, color=["cell_type", gene], basis="umap_perturbation")
 
 
 

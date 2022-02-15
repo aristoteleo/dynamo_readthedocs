@@ -9,7 +9,7 @@ Introduction
   modeling. A fundamental challenge in the field
   of stem cell biology is to identify and assess the feasibility of
   optimal paths and key TFs (transcription factors) of such
-  interconversions (Figure 6A :cite:p:`QIU2022`). The least action path (LAP) is a principled method that has previously been used in
+  interconversions (Figure 6A of :cite:p:`QIU2022`). The least action path (LAP) is a principled method that has previously been used in
   theoretical efforts to predict the most probable path a cell will
   follow during fate transition. Specifically, the optimal path between any two cell states
   (e.g. the fixed point of HSCs and that of megakaryocytes) is searched
@@ -19,7 +19,7 @@ Introduction
   transition probability and is associated with a particular transition
   time. Once the LAP is identified, we can focus only on TFs and rank them by the path integral of the mean square displacement (MSD) of gene expression with respect to the initial expression to identify key transcription factors of the associated cell fate transitions.
 
-| In this tutorial, we will showcase how to 
+| In this tutorial, we will demonstrate how to 
 - perform LAP analyses;
 - visualize transition paths found by the LAP approach on the vector field;
 - plot heatmaps of actions and transition times matrix between all hematopoietic cell types;
@@ -50,13 +50,13 @@ Import relevant packages
     |-----> setting visualization default mode in dynamo. Your customized matplotlib settings might be overritten.
 
 
-Load the human hematopoiesis scNT-seq dataset produced in this study (:cite:p:`QIU2022`). In this tutorial we will focus on analyzing this scNT-seq dataset because decades of researches in hematopoiesis make it a well suited system for testing LAP. 
+Let us first load the human hematopoiesis scNT-seq dataset, which has stored as a sample dataset within dynamo that can be download directly using the above function, produced in this study (:cite:p:`QIU2022`). In this tutorial we will focus on analyzing this scNT-seq dataset because decades of researches in hematopoiesis make it a well suited system for testing LAP predictions. 
 
 .. code:: ipython3
 
-    adata_labeling = dyn.sample_data.hematopoietic_processed()
+    adata_labeling = dyn.sample_data. hematopoiesis()
 
-We keep this hematopoiesis dataset as a sample dataset within dynamo which can be download directly using the above function. Let us take a glance at what is in ``adata`` object. Preprocessing, normalization, umap dimension reduction, total RNA velocity, as well as the continous RNA velocity vector field are computed (notebooks on these operations will be released shortly. Please also check other existing notebooks for these operations). 
+Let us take a glance at what is in ``adata`` object. Preprocessing, normalization, umap dimension reduction, total RNA velocity, as well as the continous RNA velocity vector field are computed (notebooks on these operations will be released shortly. Please also check other existing notebooks for these operations). 
 
 .. code:: ipython3
 
@@ -66,21 +66,21 @@ We keep this hematopoiesis dataset as a sample dataset within dynamo which can b
 .. parsed-literal::
 
     AnnData object with n_obs × n_vars = 1947 × 1956
-        obs: 'batch', 'time', 'cell_type', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'new_Size_Factor', 'initial_new_cell_size', 'total_Size_Factor', 'initial_total_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'Size_Factor', 'initial_cell_size', 'ntr', 'cell_cycle_phase', 'leiden', 'umap_leiden', 'umap_louvain', 'control_point_pca', 'inlier_prob_pca', 'obs_vf_angle_pca', 'pca_ddhodge_div', 'pca_ddhodge_potential', 'umap_ori_ddhodge_div', 'umap_ori_ddhodge_potential', 'curl_umap_ori', 'divergence_umap_ori', 'control_point_umap_ori', 'inlier_prob_umap_ori', 'obs_vf_angle_umap_ori', 'acceleration_pca', 'curvature_pca', 'n_counts', 'mt_frac', 'jacobian_det_pca', 'manual_selection', 'divergence_pca', 'curvature_umap_ori', 'acceleration_umap_ori', 'control_point_umap', 'inlier_prob_umap', 'obs_vf_angle_umap', 'curvature_umap', 'curv_leiden', 'curv_louvain', 'SPI1->GATA1_jacobian', 'jacobian'
+        obs: 'batch', 'time', 'cell_type', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'new_Size_Factor', 'initial_new_cell_size', 'total_Size_Factor', 'initial_total_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'Size_Factor', 'initial_cell_size', 'ntr', 'cell_cycle_phase', 'leiden', 'umap_leiden', 'umap_louvain', 'control_point_pca', 'inlier_prob_pca', 'obs_vf_angle_pca', 'pca_ddhodge_div', 'pca_ddhodge_potential', 'umap_ddhodge_div', 'umap_ddhodge_potential', 'curl_umap', 'divergence_umap', 'control_point_umap', 'inlier_prob_umap', 'obs_vf_angle_umap', 'acceleration_pca', 'curvature_pca', 'n_counts', 'mt_frac', 'jacobian_det_pca', 'manual_selection', 'divergence_pca', 'curvature_umap', 'acceleration_umap', 'control_point_umap', 'inlier_prob_umap', 'obs_vf_angle_umap', 'curvature_umap', 'curv_leiden', 'curv_louvain', 'SPI1->GATA1_jacobian', 'jacobian'
         var: 'gene_name', 'gene_id', 'nCells', 'nCounts', 'pass_basic_filter', 'use_for_pca', 'frac', 'ntr', 'time_3_alpha', 'time_3_beta', 'time_3_gamma', 'time_3_half_life', 'time_3_alpha_b', 'time_3_alpha_r2', 'time_3_gamma_b', 'time_3_gamma_r2', 'time_3_gamma_logLL', 'time_3_delta_b', 'time_3_delta_r2', 'time_3_bs', 'time_3_bf', 'time_3_uu0', 'time_3_ul0', 'time_3_su0', 'time_3_sl0', 'time_3_U0', 'time_3_S0', 'time_3_total0', 'time_3_beta_k', 'time_3_gamma_k', 'time_5_alpha', 'time_5_beta', 'time_5_gamma', 'time_5_half_life', 'time_5_alpha_b', 'time_5_alpha_r2', 'time_5_gamma_b', 'time_5_gamma_r2', 'time_5_gamma_logLL', 'time_5_bs', 'time_5_bf', 'time_5_uu0', 'time_5_ul0', 'time_5_su0', 'time_5_sl0', 'time_5_U0', 'time_5_S0', 'time_5_total0', 'time_5_beta_k', 'time_5_gamma_k', 'use_for_dynamics', 'gamma', 'gamma_r2', 'use_for_transition', 'gamma_k', 'gamma_b'
-        uns: 'PCs', 'VecFld_pca', 'VecFld_umap', 'VecFld_umap_ori', 'X_umap_ori_neighbors', 'cell_phase_genes', 'cell_type_colors', 'dynamics', 'explained_variance_ratio_', 'feature_selection', 'grid_velocity_pca', 'grid_velocity_umap', 'grid_velocity_umap_ori', 'grid_velocity_umap_ori_perturbation', 'grid_velocity_umap_ori_test', 'grid_velocity_umap_perturbation', 'jacobian_pca', 'leiden', 'neighbors', 'pca_mean', 'pp', 'response'
-        obsm: 'X', 'X_pca', 'X_pca_SparseVFC', 'X_umap', 'X_umap_SparseVFC', 'X_umap_ori', 'X_umap_ori_SparseVFC', 'X_umap_ori_perturbation', 'X_umap_ori_test', 'X_umap_perturbation', 'acceleration_pca', 'acceleration_umap_ori', 'cell_cycle_scores', 'curvature_pca', 'curvature_umap', 'curvature_umap_ori', 'j_delta_x_perturbation', 'velocity_pca', 'velocity_pca_SparseVFC', 'velocity_umap', 'velocity_umap_SparseVFC', 'velocity_umap_ori', 'velocity_umap_ori_SparseVFC', 'velocity_umap_ori_perturbation', 'velocity_umap_ori_test', 'velocity_umap_perturbation'
+        uns: 'PCs', 'VecFld_pca', 'VecFld_umap', 'VecFld_umap', 'X_umap_neighbors', 'cell_phase_genes', 'cell_type_colors', 'dynamics', 'explained_variance_ratio_', 'feature_selection', 'grid_velocity_pca', 'grid_velocity_umap', 'grid_velocity_umap', 'grid_velocity_umap_perturbation', 'grid_velocity_umap_test', 'grid_velocity_umap_perturbation', 'jacobian_pca', 'leiden', 'neighbors', 'pca_mean', 'pp', 'response'
+        obsm: 'X', 'X_pca', 'X_pca_SparseVFC', 'X_umap', 'X_umap_SparseVFC', 'X_umap', 'X_umap_SparseVFC', 'X_umap_perturbation', 'X_umap_test', 'X_umap_perturbation', 'acceleration_pca', 'acceleration_umap', 'cell_cycle_scores', 'curvature_pca', 'curvature_umap', 'curvature_umap', 'j_delta_x_perturbation', 'velocity_pca', 'velocity_pca_SparseVFC', 'velocity_umap', 'velocity_umap_SparseVFC', 'velocity_umap', 'velocity_umap_SparseVFC', 'velocity_umap_perturbation', 'velocity_umap_test', 'velocity_umap_perturbation'
         layers: 'M_n', 'M_nn', 'M_t', 'M_tn', 'M_tt', 'X_new', 'X_total', 'velocity_alpha_minus_gamma_s'
-        obsp: 'X_umap_ori_connectivities', 'X_umap_ori_distances', 'connectivities', 'cosine_transition_matrix', 'distances', 'fp_transition_rate', 'moments_con', 'pca_ddhodge', 'perturbation_transition_matrix', 'umap_ori_ddhodge'
+        obsp: 'X_umap_connectivities', 'X_umap_distances', 'connectivities', 'cosine_transition_matrix', 'distances', 'fp_transition_rate', 'moments_con', 'pca_ddhodge', 'perturbation_transition_matrix', 'umap_ddhodge'
 
 
-We will first show the streamline plot of this dataset in the UMAP space. From which, we can see that we have six cell types, namely hematopoietic stem cells (HSC), neutrophil (Neu), monocyte (mon), basophil (bas), megakaryocyte (meg) and erythrocytes (ery). From the streamline plot, we can that HSC will first become GMP (granulocyte monocyte progenitor)-like or MEP (megakaryocyte and erythrocyte progenitor)-like cells and then bifurcate into Neu and Mon or Ery, Bas and Meg. Here we will select a few characteristic cells for each specific cell type via ``dyn.tl.select_cell``.
+We will first show the streamline plot of this dataset in the UMAP space. From which, we can see that we have six major cell types, namely hematopoietic stem cells (HSC), neutrophil (Neu), monocyte (Mon), basophil (Bas), megakaryocyte (Meg) and erythrocytes (Ery). From the streamline plot, we can see that HSC will first become GMP (granulocyte monocyte progenitor)-like or MEP (megakaryocyte and erythrocyte progenitor)-like cells and then bifurcate into Neu and Mon or Ery, Bas and Meg, respectively. Here we will select a few characteristic cells for each specific cell type via ``dyn.tl.select_cell``.
 
-Among the cell types from our tscRNA-seq data, there are five developmental events (from HSC to each of the terminal cell type), one reported dedifferentiation event (from Meg to HSC), and a total of eight reported transdifferentiation events. Considering all-against-all conversions, we are left with 18 unreported transitions between different mature cell types. Thus, this system provides a broad range of known transitions and associated transcription factors to confirm our predictions while also allows us to make non-trivial predictions for the rest 18 unreported transitions.  
+Among the cell types from our tscRNA-seq data, there are five developmental events (from HSC to each of the terminal cell type), one reported dedifferentiation event (from Meg to HSC), and a total of eight reported transdifferentiation events. Considering all-against-all conversions, we are left with 18 unreported transitions between different mature cell types. Thus, this system provides a broad range of known transitions and associated transcription factors to confirm our predictions while also allows us to make non-trivial predictions for the remaining 18 unreported transitions.  
 
 .. code:: ipython3
 
-    dyn.pl.streamline_plot(adata_labeling, basis="umap_ori", color="cell_type")
+    dyn.pl.streamline_plot(adata_labeling, basis="umap", color="cell_type")
 
     HSC_cells = dyn.tl.select_cell(adata_labeling, "cell_type", "HSC")
     Meg_cells = dyn.tl.select_cell(adata_labeling, "cell_type", "Meg")
@@ -90,15 +90,15 @@ Among the cell types from our tscRNA-seq data, there are five developmental even
     Neu_cells = dyn.tl.select_cell(adata_labeling, "cell_type", "Neu")
     
 
-
 .. image:: output_6_0.png
    :width: 487px
 
 
-| We select the five closest cells of the identified attractors that correspond to each of the six cell types to represent the typical cell state of these cells (note that attractors often don't correspond to any particular cell). 
+| We select the five closest cells of the identified attractors that correspond to each of the six cell types to represent the typical cell state of these cells (note that attractors often don't correspond to any particular cell).
+
 | Then nearest cells of these ``attractors`` are saved to
   ``*_cells_indices variables``, which points to their cell indices in
-  the adata object. Note that we could just take the attractors but using the actual cells provides us the benefits to take advantage of the nearest neighbor graph of cells to intialize the searching of LAP (see below). 
+  the adata object. Note that we could just take the attractors for LAP analyses but using the actual cells offering us the benefits to take advantage of the nearest neighbor graph of cells to intialize the searching of LAP (see below). 
 
 .. code:: ipython3
 
@@ -115,12 +115,12 @@ Among the cell types from our tscRNA-seq data, there are five developmental even
         ]
     )
     
-    HSC_cells_indices = nearest_neighbors(attractors[0], adata_labeling.obsm["X_umap_ori"])
-    Meg_cells_indices = nearest_neighbors(attractors[1], adata_labeling.obsm["X_umap_ori"])
-    Ery_cells_indices = nearest_neighbors(attractors[2], adata_labeling.obsm["X_umap_ori"])
-    Bas_cells_indices = nearest_neighbors(attractors[3], adata_labeling.obsm["X_umap_ori"])
-    Mon_cells_indices = nearest_neighbors(attractors[4], adata_labeling.obsm["X_umap_ori"])
-    Neu_cells_indices = nearest_neighbors(attractors[5], adata_labeling.obsm["X_umap_ori"])
+    HSC_cells_indices = nearest_neighbors(extreme_points[0], adata_labeling.obsm["X_umap"])
+    Meg_cells_indices = nearest_neighbors(extreme_points[1], adata_labeling.obsm["X_umap"])
+    Ery_cells_indices = nearest_neighbors(extreme_points[2], adata_labeling.obsm["X_umap"])
+    Bas_cells_indices = nearest_neighbors(extreme_points[3], adata_labeling.obsm["X_umap"])
+    Mon_cells_indices = nearest_neighbors(extreme_points[4], adata_labeling.obsm["X_umap"])
+    Neu_cells_indices = nearest_neighbors(extreme_points[5], adata_labeling.obsm["X_umap"])
 
 
 .. code:: ipython3
@@ -129,7 +129,7 @@ Among the cell types from our tscRNA-seq data, there are five developmental even
     
     # plt.figure(figsize=(4, 4))
     
-    plt.scatter(*adata_labeling.obsm["X_umap_ori"].T)
+    plt.scatter(*adata_labeling.obsm["X_umap"].T)
     for indices in [
         HSC_cells_indices,
         Meg_cells_indices,
@@ -138,7 +138,7 @@ Among the cell types from our tscRNA-seq data, there are five developmental even
         Mon_cells_indices,
         Neu_cells_indices,
     ]:
-        plt.scatter(*adata_labeling[indices[0]].obsm["X_umap_ori"].T)
+        plt.scatter(*adata_labeling[indices[0]].obsm["X_umap"].T)
 
 
 .. image:: output_9_1.png
@@ -164,12 +164,12 @@ We can see, for example, the cell indices ``1587, 1557, 1725, 1091, 1070`` are t
 
 Now we are ready to perform the LAP analyses. We will start with computing the neighbor graph of cells in the umap space (pca space works too) and use the shortest paths between any two represented cells as the initial guess of the LAP. We will next run the LAP analyses between all pair-wise combinations of cells. We can either perform the LAP analyses on the UMAP space or in the PCA space, using the vector field reconstructed in UMAP or PCA space, respectively. With the vector field learned in the PCA space, we can then further projected the optimized LAP back to the original gene expression space to reveal the transcriptomic kinetics along the LAP. 
 
-Compute neighbor graph based on ``umap_ori``
+Compute neighbor graph based on ``umap``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: ipython3
 
-    dyn.tl.neighbors(adata_labeling, basis="umap_ori", result_prefix="umap_ori")
+    dyn.tl.neighbors(adata_labeling, basis="umap", result_prefix="umap")
 
 
 
@@ -177,40 +177,27 @@ Compute neighbor graph based on ``umap_ori``
 
     |-----> Start computing neighbor graph...
     |-----------> X_data is None, fetching or recomputing...
-    |-----> fetching X data from layer:None, basis:umap_ori
+    |-----> fetching X data from layer:None, basis:umap
     |-----> method arg is None, choosing methods automatically...
     |-----------> method kd_tree selected
-    |-----> <insert> umap_ori_connectivities to obsp in AnnData Object.
-    |-----> <insert> umap_ori_distances to obsp in AnnData Object.
-    |-----> <insert> umap_ori_neighbors to uns in AnnData Object.
-    |-----> <insert> umap_ori_neighbors.indices to uns in AnnData Object.
-    |-----> <insert> umap_ori_neighbors.params to uns in AnnData Object.
+    |-----> <insert> umap_connectivities to obsp in AnnData Object.
+    |-----> <insert> umap_distances to obsp in AnnData Object.
+    |-----> <insert> umap_neighbors to uns in AnnData Object.
+    |-----> <insert> umap_neighbors.indices to uns in AnnData Object.
+    |-----> <insert> umap_neighbors.params to uns in AnnData Object.
 
 
 
-
-.. parsed-literal::
-
-    AnnData object with n_obs × n_vars = 1947 × 1956
-        obs: 'batch', 'time', 'cell_type', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'new_Size_Factor', 'initial_new_cell_size', 'total_Size_Factor', 'initial_total_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'Size_Factor', 'initial_cell_size', 'ntr', 'cell_cycle_phase', 'leiden', 'umap_leiden', 'umap_louvain', 'control_point_pca', 'inlier_prob_pca', 'obs_vf_angle_pca', 'pca_ddhodge_div', 'pca_ddhodge_potential', 'umap_ori_ddhodge_div', 'umap_ori_ddhodge_potential', 'curl_umap_ori', 'divergence_umap_ori', 'control_point_umap_ori', 'inlier_prob_umap_ori', 'obs_vf_angle_umap_ori', 'acceleration_pca', 'curvature_pca', 'n_counts', 'mt_frac', 'jacobian_det_pca', 'manual_selection', 'divergence_pca', 'curvature_umap_ori', 'acceleration_umap_ori', 'control_point_umap', 'inlier_prob_umap', 'obs_vf_angle_umap', 'curvature_umap', 'curv_leiden', 'curv_louvain', 'SPI1->GATA1_jacobian', 'jacobian'
-        var: 'gene_name', 'gene_id', 'nCells', 'nCounts', 'pass_basic_filter', 'use_for_pca', 'frac', 'ntr', 'time_3_alpha', 'time_3_beta', 'time_3_gamma', 'time_3_half_life', 'time_3_alpha_b', 'time_3_alpha_r2', 'time_3_gamma_b', 'time_3_gamma_r2', 'time_3_gamma_logLL', 'time_3_delta_b', 'time_3_delta_r2', 'time_3_bs', 'time_3_bf', 'time_3_uu0', 'time_3_ul0', 'time_3_su0', 'time_3_sl0', 'time_3_U0', 'time_3_S0', 'time_3_total0', 'time_3_beta_k', 'time_3_gamma_k', 'time_5_alpha', 'time_5_beta', 'time_5_gamma', 'time_5_half_life', 'time_5_alpha_b', 'time_5_alpha_r2', 'time_5_gamma_b', 'time_5_gamma_r2', 'time_5_gamma_logLL', 'time_5_bs', 'time_5_bf', 'time_5_uu0', 'time_5_ul0', 'time_5_su0', 'time_5_sl0', 'time_5_U0', 'time_5_S0', 'time_5_total0', 'time_5_beta_k', 'time_5_gamma_k', 'use_for_dynamics', 'gamma', 'gamma_r2', 'use_for_transition', 'gamma_k', 'gamma_b'
-        uns: 'PCs', 'VecFld_pca', 'VecFld_umap', 'VecFld_umap_ori', 'X_umap_ori_neighbors', 'cell_phase_genes', 'cell_type_colors', 'dynamics', 'explained_variance_ratio_', 'feature_selection', 'grid_velocity_pca', 'grid_velocity_umap', 'grid_velocity_umap_ori', 'grid_velocity_umap_ori_perturbation', 'grid_velocity_umap_ori_test', 'grid_velocity_umap_perturbation', 'jacobian_pca', 'leiden', 'neighbors', 'pca_mean', 'pp', 'response', 'umap_ori_neighbors'
-        obsm: 'X', 'X_pca', 'X_pca_SparseVFC', 'X_umap', 'X_umap_SparseVFC', 'X_umap_ori', 'X_umap_ori_SparseVFC', 'X_umap_ori_perturbation', 'X_umap_ori_test', 'X_umap_perturbation', 'acceleration_pca', 'acceleration_umap_ori', 'cell_cycle_scores', 'curvature_pca', 'curvature_umap', 'curvature_umap_ori', 'j_delta_x_perturbation', 'velocity_pca', 'velocity_pca_SparseVFC', 'velocity_umap', 'velocity_umap_SparseVFC', 'velocity_umap_ori', 'velocity_umap_ori_SparseVFC', 'velocity_umap_ori_perturbation', 'velocity_umap_ori_test', 'velocity_umap_perturbation'
-        layers: 'M_n', 'M_nn', 'M_t', 'M_tn', 'M_tt', 'X_new', 'X_total', 'velocity_alpha_minus_gamma_s'
-        obsp: 'X_umap_ori_connectivities', 'X_umap_ori_distances', 'connectivities', 'cosine_transition_matrix', 'distances', 'fp_transition_rate', 'moments_con', 'pca_ddhodge', 'perturbation_transition_matrix', 'umap_ori_ddhodge', 'umap_ori_distances', 'umap_ori_connectivities'
-
-
-
-Run pairwise least action path among six distinct hematopoietic cell types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run pairwise least action path analyses among six distinct hematopoietic cell types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This section will demonstrate how to compute LAPs for all possible cell type transition pairs in our scNT-seq dataset. The corresponding function in
-*dynamo* is ``dyn.pd.least_action``. This function takes ``adata``, a start
+*dynamo* is ``dyn.pd.least_action``. This function takes an ``adata`` object that has continous vector field reconstructed, a start
 cell and a target cell to compute least action path or most probable path between them. As shown
-above, either UMAP or PCA basis can be used. Here we use the UMAP basis to visualize the LAP and the PCA basis to 
+above, either UMAP or PCA basis can be used. Here we use the UMAP basis to visualize the LAP and the PCA basis 
 for downstream transcription factor prioritization and other analyses.
 
-Note that the following block also demonstrates using the `GeneTrajectory` function to reverse project the optimized LAP in PCA space back to the original gene expression space to reveal the transcriptomic kinetics along the LAP. We then calculate the accumulative MSD (mean square displacement) with respect to the initial state of each gene along the LAP in the original gene expression space (with `calc_msd` function) and use this score to prioritize the importance of each gene (with `rank_genes` function). Genes with top MSD have higher variances with respect to the initial state and will be ranked higher, which may also indicate key roles in making the cell fate conversion. 
+Note that the following block also demonstrates using the `GeneTrajectory` function to reverse project the optimized LAP in PCA space back to the original gene expression space to reveal the transcriptomic kinetics along the LAP. We then calculate the accumulative MSD (mean square displacement) with respect to the initial state of each gene along the LAP in the original gene expression space (with `calc_msd` function) and use this score to prioritize the importance of each gene (with `rank_genes` function). Genes with top MSD have higher variances with respect to the initial state and will be ranked higher, which may also indicate key roles in making the cell fate conversions. 
 
 Please refer to the API documentation of each of these functions for
 detailed explanation of their input parameters, output, etc. Please also check our primers on the optimal path and the Cell paper for more in-depth understandings. 
@@ -239,12 +226,12 @@ detailed explanation of their input parameters, output, etc. Please also check o
                     adata_labeling,
                     [adata_labeling.obs_names[start[0]][0]],
                     [adata_labeling.obs_names[end[0]][0]],
-                    basis="umap_ori",
-                    adj_key="X_umap_ori_distances",
+                    basis="umap",
+                    adj_key="X_umap_distances",
                     min_lap_t= min_lap_t,
                     EM_steps=2,
                 )
-                dyn.pl.least_action(adata_labeling, basis="umap_ori")
+                dyn.pl.least_action(adata_labeling, basis="umap")
                 lap = dyn.pd.least_action(
                     adata_labeling,
                     [adata_labeling.obs_names[start[0]][0]],
@@ -275,7 +262,7 @@ detailed explanation of their input parameters, output, etc. Please also check o
     
                 transition_graph[cell_type[i] + "->" + cell_type[j]] = {
                     "lap": lap,
-                    "LAP_umap_ori": adata_labeling.uns["LAP_umap_ori"],
+                    "LAP_umap": adata_labeling.uns["LAP_umap"],
                     "LAP_pca": adata_labeling.uns["LAP_pca"],
                     "ranking": ranking,
                     "gtraj": gtraj,
@@ -425,13 +412,13 @@ Visualize developmental LAPs
     fig, ax = plt.subplots(figsize=(5, 4))
     
     ax = dyn.pl.streamline_plot(
-        adata_labeling, basis="umap_ori", save_show_or_return="return", ax=ax, color="cell_type", frontier=True
+        adata_labeling, basis="umap", save_show_or_return="return", ax=ax, color="cell_type", frontier=True
     )
     
     ax = ax[0]
     x, y = 0, 1
     for i in develope_keys:
-        lap_dict = transition_graph[i]["LAP_umap_ori"]
+        lap_dict = transition_graph[i]["LAP_umap"]
         for j, k in zip(lap_dict["prediction"], lap_dict["action"]):
             ax.scatter(*j[:, [x, y]].T, c=map2color(k))
             ax.plot(*j[:, [x, y]].T, c="k")
@@ -493,7 +480,7 @@ Next, we will focus on transcription factors (TFs) and rank them based on their 
     HSC->Meg,HSC->Ery,HSC->Bas,HSC->Mon,HSC->Neu,Meg->HSC,Meg->Ery,Meg->Bas,Meg->Mon,Meg->Neu,Ery->HSC,Ery->Meg,Ery->Bas,Ery->Mon,Ery->Neu,Bas->HSC,Bas->Meg,Bas->Ery,Bas->Mon,Bas->Neu,Mon->HSC,Mon->Meg,Mon->Ery,Mon->Bas,Mon->Neu,Neu->HSC,Neu->Meg,Neu->Ery,Neu->Bas,Neu->Mon,
 
 We now visualize the LAP time of all developmental LAPs. Interestingly, we show that the LAP time from HSC to Meg lineage LAP (28 hour) is the shortest among all
-developmental LAPs, consistent with the fact that megakaryocyte is the earliest cell type to appear. The predicted 28 hours is also on the time-scale of what has been reported for the single HSC transplantation experiments. We want to note that because we used the metabolic labeling based scRNA-seq, we obtained absolute RNA velocity and thus we can predict the actual time of the LAP, a rather powerful feature of the labeling data. 
+developmental LAPs, consistent with the fact that megakaryocyte is the earliest cell type to appear. The predicted 28 hours is also on the time-scale of what has been reported for the single HSC transplantation experiments. We want to note that because we used the metabolic labeling based scRNA-seq, we obtained absolute RNA velocity and thus we can predict the actual time (with units of hour) of the LAP, a rather remarkable feature of the labeling data. 
 
 .. code:: ipython3
 
@@ -551,8 +538,8 @@ developmental LAPs, consistent with the fact that megakaryocyte is the earliest 
 
 Here we are going to visualize the transition matrices of actions and LAP time between all pair-wise cell type conversions with heatmaps. Overall, we find the the developmental LAP time is much larger than that of the dedifferentiation LAP while the action has the opposite pattern. 
 
-Heatmap of actions and time matrices of pairwise cell fate conversions
-----------------------------------------------------------------------
+Heatmap of LAP actions and LAP time matrices of pairwise cell fate conversions
+-------------------------------------------------------------------------------
 
 .. code:: ipython3
 
@@ -581,13 +568,13 @@ Heatmap of actions and time matrices of pairwise cell fate conversions
    :width: 515px
 
 
-Kinetics Heatmap via LAP
-------------------------
+Kinetics heatmap of gene expression dynamics along the LAP
+-----------------------------------------------------------
 
-As mentioned above, we are able to obtain the gene-wise kinetics when we reverse projected the LAP learned in PCA space back to gene-wise space. In this section we will show how to do so and we will create a kinetics heatmap of the transcriptomic dynamics along the LAP. We will rely on mainly two functions, ``dyn.pd.least_action``  and ``dyn.pl.kinetic_heatmap``. ``dyn.pd.least_action`` can be used to computes the optimal paths between any two cell states, as mentioned above while ``dyn.pl.kinetic_heatmap`` can be used to plot kinetics
+As mentioned above, we are able to obtain the gene-wise kinetics when we reverse projected the LAP learned in PCA space back to gene-wise space. In this section we will show how to do so and we will create a kinetics heatmap of the transcriptomic dynamics along the LAP from HSC to basophil lineage. We will rely on mainly two functions, ``dyn.pd.least_action``  and ``dyn.pl.kinetic_heatmap``. ``dyn.pd.least_action`` can be used to computes the optimal paths between any two cell states, as mentioned above while ``dyn.pl.kinetic_heatmap`` can be used to plot kinetics
 heatmap.
 
-Here we will demonstrate the transcriptomic kinetics along the HSC to basophil lineage, and thus one typical HSC and one typical basophil cell are chosen as the initial and target cell, respectively. 
+Here we will identify the LAP from the HSC to basophil lineage, and thus one typical HSC and one typical basophil cell are chosen as the initial and target cell, respectively. 
 
 .. code:: ipython3
 
@@ -625,7 +612,7 @@ Now let us find the optimal path between HSC to basophil lineage via the ``least
     |-----> [iterating through 1 pairs] finished [9.2680s]
 
 
-Now let us plot the kinetic heatmap of the gene expression kinetics of all transcription factors (restricted only to those that are used for calculating the velocity transition matrix) along the LaP from HSC to basophil lineage.  
+Now let us plot the kinetic heatmap of the gene expression kinetics of all transcription factors (restricted only to those that are used for calculating the velocity transition matrix) along the LAP from HSC to basophil lineage.  
 
 .. code:: ipython3
 
@@ -661,8 +648,8 @@ Evaluate TF rankings based on LAP analyses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 As mentioned above, we can rank TFs based on the mean square displacement (MSD) along the LAP . In this section, we are going to evaluate rankings from LAP analyses by comparing with known transcription factors that enable the successful cell fate conversion, reported from literature. More details can be found in the dynamo paper :cite:p:`QIU2022`. 
 
-We first prepare TF ranking dataframes used to create ranking statistics in this
-section. We first identify the TFs from all genes (``["TF"]`` key) and tag TFs that are known transcription factor for the corresponding cell fate conversion  (``["known_TF"]`` key). To the best we can, the known factors are manually compiled for all known hematopoietic cell fate transitions (including developmental process). Please see supplementary table 2 from dynamo paper :cite:p:`QIU2022`. 
+We first prepare TF ranking dataframes that will be used to create ranking statistics in this
+section. We first identify the TFs from all genes (``["TF"]`` key) and tag TFs that are known transcription factor for the corresponding cell fate conversion  (``["known_TF"]`` key). To the best we can, we all manually compiled all known factors for all known hematopoietic cell fate transitions (including developmental process). Please see supplementary table 2 from dynamo paper :cite:p:`QIU2022` for more details. 
 
 This part is specific to our scNT-seq dataset but should be easily changed to meet your needs as well. 
 
@@ -1018,7 +1005,7 @@ Here we will convert the rankings of known TFs to a priority score, simply defin
 Plotting priority scores of known TFs for specific hematopoietic trandifferentiations
 -------------------------------------------------------------------------------------
 
-The y-axis is the ematopoietic trandifferentiation and the x-axis shows the TF priority scores for a specific transition.
+The y-axis is the hematopoietic trandifferentiation and the x-axis the TF priority scores for a specific transition.
 
 .. code:: ipython3
 
@@ -1069,15 +1056,15 @@ The y-axis is the ematopoietic trandifferentiation and the x-axis shows the TF p
 .. image:: output_55_1.png
    :width: 650px
 
-From the above plot, you can appreciate that our prediction works very well. Majority of the known TFs of the known transitions are ranked > 0.8 while some of them achiving perfect priorization (score == 1).
+From the above plot, you can appreciate that our prediction works very well. Majority of the known TFs of the known transitions are prioritized as > 0.8 while some of them achiving perfect prioritization (score ~= 1).
 
 
-Plotting ROC Curve
-----------------------------------
+ROC curve analyses of TF priorization of the LAP predictions
+------------------------------------------------------------
 
-Last but not least, lets evaluate our TF ranking via receiver operating curve (ROC) analyses. ROC of LAP TF priority predictions when using all known genes of all known transitions as the gold standard (see STAR Methods) reveals an AUC (area under curve) of ``0.83``, again indicating our LAP predictions and TFs prioritization works quiet well. 
+Last but not least, let us evaluate our TF ranking via receiver operating curve (ROC) analyses. ROC of LAP TF prioritization predictions when using all known genes of all known transitions as the gold standard (see STAR Methods of :cite:p:`QIU2022`) reveals an AUC (area under curve) of ``0.83``, again indicating our LAP predictions and TFs prioritization works quiet well. 
 
-These analyses reveal the potential of the LAP approach to predict the optimal path and TF cocktails of cell-fate transitions with high accuracy, paving the road for à la carte reprogramming between any cell types of interest for applications in regenerative medicine (Graf and Enver, 2009).
+These analyses reveal the potential of the LAP approach to predict the optimal paths and TF cocktails of cell-fate transitions with high accuracy, paving the road for à la carte reprogramming between any cell types of interest for applications in regenerative medicine (Graf and Enver, 2009).
 
 .. code:: ipython3
 
