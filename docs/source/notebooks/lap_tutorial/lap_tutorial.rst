@@ -12,19 +12,19 @@ Introduction
   interconversions (Figure 6A :cite:p:`QIU2022`). The least action path (LAP) is a principled method that has previously been used in
   theoretical efforts to predict the most probable path a cell will
   follow during fate transition. Specifically, the optimal path between any two cell states
-  (e.g. the fixed point of HSCs and that of megakaryocytes) is searched
+  (e.g. the fixed point of HSCs and that of megakaryocytes) is searched
   by variating the continuous path connecting the source state to the
   target while minimizing its action and updating the associated
   transition time. The resultant least action path has the highest
   transition probability and is associated with a particular transition
-  time.
+  time. Once the LAP is identified, we can focus only on TFs and rank them by the path integral of the mean square displacement (MSD) of gene expression with respect to the initial expression to identify key transcription factors of the associated cell fate transitions.
+
 | In this tutorial, we will showcase how to 
-- perform LAP analyses
-- visualize
-  transition paths found by LAP on vectorfield 
-- plot heatmaps of pairwise actions and transition times
-- rank transcriptomics factor
-- plot ROC curve of priority scores
+- perform LAP analyses;
+- visualize transition paths found by the LAP approach on the vector field;
+- plot heatmaps of actions and transition times matrix between all hematopoietic cell types;
+- prioritize transcription factors of each predicted optimal path;
+- ROC analyses of the LAP predictions.
 
 Import relevant packages
 
@@ -50,17 +50,13 @@ Import relevant packages
     |-----> setting visualization default mode in dynamo. Your customized matplotlib settings might be overritten.
 
 
-Load hematopoietic scNT-seq dataset. This this tutorial we are going to perform LAP analyses on and visualize hematopoietic scNT-seq dataset.
+Load the human hematopoiesis scNT-seq dataset produced in this study (:cite:p:`QIU2022`). In this tutorial we will focus on analyzing this scNT-seq dataset because decades of researches in hematopoiesis make it a well suited system for testing LAP. 
 
 .. code:: ipython3
 
     adata_labeling = dyn.sample_data.hematopoietic_processed()
 
-Take a glance at what is in ``adata`` object. All observations,
-embedding layers and other data in ``adata`` are computed within
-``dynamo``. Please refer to other dynamo tutorials regarding how to
-obtain these values from the metadata and the raw new/total and (or) raw
-spliced/unspliced gene expression values.
+We keep this hematopoiesis dataset as a sample dataset within dynamo which can be download directly using the above function. Let us take a glance at what is in ``adata`` object. Preprocessing, normalization, umap dimension reduction, total RNA velocity, as well as the continous RNA velocity vector field are computed (notebooks on these operations will be released shortly. Please also check other existing notebooks for these operations). 
 
 .. code:: ipython3
 
@@ -78,9 +74,13 @@ spliced/unspliced gene expression values.
         obsp: 'X_umap_ori_connectivities', 'X_umap_ori_distances', 'connectivities', 'cosine_transition_matrix', 'distances', 'fp_transition_rate', 'moments_con', 'pca_ddhodge', 'perturbation_transition_matrix', 'umap_ori_ddhodge'
 
 
-Here we select cells via ``dyn.tl.select_cell``.
+We will first show the streamline plot of this dataset in the UMAP space. From which, we can see that we have six cell types, namely hematopoietic stem cells (HSC), neutrophil (Neu), monocyte (mon), basophil (bas), megakaryocyte (meg) and erythrocytes (ery). From the streamline plot, we can that HSC will first become GMP (granulocyte monocyte progenitor)-like or MEP (megakaryocyte and erythrocyte progenitor)-like cells and then bifurcate into Neu and Mon or Ery, Bas and Meg. Here we will select a few characteristic cells for each specific cell type via ``dyn.tl.select_cell``.
+
+Among the cell types from our tscRNA-seq data, there are five developmental events (from HSC to each of the terminal cell type), one reported dedifferentiation event (from Meg to HSC), and a total of eight reported transdifferentiation events. Considering all-against-all conversions, we are left with 18 unreported transitions between different mature cell types. Thus, this system provides a broad range of known transitions and associated transcription factors to confirm our predictions while also allows us to make non-trivial predictions for the rest 18 unreported transitions.  
 
 .. code:: ipython3
+
+    dyn.pl.streamline_plot(adata_labeling, basis="umap_ori", color="cell_type")
 
     HSC_cells = dyn.tl.select_cell(adata_labeling, "cell_type", "HSC")
     Meg_cells = dyn.tl.select_cell(adata_labeling, "cell_type", "Meg")
@@ -89,28 +89,22 @@ Here we select cells via ``dyn.tl.select_cell``.
     Mon_cells = dyn.tl.select_cell(adata_labeling, "cell_type", "Mon")
     Neu_cells = dyn.tl.select_cell(adata_labeling, "cell_type", "Neu")
     
-    dyn.pl.streamline_plot(adata_labeling, basis="umap_ori", color="cell_type")
-
-
 
 
 .. image:: output_6_0.png
    :width: 487px
 
 
-| We select the most extreme cells from alpha and beta cells as the
-  starting and end points. The most extreme cells are selected manually
-  based on UMAP visualization above and their coordinates are stored in
-  ``extreme_points``.
-| Then neighbors of these ``extreme_points`` are saved to
-  ``*_cells_indices variables``, which stores indices of these points in
-  adata.
+| We select the five closest cells of the identified attractors that correspond to each of the six cell types to represent the typical cell state of these cells (note that attractors often don't correspond to any particular cell). 
+| Then nearest cells of these ``attractors`` are saved to
+  ``*_cells_indices variables``, which points to their cell indices in
+  the adata object. Note that we could just take the attractors but using the actual cells provides us the benefits to take advantage of the nearest neighbor graph of cells to intialize the searching of LAP (see below). 
 
 .. code:: ipython3
 
     from dynamo.tools.utils import nearest_neighbors
     
-    extreme_points = np.array(
+    attractors = np.array(
         [
             [8.45201833, 9.37697661],
             [14.00630381, 2.53853712],
@@ -121,12 +115,12 @@ Here we select cells via ``dyn.tl.select_cell``.
         ]
     )
     
-    HSC_cells_indices = nearest_neighbors(extreme_points[0], adata_labeling.obsm["X_umap_ori"])
-    Meg_cells_indices = nearest_neighbors(extreme_points[1], adata_labeling.obsm["X_umap_ori"])
-    Ery_cells_indices = nearest_neighbors(extreme_points[2], adata_labeling.obsm["X_umap_ori"])
-    Bas_cells_indices = nearest_neighbors(extreme_points[3], adata_labeling.obsm["X_umap_ori"])
-    Mon_cells_indices = nearest_neighbors(extreme_points[4], adata_labeling.obsm["X_umap_ori"])
-    Neu_cells_indices = nearest_neighbors(extreme_points[5], adata_labeling.obsm["X_umap_ori"])
+    HSC_cells_indices = nearest_neighbors(attractors[0], adata_labeling.obsm["X_umap_ori"])
+    Meg_cells_indices = nearest_neighbors(attractors[1], adata_labeling.obsm["X_umap_ori"])
+    Ery_cells_indices = nearest_neighbors(attractors[2], adata_labeling.obsm["X_umap_ori"])
+    Bas_cells_indices = nearest_neighbors(attractors[3], adata_labeling.obsm["X_umap_ori"])
+    Mon_cells_indices = nearest_neighbors(attractors[4], adata_labeling.obsm["X_umap_ori"])
+    Neu_cells_indices = nearest_neighbors(attractors[5], adata_labeling.obsm["X_umap_ori"])
 
 
 .. code:: ipython3
@@ -151,7 +145,7 @@ Here we select cells via ``dyn.tl.select_cell``.
    :width: 543px
 
 
-Showing what is in ``HSC_cell_indices``
+We can see, for example, the cell indices ``1587, 1557, 1725, 1091, 1070`` are the nearest cells to the identified HSC attractor. 
 
 .. code:: ipython3
 
@@ -168,6 +162,7 @@ Showing what is in ``HSC_cell_indices``
     Development path for Meg, Ery, Bas, Mon and Neu cells
     -----------------------------------------------------
 
+Now we are ready to perform the LAP analyses. We will start with computing the neighbor graph of cells in the umap space (pca space works too) and use the shortest paths between any two represented cells as the initial guess of the LAP. We will next run the LAP analyses between all pair-wise combinations of cells. We can either perform the LAP analyses on the UMAP space or in the PCA space, using the vector field reconstructed in UMAP or PCA space, respectively. With the vector field learned in the PCA space, we can then further projected the optimized LAP back to the original gene expression space to reveal the transcriptomic kinetics along the LAP. 
 
 Compute neighbor graph based on ``umap_ori``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -206,15 +201,19 @@ Compute neighbor graph based on ``umap_ori``
 
 
 
-Run pairwise least action path among cell states
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Run pairwise least action path among six distinct hematopoietic cell types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This section will compute LAPs for all cell type transition pairs. The corresponding function in
-dynamo is ``dyn.pd.least_action``. This function takes ``adata``, start
-cells and end cells to compute least action path. As shown
-below, different basis can be used. Here we use PCA basis to compute LAP
-for downstream analysis. Please refer to specific API documentation for
-detailed parameter explanation.
+This section will demonstrate how to compute LAPs for all possible cell type transition pairs in our scNT-seq dataset. The corresponding function in
+*dynamo* is ``dyn.pd.least_action``. This function takes ``adata``, a start
+cell and a target cell to compute least action path or most probable path between them. As shown
+above, either UMAP or PCA basis can be used. Here we use the UMAP basis to visualize the LAP and the PCA basis to 
+for downstream transcription factor prioritization and other analyses.
+
+Note that the following block also demonstrates using the `GeneTrajectory` function to reverse project the optimized LAP in PCA space back to the original gene expression space to reveal the transcriptomic kinetics along the LAP. We then calculate the accumulative MSD (mean square displacement) with respect to the initial state of each gene along the LAP in the original gene expression space (with `calc_msd` function) and use this score to prioritize the importance of each gene (with `rank_genes` function). Genes with top MSD have higher variances with respect to the initial state and will be ranked higher, which may also indicate key roles in making the cell fate conversion. 
+
+Please refer to the API documentation of each of these functions for
+detailed explanation of their input parameters, output, etc. Please also check our primers on the optimal path and the Cell paper for more in-depth understandings. 
 
 .. code:: ipython3
 
@@ -408,8 +407,10 @@ detailed parameter explanation.
     |-----> [iterating through 1 pairs] finished [29.8258s]
 
 
-Obtain developmental LAPs
-------------------
+The LAPs between all pairs of cell types are stored in the `transition_graph` object. Here we will use the LAP results to visualize the developmental least action paths. Interestingly, we show that the LAP is not simply the shortest paths between two cell states but instead follow the curved vector field flow. 
+
+Visualize developmental LAPs
+----------------------------
 
 .. code:: ipython3
 
@@ -441,6 +442,8 @@ Obtain developmental LAPs
 .. image:: output_19_0.png
    :width: 407px
 
+
+Next, we will focus on transcription factors (TFs) and rank them based on their MSD along the LAP path to prioritize the importance of each TF. Meanwhile, we will also keep the action (an functional of the LAP) and the least action path time, with `action_df` and `t_df`, respectively, of each of these conversions. 
 
 .. code:: ipython3
 
@@ -489,6 +492,9 @@ Obtain developmental LAPs
 
     HSC->Meg,HSC->Ery,HSC->Bas,HSC->Mon,HSC->Neu,Meg->HSC,Meg->Ery,Meg->Bas,Meg->Mon,Meg->Neu,Ery->HSC,Ery->Meg,Ery->Bas,Ery->Mon,Ery->Neu,Bas->HSC,Bas->Meg,Bas->Ery,Bas->Mon,Bas->Neu,Mon->HSC,Mon->Meg,Mon->Ery,Mon->Bas,Mon->Neu,Neu->HSC,Neu->Meg,Neu->Ery,Neu->Bas,Neu->Mon,
 
+We now visualize the LAP time of all developmental LAPs. Interestingly, we show that the LAP time from HSC to Meg lineage LAP (28 hour) is the shortest among all
+developmental LAPs, consistent with the fact that megakaryocyte is the earliest cell type to appear. The predicted 28 hours is also on the time-scale of what has been reported for the single HSC transplantation experiments. We want to note that because we used the metabolic labeling based scRNA-seq, we obtained absolute RNA velocity and thus we can predict the actual time of the LAP, a rather powerful feature of the labeling data. 
+
 .. code:: ipython3
 
     dyn.configuration.set_pub_style(scaler=1.5)
@@ -520,9 +526,6 @@ Obtain developmental LAPs
     plt.tight_layout()
     plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
 
-The integration time of HSC to Meg lineage LAP (28 hour) is the shortest among all
-developmental LAPs.
-
 .. parsed-literal::
 
         integration time lineage
@@ -546,9 +549,10 @@ developmental LAPs.
 .. image:: output_22_2.png
    :width: 449px
 
+Here we are going to visualize the transition matrices of actions and LAP time between all pair-wise cell type conversions with heatmaps. Overall, we find the the developmental LAP time is much larger than that of the dedifferentiation LAP while the action has the opposite pattern. 
 
-Heatmap of pairwise celltype actions and time of transitions
-------------------------------------------------------------
+Heatmap of actions and time matrices of pairwise cell fate conversions
+----------------------------------------------------------------------
 
 .. code:: ipython3
 
@@ -580,15 +584,10 @@ Heatmap of pairwise celltype actions and time of transitions
 Kinetics Heatmap via LAP
 ------------------------
 
-In this section we will show how to generate kinetics heatmap based on
-LAP. ``dyn.pd.least_action`` is a function which computes the optimal paths between any two cell states in selected
-basis. ``dyn.pl.kinetic_heatmap`` can be used to plot kinetics
+As mentioned above, we are able to obtain the gene-wise kinetics when we reverse projected the LAP learned in PCA space back to gene-wise space. In this section we will show how to do so and we will create a kinetics heatmap of the transcriptomic dynamics along the LAP. We will rely on mainly two functions, ``dyn.pd.least_action``  and ``dyn.pl.kinetic_heatmap``. ``dyn.pd.least_action`` can be used to computes the optimal paths between any two cell states, as mentioned above while ``dyn.pl.kinetic_heatmap`` can be used to plot kinetics
 heatmap.
 
-First we assign observation names to ``init_cells`` and ``target_cells``.
-Note that for demonstration purses and paper figure reproduction, we only store
-1 cell instance in the init and end cell lists. You may use multiple cells as
-inputs for ``dyn.pd.least_action``.
+Here we will demonstrate the transcriptomic kinetics along the HSC to basophil lineage, and thus one typical HSC and one typical basophil cell are chosen as the initial and target cell, respectively. 
 
 .. code:: ipython3
 
@@ -604,8 +603,7 @@ inputs for ``dyn.pd.least_action``.
     end cells: ['GCAGCGAAGGCA-JL12_0']
 
 
-Compute via ``least_action`` interface and store results, including embeddings for kinetics heatmap, in ``adata``. More information regarding this
-function can be found in API documentation.
+Now let us find the optimal path between HSC to basophil lineage via the ``least_action`` function.
 
 .. code:: ipython3
 
@@ -627,9 +625,7 @@ function can be found in API documentation.
     |-----> [iterating through 1 pairs] finished [9.2680s]
 
 
-The computed LAP information can be visualized via ``dyn.pl.kinetic_heatmap``. Note
-that the x-axis below represents the cell type transition path time, LAP time. In
-this case it is ``HSC->Bas``. While the y-axis represents gene names.
+Now let us plot the kinetic heatmap of the gene expression kinetics of all transcription factors (restricted only to those that are used for calculating the velocity transition matrix) along the LaP from HSC to basophil lineage.  
 
 .. code:: ipython3
 
@@ -661,23 +657,14 @@ this case it is ``HSC->Bas``. While the y-axis represents gene names.
 .. image:: output_31_0.png
    :width: 818px
 
-Rank transcriptomics factors (TFs)
-----------------------------------
-
-Here we will show how to leverage information we processed and stored in
-``transition_graph`` to produce visualization results for ranking the TFs
-in the transition paths.
-
 Evaluate TF rankings based on LAP analyses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In the dynamo paper :cite:p:`QIU2022`, we introduce using the mean square displacement (MSD) of LAP to rank TFs. In this section, we are going to evaluate rankings from LAP analyses by comparing them with those from literature.
+As mentioned above, we can rank TFs based on the mean square displacement (MSD) along the LAP . In this section, we are going to evaluate rankings from LAP analyses by comparing with known transcription factors that enable the successful cell fate conversion, reported from literature. More details can be found in the dynamo paper :cite:p:`QIU2022`. 
 
-We first prepare TF ranking dataframes used to plot ranking information in this
-section. This part is specific to your dataset and very little of dynamo
-specific API is involved, so you may skip this part in your own
-cases.
+We first prepare TF ranking dataframes used to create ranking statistics in this
+section. We first identify the TFs from all genes (``["TF"]`` key) and tag TFs that are known transcription factor for the corresponding cell fate conversion  (``["known_TF"]`` key). To the best we can, the known factors are manually compiled for all known hematopoietic cell fate transitions (including developmental process). Please see supplementary table 2 from dynamo paper :cite:p:`QIU2022`. 
 
-To the best of our ability, we manually compiled a complete table of known hematopoietic cell fate transitions (including developmental process) and the key TFs corresponding to each transition.
+This part is specific to our scNT-seq dataset but should be easily changed to meet your needs as well. 
 
 .. code:: ipython3
 
@@ -793,12 +780,11 @@ To the best of our ability, we manually compiled a complete table of known hemat
     adata_labeling.uns["LAP_pca"] = lap_dict
 
 
-Assigning TF Rankings
-----------------------------------
+Ranking TF's importance for each LAP
+------------------------------------
 
-Let's prepare TF ranking data for visualization later. We obtain TFs’
-rankings in each transition by using the helper function
-``assign_tf_ranks`` defined below.
+Let's re-rank each known TF from each known hematopoietic fate conversion based on their MSD rankings among all TFs. We will use the helper function
+``assign_tf_ranks`` to achieve this purpose. All the known TFs are collected from literature as mentioned above.
 
 .. code:: ipython3
 
@@ -852,10 +838,6 @@ rankings in each transition by using the helper function
 .. code:: ipython3
 
     assign_tf_ranks(transition_graph, "HSC->Neu", ["GFI1", "PER3", "GATA1", "ETS3"])
-
-
-Here lets add more rankings from literature and our perturbation analysis.
-Through perturbation analysis, we can show that transient expression of six transcription factors Run1t1, Hlf, Lmo2GATA-1 converts lymphoid and myelomonocytic progenitors into the megakaryocyte/erythrocyte lineages, while Prdm5, Pbx1, and Zfp37 imparts multilineage transplantation potential onto otherwise committed lymphoid and myeloid progenitors and myeloid effector cells. Inclusion of Mycn and Meis1 and use of polycistronic viruses increase reprogramming efficacy. The above predictions show that HLF and MYCN is already sufficient in reprogramming the cell back to HSC. The following ranking is for the cases in which we activate HLF1, PDX1, MYCN and MEIS1 together.
 
 
 .. code:: ipython3
@@ -916,6 +898,7 @@ inactivation
     (['CEBPA', 'CEBPB', 'CEBPE', 'SPI1'], [0, -1, -1, 17])
 
 
+Here we will convert the rankings of known TFs to a priority score, simply defined as :math:`1 - # rank / # TF`.
 
 .. code:: ipython3
 
@@ -1032,10 +1015,10 @@ inactivation
     reprogramming_mat_df_p["rank"] = 1 - reprogramming_mat_df_p["rank"]
 
 
-Plotting TF rankings with a scatter plot
---------------------------------------------------------------------
+Plotting priority scores of known TFs for specific hematopoietic trandifferentiations
+-------------------------------------------------------------------------------------
 
-The y-axis is the transition path and the x-axis shows the TF scores for a specific transition path.
+The y-axis is the ematopoietic trandifferentiation and the x-axis shows the TF priority scores for a specific transition.
 
 .. code:: ipython3
 
@@ -1086,11 +1069,15 @@ The y-axis is the transition path and the x-axis shows the TF scores for a speci
 .. image:: output_55_1.png
    :width: 650px
 
+From the above plot, you can appreciate that our prediction works very well. Majority of the known TFs of the known transitions are ranked > 0.8 while some of them achiving perfect priorization (score == 1).
+
 
 Plotting ROC Curve
 ----------------------------------
 
-Last but not least, lets evaluate our TF ranking via a ROC curve. The area= ``0.83`` we obtained, indicates our ranking scores are reasonable.
+Last but not least, lets evaluate our TF ranking via receiver operating curve (ROC) analyses. ROC of LAP TF priority predictions when using all known genes of all known transitions as the gold standard (see STAR Methods) reveals an AUC (area under curve) of ``0.83``, again indicating our LAP predictions and TFs prioritization works quiet well. 
+
+These analyses reveal the potential of the LAP approach to predict the optimal path and TF cocktails of cell-fate transitions with high accuracy, paving the road for à la carte reprogramming between any cell types of interest for applications in regenerative medicine (Graf and Enver, 2009).
 
 .. code:: ipython3
 

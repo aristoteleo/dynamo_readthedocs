@@ -6,19 +6,16 @@
 :math:`\newcommand{\pdv}[2]{\dfrac{\partial #1}{\partial #2}} \newcommand{\trp}{\mathsf{T}}`
 
 We leverage the analytical Jacobian of the reconstructed vector field
-function to make :math:`\textit{in silico}` genetic perturbations
-and predict cell-fate outcomes after the perturbation, showcased in :ref:`this figure<dynamo_fig7_a>`. 
+function to make :math:`\textit{in silico}` genetic perturbations (left panel in :ref:`this figure<dynamo_fig7_a>`.)
+and predict cell-fate outcomes after the perturbation (right panel in :ref:`this figure<dynamo_fig7_a>`.). 
 
 .. _dynamo_fig7_a:
 .. figure:: dynamo_paper_figures/fig7_a.png
     :align: center
 
-    In silico genetic perturbation of the velocity vector field. i) in silico perturbations can predict the gene-wise response. ii) In silico perturbations can predict the cell fate trajectory after genetic perturbation by integrating the displacement of velocities across cells.
+    :math:`\textit{In silico}` genetic perturbation of the velocity vector field. i) :math:`\textit{in silico}` perturbations can predict the gene-wise response. ii) :math:`\textit{in silico}` perturbations can predict the cell fate trajectory after genetic perturbation by integrating the displacement of velocities across cells.
 
-Mathematically, for gene :math:`i` in any cell, the genetic perturbation effects or
-changes in its velocity (or more accurately, the vector field) w.r.t. to
-small perturbations in the expression of all genes in the network
-(encoded by the Jacobian matrix :math:`\boldsymbol J`),
+Intuitively, to simulate the genetic perturbation effects, we will introduce genetic perturbations to the system (encoded by the perturbation vector) and then let the perturbations propogate in the gene regulatory network (encoded by the Jacobian matrix) to execute downstream responses. Mathematically, for gene :math:`i` in any cell, the genetic perturbation effects or changes in its velocity (or more accurately, the vector field) w.r.t. to small perturbations in the expression of all genes in the network (encoded by the Jacobian matrix :math:`\boldsymbol J`),
 :math:`\mathrm dx_1`, :math:`\mathrm dx_2`,…, :math:`\mathrm dx_n`, can
 be calculated with the :math:`\textit{exact differential}`:
 
@@ -38,7 +35,7 @@ equation becomes:
     \begin{align*}  \Delta \boldsymbol f = \boldsymbol J \Delta \boldsymbol x. \end{align*}
 
 
-In practice, a proportionality constant :math:`c` is often added to the
+In practice, a proportionality constant :math:`c` (i.e. setting a perturbation to be 100 or -100) is often added to the
 perturbation :math:`\Delta \boldsymbol x` to amplify the response
 :math:`\Delta \boldsymbol f`. Furthermore, because vector fields are
 often learned in the PCA space, the perturbations in the
