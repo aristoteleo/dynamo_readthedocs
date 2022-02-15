@@ -885,7 +885,7 @@ inactivation
     (['CEBPA', 'CEBPB', 'CEBPE', 'SPI1'], [0, -1, -1, 17])
 
 
-Here we will convert the rankings of known TFs to a priority score, simply defined as :math:`1 - # rank / # TF`.
+Here we will convert the rankings of known TFs to a priority score, simply defined as :math:`1 - \frac{\# rank}{\# TF}`.
 
 .. code:: ipython3
 
