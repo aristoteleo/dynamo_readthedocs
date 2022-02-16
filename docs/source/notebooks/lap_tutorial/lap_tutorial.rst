@@ -394,7 +394,7 @@ detailed explanation of their input parameters, output, etc. Please also check o
     |-----> [iterating through 1 pairs] finished [29.8258s]
 
 
-The LAPs between all pairs of cell types are stored in the `transition_graph` object. Here we will use the LAP results to visualize the developmental least action paths. Interestingly, we show that the LAP is not simply the shortest paths between two cell states but instead follow the curved vector field flow. 
+The LAPs between all pairs of cell types are stored in the `transition_graph` object. Here we will use the LAP results to visualize the developmental, reprogram and transdifferentiation least action paths. Interestingly, we show that the LAP is not simply the shortest paths between two cell states but instead follow the curved vector field flow. 
 
 Visualize developmental LAPs
 ----------------------------
@@ -403,30 +403,71 @@ Visualize developmental LAPs
 
     develope_keys = ["HSC->Meg", "HSC->Ery", "HSC->Bas", "HSC->Mon", "HSC->Neu"]
     reprogram_keys = ["Meg->HSC", "Ery->HSC", "Bas->HSC", "Mon->HSC", "Neu->HSC"]
+    transdifferentiation = [
+        "Ery->Meg",
+        "Neu->Bas",
+        "Mon->Ery",
+        "Bas->Meg",
+        "Neu->Meg",
+        "Meg->Bas",
+        "Mon->Bas",
+        "Neu->Mon",
+        "Meg->Ery",
+        "Ery->Bas",
+        "Bas->Mon",
+        "Mon->Neu",
+        "Neu->Ery",
+        "Mon->Meg",
+        "Bas->Neu",
+        "Meg->Neu",
+        "Ery->Mon",
+        "Meg->Mon",
+        "Ery->Neu",
+        "Bas->Ery",
+    ]
 
-
+We define a helper function ``plot_lap`` to visualize different set of paths. Here we visualize developmental LAPs.
 .. code:: ipython3
 
     from dynamo.plot.utils import map2color
-    
-    fig, ax = plt.subplots(figsize=(5, 4))
-    
-    ax = dyn.pl.streamline_plot(
-        adata_labeling, basis="umap", save_show_or_return="return", ax=ax, color="cell_type", frontier=True
-    )
-    
-    ax = ax[0]
-    x, y = 0, 1
-    for i in develope_keys:
-        lap_dict = transition_graph[i]["LAP_umap"]
-        for j, k in zip(lap_dict["prediction"], lap_dict["action"]):
-            ax.scatter(*j[:, [x, y]].T, c=map2color(k))
-            ax.plot(*j[:, [x, y]].T, c="k")
+    def plot_lap(paths):
+        fig, ax = plt.subplots(figsize=(5, 4))
+        ax = dyn.pl.streamline_plot(
+            adata_labeling, basis="umap", save_show_or_return="return", ax=ax, color="cell_type", frontier=True
+        )
+        ax = ax[0]
+        x, y = 0, 1
+
+        # plot paths
+        for path in paths:
+            lap_dict = transition_graph[path]["LAP_umap"]
+            for prediction, action in zip(lap_dict["prediction"], lap_dict["action"]):
+                ax.scatter(*prediction[:, [x, y]].T, c=map2color(action))
+                ax.plot(*prediction[:, [x, y]].T, c="k")
+    plot_lap(develope_keys)
 
 
 
 
 .. image:: output_19_0.png
+   :width: 407px
+
+**Reprogram LAPs**
+
+.. code:: ipython3
+
+    plot_lap(reprogram_keys)
+
+.. image:: reprogram-lap.png
+   :width: 407px
+
+**Transdifferentiation LAPs**
+
+.. code:: ipython3
+
+    plot_lap(transdifferentiation)
+
+.. image:: transdifferentiation-lap.png
    :width: 407px
 
 
