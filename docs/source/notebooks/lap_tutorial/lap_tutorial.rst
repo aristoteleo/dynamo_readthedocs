@@ -644,6 +644,43 @@ Now let us plot the kinetic heatmap of the gene expression kinetics of all trans
 .. image:: output_31_0.png
    :width: 818px
 
+
+Now let us swap ``target_cells`` and ``init_cells``, when passing parameters into ``dyn.pd.least_action``, to draw the  the kinetic heatmap of the gene expression kinetics of all transcription factors along the LAP from basophil to HSC. 
+
+.. code:: ipython3
+
+    from matplotlib import pyplot, transforms
+
+    is_human_tfs = [gene in human_tfs_names for gene in adata_labeling.var_names[adata_labeling.var.use_for_transition]]
+    human_genes = adata_labeling.var_names[adata_labeling.var.use_for_transition][is_human_tfs]
+    lap = dyn.pd.least_action(
+        adata_labeling,
+        init_cells=target_cells,
+        target_cells=init_cells,
+        basis="pca",
+        adj_key="cosine_transition_matrix",
+    )
+    sns.set(font_scale=0.8)
+    sns_heatmap = dyn.pl.kinetic_heatmap(
+        adata_labeling,
+        basis="pca",
+        mode="lap",
+        figsize=(16, 8),
+        genes=human_genes,
+        project_back_to_high_dim=True,
+        save_show_or_return="return",
+        color_map="bwr",
+        transpose=True,
+        xticklabels=True,
+        yticklabels=False,
+    )
+    plt.setp(sns_heatmap.ax_heatmap.xaxis.get_majorticklabels(), rotation=90)
+    plt.tight_layout()
+
+.. image:: bas-hsc-kinetic.png
+   :width: 818px
+
+
 Evaluate TF rankings based on LAP analyses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 As mentioned above, we can rank TFs based on the mean square displacement (MSD) along the LAP . In this section, we are going to evaluate rankings from LAP analyses by comparing with known transcription factors that enable the successful cell fate conversion, reported from literature. More details can be found in the dynamo paper :cite:p:`QIU2022`. 
