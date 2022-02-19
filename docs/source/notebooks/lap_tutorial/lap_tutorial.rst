@@ -436,6 +436,7 @@ Visualize developmental LAPs
     ]
 
 We define a helper function ``plot_lap`` to visualize different set of paths. Here we visualize developmental LAPs.
+
 .. code:: ipython3
 
     from dynamo.plot.utils import map2color
