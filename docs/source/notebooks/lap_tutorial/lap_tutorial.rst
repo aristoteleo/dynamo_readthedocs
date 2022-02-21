@@ -124,12 +124,12 @@ Among the cell types from our tscRNA-seq data, there are five developmental even
         ]
     )
     
-    HSC_cells_indices = nearest_neighbors(extreme_points[0], adata_labeling.obsm["X_umap"])
-    Meg_cells_indices = nearest_neighbors(extreme_points[1], adata_labeling.obsm["X_umap"])
-    Ery_cells_indices = nearest_neighbors(extreme_points[2], adata_labeling.obsm["X_umap"])
-    Bas_cells_indices = nearest_neighbors(extreme_points[3], adata_labeling.obsm["X_umap"])
-    Mon_cells_indices = nearest_neighbors(extreme_points[4], adata_labeling.obsm["X_umap"])
-    Neu_cells_indices = nearest_neighbors(extreme_points[5], adata_labeling.obsm["X_umap"])
+    HSC_cells_indices = nearest_neighbors(attractors[0], adata_labeling.obsm["X_umap"])
+    Meg_cells_indices = nearest_neighbors(attractors[1], adata_labeling.obsm["X_umap"])
+    Ery_cells_indices = nearest_neighbors(attractors[2], adata_labeling.obsm["X_umap"])
+    Bas_cells_indices = nearest_neighbors(attractors[3], adata_labeling.obsm["X_umap"])
+    Mon_cells_indices = nearest_neighbors(attractors[4], adata_labeling.obsm["X_umap"])
+    Neu_cells_indices = nearest_neighbors(attractors[5], adata_labeling.obsm["X_umap"])
 
 
 .. code:: ipython3
