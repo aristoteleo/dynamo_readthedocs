@@ -567,7 +567,8 @@ API pages of online documentation. ``dyn.vf.rank_jacobian_genes``
                                                groups='Cell_type', 
                                                mode="full_reg", 
                                                abs=True, 
-                                               output_values=True)
+                                               output_values=True,
+                                               return_df=True)
 
 .. code:: ipython3
 
@@ -576,7 +577,8 @@ API pages of online documentation. ``dyn.vf.rank_jacobian_genes``
                                                mode='full_eff', 
                                                abs=True, 
                                                exclude_diagonal=True, 
-                                               output_values=True)
+                                               output_values=True,
+                                               return_df=True)
 
 The results of full_eff and full_reg are dictionaries, whose keys are
 cluster (cell type in the case above) names and values are
@@ -717,18 +719,18 @@ respectively. The same applies to other columns and similarly to the
 
 .. code:: ipython3
 
-    eff_rank = dyn.vf.rank_jacobian_genes(adata, groups='Cell_type', mode='eff', abs=True, output_values=True)
+    eff_rank = dyn.vf.rank_jacobian_genes(adata, groups='Cell_type', mode='eff', abs=True, output_values=True, return_df=True)
 
 .. code:: ipython3
 
-    reg_rank = dyn.vf.rank_jacobian_genes(adata, groups='Cell_type', mode='reg', abs=True, exclude_diagonal=True)
+    reg_rank = dyn.vf.rank_jacobian_genes(adata, groups='Cell_type', mode='reg', abs=True, exclude_diagonal=True, return_df=True)
 
 ``int`` stands for interactions, the pairs of (gene1, gene2) values in
 jacobian matrix.
 
 .. code:: ipython3
 
-    int_rank = dyn.vf.rank_jacobian_genes(adata, groups='Cell_type', mode='int', exclude_diagonal=True, output_values=True)
+    int_rank = dyn.vf.rank_jacobian_genes(adata, groups='Cell_type', mode='int', exclude_diagonal=True, output_values=True, return_df=True)
 
 Construct and visualize cell-type specific regulatory networks
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
