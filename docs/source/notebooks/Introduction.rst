@@ -50,7 +50,7 @@ and separate the pre-exisiting RNA and newly transcribed RNA. Then we
 will follow by preparing two separate libraries, old and new RNAs, for
 sequencing. There are a few very well known issue regarding this method:
 
-1. it often introduces 20-30% cross-contanimation between old and new
+1. it often introduces 20-30% cross-contamination between old and new
    RNAs,
 2. it also leads to some normalization issues between different
    libraries.
@@ -84,7 +84,7 @@ is based on
 `CEL-Seq2 <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-0938-8>`__
 and is also plate-based but uses UMI in contrast to scSLAM-seq or
 NASC-seq. The scEU-seq method is based on EU and required purification
-and it thus may involve cross-contanimation or normalization issues.
+and it thus may involve cross-contamination or normalization issues.
 
 `Cao, et
 al <https://www.nature.com/articles/s41587-020-0480-9#:~:text=Abstract,not%20directly%20capture%20transcriptional%20dynamics.&text=We%20used%20sci%2Dfate%20to,in%20%3E6%2C000%20single%20cultured%20cells>`__
