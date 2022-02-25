@@ -22,3 +22,12 @@
 .rst-content .sidebar dl {
     font-size: 13px;
 }
+
+/* Sidebar header (and topbar for mobile) */
+.wy-side-nav-search, .wy-nav-top {
+    background: #1b1b1b;
+}
+/* Sidebar */
+.wy-nav-side {
+background: #373737;
+}
