@@ -832,6 +832,20 @@ constrain the edges by removing all edges with weight <= 0.002.
                                       'regulator', 'target', 
                                       edge_attr='weight', 
                                       create_using=nx.DiGraph())
+Before drawing a circos plot, we can insert attributes into ``networkx`` ``Graph`` object. In the code cell below, we assign average `M_s` values to each cluster to color the nodes in the circos plot later. Edge weights in the network are scaled so that ``nxviz`` circos plot API can show edges. You may choose the scaler (`1000` in our case) based on your analysis needs. 
+
+.. code:: ipython3
+
+    color_key = "M_s"
+    cluster_key = "Cell_type"
+    selected_cluster = "Unknown"
+    adata_layer_key = "M_s"
+    for node in network.nodes:
+        network.nodes[node]["M_s"] = adata[:, node].layers["M_s"].mean()
+
+    for edge in network.edges:
+        network.edges[edge]["weight"] *= 1000
+
 
 Lastly, we can visulize the network with ``dyn.pl.circosPlot``.
 
