@@ -64,7 +64,6 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
    notebooks/perturbation_introduction_theory.rst
    .. auto_examples/index.rst
    gallery/index.rst
-   notebooks/tutorial_pancreatic_endocrinogenesis
 
 .. toctree::
    :caption: Contents
