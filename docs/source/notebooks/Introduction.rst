@@ -60,7 +60,7 @@ labrious and error-prone procedure of separating old/old RNA and
 preparing two different libraries and emerged as the favored strategy
 recently. The key idea of chemical conversion based methods are that by
 some chemical reaction we can artificially introduce T to C mutation
-which can then be used to distinuigh labelled and thus new RNA from old
+which can then be used to distinguish labelled and thus new RNA from old
 RNA. There are about three different chemistry developed: IAA alkylation
 or hydrogen bond reconfiguration via TimeLapse-seq or TUC-seq chemistry.
 

@@ -51,6 +51,8 @@ Contribution
 If you want to contribute to the development of dynamo, please check out CONTRIBUTION instruction: `Contribution`_
 
 
+
+
 .. toctree::
    :caption: Introduction
    :maxdepth: 1
@@ -60,8 +62,9 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
    notebooks/Primer
    notebooks/lap_box_introduction
    notebooks/perturbation_introduction_theory.rst
-
-
+   .. auto_examples/index.rst
+   gallery/index.rst
+   notebooks/tutorial_pancreatic_endocrinogenesis
 
 .. toctree::
    :caption: Contents
@@ -77,17 +80,19 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
 
 
 .. toctree::
+   :hidden:
    :caption: Conventional scRNA-seq
    :maxdepth: 1
-   :hidden:
+   
 
    notebooks/zebrafish
 
 
 .. toctree::
+   :hidden:
    :caption: Labeling scRNA-seq
    :maxdepth: 1
-   :hidden:
+   
 
    notebooks/scNT_seq_readthedocs
    notebooks/scEU_seq_rpe1_analysis_kinetic

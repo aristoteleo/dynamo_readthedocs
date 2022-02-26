@@ -104,7 +104,8 @@ extensions = [
     # Automatically document param types (less noise in class signature)
     "sphinx_autodoc_typehints",
     "sphinxcontrib.bibtex",
-    'sphinx_gallery.gen_gallery',
+    # 'sphinx_gallery.gen_gallery',
+    'sphinx_gallery.load_style',
 ]
 
 sphinx_gallery_conf = {
