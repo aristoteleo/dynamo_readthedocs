@@ -28,6 +28,7 @@ Below is a gallery of examples
 
 .. toctree::
    :hidden:
+   
    /notebooks/tutorial_pancreatic_endocrinogenesis
 
 
