@@ -37,10 +37,8 @@ In this tutorial, we will cover following topics:
 -  calculate RNA Jacobian tensor (**cell by gene by gene**) for genes
    with high PCA loadings.
 -  rank genes based on the jacobian tensor, which including:
--  rank genes with strong postive or negative self-interaction
-   (``divergence`` ranking)
--  other rankings, ranking modes including ``full_reg``, ``full_eff``,
-   ``eff``, ``reg`` and ``int``
+    -  rank genes with strong postive or negative self-interaction (``divergence`` ranking)
+    -  other rankings, ranking modes including ``full_reg``, ``full_eff``, ``eff``, ``reg`` and ``int``
 -  build and visualize gene regulatory network with top ranked genes
 -  gene enrichment analyses of top ranked genes
 -  visualize Jacobian derived regulatory interactions across cells
