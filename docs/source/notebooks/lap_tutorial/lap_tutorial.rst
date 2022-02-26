@@ -63,7 +63,7 @@ Let us first load the human hematopoiesis scNT-seq dataset, which has stored as 
 
 .. code:: ipython3
 
-    adata_labeling = dyn.sample_data. hematopoiesis()
+    adata_labeling = dyn.sample_data.hematopoiesis()
 
 Let us take a glance at what is in ``adata`` object. Preprocessing, normalization, umap dimension reduction, total RNA velocity, as well as the continous RNA velocity vector field are computed (notebooks on these operations will be released shortly. Please also check other existing notebooks for these operations). 
 
