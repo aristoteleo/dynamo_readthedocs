@@ -163,7 +163,7 @@ Vector field (vf)
     :toctree: _autosummary
 
    vf.SparseVFC
-   vf.base_vectorfield
+   vf.BaseVectorfield
    vf.SvcVectorfield
    .. vf.graphize_vecfld
    .. vf.vector_field_function

@@ -17,7 +17,7 @@ Below is a gallery of examples
 .. only:: html
 
  .. figure:: /gallery/images/pancreas_cover0.png
-     :alt: Pancreatic endocrinogenesis differential geometry
+     :alt: Pancreatic endocrinogenesis analysis
 
      :ref:`/notebooks/tutorial_pancreatic_endocrinogenesis.ipynb`
 
