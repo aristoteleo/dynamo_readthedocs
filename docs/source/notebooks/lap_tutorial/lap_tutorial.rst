@@ -103,17 +103,17 @@ Among the cell types from our tscRNA-seq data, there are five developmental even
    :width: 487px
 
 
-| We select the five closest cells of the identified attractors that correspond to each of the six cell types to represent the typical cell state of these cells (note that attractors often don't correspond to any particular cell).
+| We select the five closest cells of the identified fixed_points that correspond to each of the six cell types to represent the typical cell state of these cells (note that fixed_points often don't correspond to any particular cell).
 
-| Then nearest cells of these ``attractors`` are saved to
+| Then nearest cells of these ``fixed_points`` are saved to
   ``*_cells_indices variables``, which points to their cell indices in
-  the adata object. Note that we could just take the attractors for LAP analyses but using the actual cells offering us the benefits to take advantage of the nearest neighbor graph of cells to intialize the searching of LAP (see below). 
+  the adata object. Note that we could just take the fixed_points for LAP analyses but using the actual cells offering us the benefits to take advantage of the nearest neighbor graph of cells to intialize the searching of LAP (see below). 
 
 .. code:: ipython3
 
     from dynamo.tools.utils import nearest_neighbors
     
-    attractors = np.array(
+    fixed_points = np.array(
         [
             [8.45201833, 9.37697661],
             [14.00630381, 2.53853712],
@@ -124,12 +124,12 @@ Among the cell types from our tscRNA-seq data, there are five developmental even
         ]
     )
     
-    HSC_cells_indices = nearest_neighbors(attractors[0], adata_labeling.obsm["X_umap"])
-    Meg_cells_indices = nearest_neighbors(attractors[1], adata_labeling.obsm["X_umap"])
-    Ery_cells_indices = nearest_neighbors(attractors[2], adata_labeling.obsm["X_umap"])
-    Bas_cells_indices = nearest_neighbors(attractors[3], adata_labeling.obsm["X_umap"])
-    Mon_cells_indices = nearest_neighbors(attractors[4], adata_labeling.obsm["X_umap"])
-    Neu_cells_indices = nearest_neighbors(attractors[5], adata_labeling.obsm["X_umap"])
+    HSC_cells_indices = nearest_neighbors(fixed_points[0], adata_labeling.obsm["X_umap"])
+    Meg_cells_indices = nearest_neighbors(fixed_points[1], adata_labeling.obsm["X_umap"])
+    Ery_cells_indices = nearest_neighbors(fixed_points[2], adata_labeling.obsm["X_umap"])
+    Bas_cells_indices = nearest_neighbors(fixed_points[3], adata_labeling.obsm["X_umap"])
+    Mon_cells_indices = nearest_neighbors(fixed_points[4], adata_labeling.obsm["X_umap"])
+    Neu_cells_indices = nearest_neighbors(fixed_points[5], adata_labeling.obsm["X_umap"])
 
 
 .. code:: ipython3
