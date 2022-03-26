@@ -162,5 +162,5 @@ A minimal network governing GMP vs. Bas origin of Bas lineage
   suggesting that Bas lineage can arise via two potential trajectories,
   from either GMP or MEP cells, consistent with (Drissen et al., 2019).
 
-.. figure:: /notebooks/hsc_images/fig5_g_iv.png
+.. figure:: ../hsc_images/fig5_g_iv.png
    :alt: fig5_g_iv

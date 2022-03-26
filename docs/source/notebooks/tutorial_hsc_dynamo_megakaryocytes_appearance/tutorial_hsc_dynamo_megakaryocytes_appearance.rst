@@ -57,7 +57,7 @@ A schematic of leveraging differential geometry
 -  gene set enrichment, network construction, and visualization
 -  identifying top toggle-switch pairs driving cell fate bifurcations
 
-.. figure:: /notebooks/hsc_images/fig5_a.png
+.. figure:: ../hsc_images/fig5_a.png
    :alt: fig5_A
 
 Visualize topography
@@ -66,7 +66,7 @@ Visualize topography
 Lineage tree of hematopoiesis, lumped automatically from the vector field built in the UMAP space
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. figure:: /notebooks/hsc_images/fig5_C.png
+.. figure:: ../hsc_images/fig5_C.png
    :alt: fig5_C
 
 The reconstructed vector field and associated fixed points.
@@ -340,5 +340,5 @@ repressing the commitment into erythrocytes through inhibition of KLF1.
 Together with the mutual regulation we show ealier in this tutorial, we
 can generate the following schematic to summarize the gene network.
 
-.. figure:: /notebooks/hsc_images/fig5_f_iv.png
+.. figure:: ../hsc_images/fig5_f_iv.png
    :alt: fig5_f_iv
