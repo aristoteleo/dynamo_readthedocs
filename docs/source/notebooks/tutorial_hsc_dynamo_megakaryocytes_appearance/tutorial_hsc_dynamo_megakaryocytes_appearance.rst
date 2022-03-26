@@ -8,10 +8,11 @@ mechanisms underlying this process remain elusive. To mechanistically
 dissect this finding, we focused on all cell types derived from the
 MEP-like lineage.
 
-In this tutorial, we will guide you to - learn vector field and manually
-select fixed points - visualize topography with computed fixed points -
-compute pseudotime (potential) - visualize vector field pseudotime of
-cell types
+| In this tutorial, we will guide you to 
+- learn vector field and manually select fixed points 
+- visualize topography with computed fixed points 
+- compute pseudotime (potential) 
+- visualize vector field pseudotime of cell types
 
 Import relevant packages
 
@@ -118,7 +119,9 @@ Manually select good fixed points found by topography
   coordinates and ``ftype`` is the specific fixed point type, denoted by
   integers.
 | ftype value mapping:
-| - -1: stable - 0: saddle - 1: unstable
+- -1: stable 
+- 0: saddle 
+- 1: unstable
 
 .. code:: ipython3
 
