@@ -44,7 +44,7 @@ interest while holding all other genes constant.
 In the next section, we will use **cell-wise analyses** to analyze
 PU.1/SPI1–GATA1 network motif.
 
-.. figure:: ../hsc_images/fig5_h.png
+.. figure:: /notebooks/hsc_images/fig5_h.png
    :alt: fig5_h
 
 
@@ -259,5 +259,5 @@ cell-wise analysis to explore the canonical PU.1/SPI1-GATA1 network
 motif. A schematic diagram of the SPI1-GATA1 toggle switch model can be
 summarized below.
 
-.. figure:: ../hsc_images/fig5_I_i.png
+.. figure:: /notebooks/hsc_images/fig5_I_i.png
    :alt: fig5_I_i
