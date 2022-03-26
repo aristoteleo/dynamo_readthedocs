@@ -1,4 +1,4 @@
-Hematopoiesis dataset analysis
+Hematopoiesis metabolically labeled data analysis
 ===================================================
 
 .. toctree::
