@@ -90,14 +90,6 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
    :hidden:
    :caption: Labeling scRNA-seq
    :maxdepth: 3
-   
-   .. .. toctree::
-   ..    :hidden:
-   ..    :caption: HSC
-
-   ..    notebooks/tutorial_hsc_dynamo_megakaryocytes_appearance/tutorial_hsc_dynamo_megakaryocytes_appearance
-   ..    notebooks/tutorial_hsc_dynamo_basophil_lineage/tutorial_hsc_dynamo_basophil_lineage
-   ..    notebooks/tutorial_hsc_dynamo_cellwise_analysis/tutorial_hsc_dynamo_cellwise_analysis
 
    notebooks/hsc_index
    notebooks/scNT_seq_readthedocs
