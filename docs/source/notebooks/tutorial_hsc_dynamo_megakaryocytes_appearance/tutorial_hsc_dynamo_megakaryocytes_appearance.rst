@@ -67,8 +67,8 @@ Visualize topography
 Lineage tree of hematopoiesis, lumped automatically from the vector field built in the UMAP space
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. figure:: ../hsc_images/fig5_C.png
-   :alt: fig5_C
+.. figure:: ../hsc_images/fig5_c.png
+   :alt: fig5_c
 
 The reconstructed vector field and associated fixed points.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -177,7 +177,7 @@ velocity transition matrix.
 
 
 **Initialize a Dataframe object that we will use to plot with
-visualization packages such as ``sns``**
+visualization packages such as ``sns`` **
 
 .. code:: ipython3
 
@@ -280,8 +280,7 @@ Molecular mechanisms underlying the early appearance of the Meg lineage
 - Self activation of FLI1 
 - Repression of KLF1 by FLI1 
 - FLI1 represses KLF1 
-- Schematic summarizing the
-interactions involving FLI1 and KLF1.
+- Schematic summarizing the interactions involving FLI1 and KLF1.
 
 .. code:: ipython3
 
