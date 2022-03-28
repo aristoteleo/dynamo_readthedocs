@@ -63,7 +63,7 @@ GATA2 has high expression in the Bas lineage
 
 .. image:: output_6_0.png
    :width: 823px
-   :height: 348px
+   
 
 
 Next, we will calculate jacobian via ``dyn.vf.jacobian``. It shows that
@@ -94,7 +94,7 @@ CEBPA represses RUNX1 and GATA2.
 
 .. image:: output_8_1.png
    :width: 981px
-   :height: 351px
+   
 
 
 .. code:: ipython3
@@ -116,7 +116,7 @@ CEBPA represses RUNX1 and GATA2.
 
 .. image:: output_9_1.png
    :width: 975px
-   :height: 648px
+   
 
 
 Jacobian analyses confirm the known repression from GATA1 to GATA2,
@@ -147,7 +147,7 @@ activation from GATA2 back to GATA1,
 
 .. image:: output_11_1.png
    :width: 981px
-   :height: 648px
+   
 
 
 A minimal network governing GMP vs. Bas origin of Bas lineage

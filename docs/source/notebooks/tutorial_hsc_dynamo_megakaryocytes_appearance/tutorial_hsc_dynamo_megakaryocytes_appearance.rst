@@ -1,4 +1,4 @@
-Molecular mechnism of earliest and fastest appearance of megakaryocytes
+Molecular mechnism of megakaryocytes
 =======================================================================
 
 One intriguing phenomenon observed in hematopoiesis is that commitment
@@ -112,7 +112,7 @@ Manually select good fixed points found by topography
 
 .. image:: output_13_0.png
    :width: 602px
-   :height: 390px
+   
 
 
 | In the resulted dictionary, ``Xss`` stands for the fixed points
@@ -150,7 +150,7 @@ Manually select good fixed points found by topography
 
 .. image:: output_16_0.png
    :width: 590px
-   :height: 389px
+   
 
 
 Vector field pseudotime
@@ -232,7 +232,7 @@ potential and time.
 
 .. image:: output_28_0.png
    :width: 965px
-   :height: 349px
+   
 
 
 .. code:: ipython3
@@ -266,7 +266,7 @@ potential and time.
 
 .. image:: output_29_1.png
    :width: 365px
-   :height: 245px
+   
 
 
 Via the visualization results above from vectorfield analysis, we can
@@ -276,8 +276,11 @@ lineages.
 Molecular mechanisms underlying the early appearance of the Meg lineage
 -----------------------------------------------------------------------
 
-In this section, we will show: - Self- activation of FLI1 - Repression
-of KLF1 by FLI1 - FLI1 represses KLF1 - Schematic summarizing the
+| In this section, we will show: 
+- Self activation of FLI1 
+- Repression of KLF1 by FLI1 
+- FLI1 represses KLF1 
+- Schematic summarizing the
 interactions involving FLI1 and KLF1.
 
 .. code:: ipython3
@@ -314,7 +317,7 @@ and KLF1 (Figure 5F) and self-activation of FLI1.
 
 .. image:: output_36_0.png
    :width: 527px
-   :height: 658px
+   
 
 
 .. code:: ipython3
@@ -330,7 +333,7 @@ and KLF1 (Figure 5F) and self-activation of FLI1.
 
 .. image:: output_37_0.png
    :width: 527px
-   :height: 350px
+   
 
 
 Conclusion: a schematic diagram summarizing the interactions involving FLI1 and KLF1

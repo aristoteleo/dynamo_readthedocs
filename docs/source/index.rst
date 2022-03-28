@@ -113,7 +113,7 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
    notebooks/perturbation_tutorial/perturbation_tutorial
 
 .. toctree::
-   :caption: Miscellany
+   :caption: Gallery
    :hidden:
 
    gallery/index.rst

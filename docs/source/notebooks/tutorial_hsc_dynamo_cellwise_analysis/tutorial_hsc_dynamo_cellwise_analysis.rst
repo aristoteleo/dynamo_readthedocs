@@ -1,4 +1,4 @@
-Cell-wise analyses:reveal dominant interactions across all cells
+Cell-wise analyses: dominant interactions
 ================================================================
 
 To obtain mechanistic insights into key regulatory motifs from different
@@ -80,7 +80,7 @@ GMP-like and MEP-like branches
 
 .. image:: output_7_0.png
    :width: 644px
-   :height: 430px
+   
 
 
 Next we will use jacobian to show - Repression from SPI1 to GATA1, GATA1
@@ -160,7 +160,7 @@ is close to zero (rectangle C: bottom right).
 
 .. image:: output_9_1.png
    :width: 925px
-   :height: 229px
+   
 
 
 The streamlines of SPI1 and GATA1 in UMAP space and colored by ``M_t``
@@ -188,13 +188,13 @@ show that HSPCs bifurcate into GMP-like and MEP-like branches clearly.
 
 .. image:: output_11_0.png
    :width: 330px
-   :height: 348px
+   
 
 
 
 .. image:: output_11_1.png
    :width: 1260px
-   :height: 348px
+   
 
 
 UMAP jacobian analysis reveals self-activation of SPI1 in GMP and GATA1
@@ -214,7 +214,7 @@ in MEP, and mutual inhibition of SPI1 and GATA1 in GMP and MEP.
 
 .. image:: output_13_1.png
    :width: 988px
-   :height: 663px
+   
 
 
 Response heatmap
@@ -248,7 +248,7 @@ activation and the corresponding expression threshold.
 
 .. image:: output_15_1.png
    :width: 1278px
-   :height: 204px
+   
 
 
 Conclusion
