@@ -283,7 +283,6 @@ Plotting (pl)
 
    pl.cell_cycle_scores
 
-
 *Scatter base*
 
 .. autosummary::
@@ -329,6 +328,17 @@ Plotting (pl)
    pl.trimap
 
 
+*Clustering*
+
+.. autosummary::
+    :toctree: _autosummary
+
+   pl.leiden
+   pl.louvain
+   pl.infomap
+   pl.streamline_clusters
+
+
 *Neighbor graph*
 
 .. autosummary::
@@ -361,6 +371,7 @@ Plotting (pl)
    pl.plot_separatrix
    pl.plot_traj
    pl.topography
+   pl.response
 
 
 *Beyond RNA velocity*
