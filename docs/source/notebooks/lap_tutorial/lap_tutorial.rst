@@ -171,7 +171,7 @@ We can see, for example, the cell indices ``1587, 1557, 1725, 1091, 1070`` are t
     Development path for Meg, Ery, Bas, Mon and Neu cells
     -----------------------------------------------------
 
-Now we are ready to perform the LAP analyses. We will start with computing the neighbor graph of cells in the umap space (pca space works too) and use the shortest paths between any two represented cells as the initial guess of the LAP. We will next run the LAP analyses between all pair-wise combinations of cells. We can either perform the LAP analyses on the UMAP space or in the PCA space, using the vector field reconstructed in UMAP or PCA space, respectively. With the vector field learned in the PCA space, we can then further projected the optimized LAP back to the original gene expression space to reveal the transcriptomic kinetics along the LAP. 
+Now we are ready to perform the LAP analyses. We will start with computing the neighbor graph of cells in the umap space (pca space works too) and use the shortest paths between any two represented cells as the initial guess of the LAP. We will next run the LAP analyses between all pair-wise combinations of cells. We can either perform the LAP analyses on the UMAP space or in the PCA space, using the vector field reconstructed in UMAP or PCA space, respectively. With the vector field learned in the PCA space, we can further projected the optimized LAP back to the original gene expression space to reveal the transcriptomic kinetics along the LAP. 
 
 Compute neighbor graph based on ``umap``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
