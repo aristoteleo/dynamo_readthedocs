@@ -1,4 +1,4 @@
-scNT-seq human Hematopoiesis
+scNT-seq human hematopoiesis
 ===================================================
 
 .. toctree::
