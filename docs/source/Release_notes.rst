@@ -26,7 +26,7 @@ Tutorial Updates on Readthedocs
 * gene perturbation analysis and least action path (LAP) tutorials on HSC dataset
 - analysis application tutorials on HSC dataset
 
-  - Molecular mechnism of megakaryocytes
+  - Molecular mechanism of megakaryocytes
   - Minimal network for basophil lineage commitment
   - Cell-wise analyses: dominant interactions
 * gallery: Pancreatic endocrinogenesis differential geometry

@@ -155,7 +155,7 @@ A minimal network governing GMP vs. Bas origin of Bas lineage
 
 | For the network of KLF1 and FLI1 (MEP on the right in the schematic
   below), please refer to dynamo paper or our tutorial *Molecular
-  mechnism of earliest and fastest appearance of megakaryocytes*.
+  mechanism of earliest and fastest appearance of megakaryocytes*.
 | Collectively, analyses above reveal a network comprises the repression
   from key regulators of both GMP lineage and MEP lineage (CEBPA and
   GATA1 respectively) to the basophil master regulators GATA2 and RUNX1,
