@@ -19,7 +19,8 @@ Feature Changes
   - wrappers in ``dyn.tl.*`` for computing clusters
   - wrappers in ``dyn.pl.*`` for plotting
 
-Tutorial Updates
+
+Tutorial Updates on Readthedocs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 * human HSC raw data process tutorials
 * gene perturbation analysis and least action path (LAP) tutorials on HSC dataset
@@ -28,7 +29,7 @@ Tutorial Updates
   - Molecular mechnism of megakaryocytes
   - Minimal network for basophil lineage commitment
   - Cell-wise analyses: dominant interactions
-* example pancreas analysis in gallery
+* gallery: Pancreatic endocrinogenesis differential geometry
 
 
 Sample Dataset Updates
