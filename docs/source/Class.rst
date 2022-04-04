@@ -1,6 +1,13 @@
 Class
 =====
 
+Preprocess
+----------
+
+.. autoclass:: dynamo.pp.Preprocessor
+    :members:
+    :inherited-members:
+
 Estimation
 ----------
 
@@ -85,6 +92,29 @@ Vector field class
     :members:
     :inherited-members:
 
+
+Predictions
+------------
+
+Least action path
+~~~~~~~~~~~~~~~~~
+
+.. autoclass:: dynamo.pd.GeneTrajectory
+    :members:
+    :inherited-members:
+
+.. autoclass:: dynamo.pd.Trajectory
+    :members:
+    :inherited-members:      
+
+.. autoclass:: dynamo.pd.LeastActionPath
+    :members:
+    :inherited-members:     
+
+.. autoclass:: dynamo.pd.GeneLeastActionPath
+    :members:
+    :inherited-members:     
+        
 
 Movie
 -----

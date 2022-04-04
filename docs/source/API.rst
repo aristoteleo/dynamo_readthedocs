@@ -25,9 +25,17 @@ Preprocessing (pp)
 .. autosummary::
       :toctree: _autosummary
 
+   pp.convert2symbol
+   pp.filter_cells
+   pp.filter_gene
+   pp.filter_genes_by_pattern
+   pp.normalize_cells
+   pp.scale
+   pp.log1p
+   pp.pca
+   pp.top_pca_genes
    pp.recipe_monocle
    pp.cell_cycle_scores
-   .. pp.pca
 
 
 Estimation (est)
@@ -59,6 +67,17 @@ Tools (tl)
    .. tl.calc_1nd_moment
    .. tl.calc_2nd_moment
 
+*Labeling Velocity recipes*
+
+.. autosummary::
+    :toctree: _autosummary
+
+   tl.recipe_deg_data,
+   tl.recipe_kin_data,
+   tl.recipe_mix_kin_deg_data,
+   tl.recipe_one_shot_data,
+   tl.velocity_N,
+
 *Dimension reduction*
 
 .. autosummary::
@@ -76,6 +95,10 @@ Tools (tl)
 
    tl.hdbscan
    tl.cluster_field
+   tl.infomap
+   tl.leiden
+   tl.louvain
+   tl.scc
 
 *Velocity projection*
 
@@ -144,12 +167,15 @@ Tools (tl)
    .. tl.n_descendants
    .. tl.growth_rate
 
-*Converter*
+*Converter and helper *
 
 .. autosummary::
     :toctree: _autosummary
 
    tl.converter
+   tl.run_scvelo
+   tl.run_velocyto
+   tl.vlm_to_adata
 
 Vector field (vf)
 ~~~~~~~~~~~~~~~~~
@@ -162,12 +188,12 @@ Vector field (vf)
 .. autosummary::
     :toctree: _autosummary
 
+   vf.VectorField
    vf.SparseVFC
    vf.BaseVectorfield
    vf.SvcVectorfield
-   .. vf.graphize_vecfld
-   .. vf.vector_field_function
-
+   vf.graphize_vecfld
+   vf.vector_field_function
 
 *Vector field topology*
 
@@ -175,8 +201,9 @@ Vector field (vf)
     :toctree: _autosummary
 
    vf.topography
-   .. vf.FixedPoints
-   .. vf.VectorField2D
+   vf.FixedPoints
+   vf.VectorField2D
+   vf.assign_fixedpoints,
 
 *Beyond RNA velocity*
 
@@ -185,11 +212,13 @@ Vector field (vf)
 
    vf.velocities
    vf.speed
+   vf.jacobian
    vf.divergence
    vf.curl
    vf.acceleration
    vf.curvature
    vf.torsion
+   vf.sensitivity
 
 *Beyond velocity vector field*
 
@@ -204,10 +233,16 @@ Vector field (vf)
 .. autosummary::
     :toctree: _autosummary
 
+   vf.rank_cells
+   vf.rank_genes
+   vf.rank_expression_genes
    vf.rank_velocity_genes
    vf.rank_divergence_genes
    vf.rank_acceleration_genes
    vf.rank_curvature_genes
+   vf.rank_jacobian_genes
+   vf.rank_s_divergence_genes
+   vf.rank_sensitivity_genes
 
 *Single cell potential: three approaches*
 
@@ -241,11 +276,13 @@ Vector field (vf)
    vf.diffusionMatrix
 
 
-*Vector field graph*
+*Vector field clustering and graph*
 
 .. autosummary::
     :toctree: _autosummary
 
+   vf.cluster_field
+   vf.streamline_clusters
    vf.vfGraph
 
 Prediction (pd)
@@ -254,11 +291,21 @@ Prediction (pd)
 .. autosummary::
    :toctree: _autosummary
 
+   pd.andecestor
    pd.fate
    pd.fate_bias
    pd.perturbation
    pd.least_action
    pd.state_graph
+   pd.get_init_path
+   pd.least_action
+   pd.KO
+   pd.rank_perturbation_cell_clusters
+   pd.rank_perturbation_cells
+   pd.rank_perturbation_genes
+   pd.state_graph
+   pd.tree_model
+
 
 Plotting (pl)
 ~~~~~~~~~~~~~
@@ -272,9 +319,12 @@ Plotting (pl)
    pl.basic_stats
    pl.show_fraction
    pl.feature_genes
+   pl.biplot
+   pl.loading
    pl.variance_explained
+   pl.highest_frac_genes
    pl.exp_by_groups
-
+   pl.bubble
 
 *Cell cycle staging*
 
@@ -289,6 +339,14 @@ Plotting (pl)
     :toctree: _autosummary
 
    pl.scatters
+
+
+*Space plot*
+
+.. autosummary::
+    :toctree: _autosummary
+
+   pl.space
 
 
 *Phase diagram: conventional scRNA-seq*
@@ -315,6 +373,7 @@ Plotting (pl)
    pl.kinetic_curves
    pl.kinetic_heatmap
    pl.jacobian_kinetics
+   pl.sensitivity_kinetics
 
 
 *Dimension reduction*
@@ -354,10 +413,12 @@ Plotting (pl)
     :toctree: _autosummary
 
    pl.cell_wise_vectors
+   pl.cell_wise_vectors_3d
    pl.grid_vectors
    pl.streamline_plot
    pl.line_integral_conv
    pl.plot_energy
+   pl.plot_3d_streamtube
 
 
 *Vector field topology*
@@ -367,6 +428,7 @@ Plotting (pl)
 
    pl.plot_flow_field
    pl.plot_fixed_points
+   pl.plot_fixed_points_2d
    pl.plot_nullclines
    pl.plot_separatrix
    pl.plot_traj
@@ -381,10 +443,24 @@ Plotting (pl)
 
    pl.speed
    pl.divergence
+   pl.acceleration
    pl.curl
    pl.curvature
    pl.jacobian
    pl.jacobian_heatmap
+   pl.sensitivity
+   pl.sensitivity_heatmap
+
+
+*Regulatory network*
+
+.. autosummary::
+    :toctree: _autosummary
+
+   pl.arcPlot
+   pl.circosPlot
+   pl.circosPlotDeprecated
+   pl.hivePlot
 
 
 *Potential landscape*
@@ -400,7 +476,28 @@ Plotting (pl)
 .. autosummary::
     :toctree: _autosummary
 
+   pl.fate
    pl.fate_bias
+
+
+*Heatmaps*
+
+.. autosummary::
+    :toctree: _autosummary
+
+   pl.causality
+   pl.comb_logic
+   pl.plot_hill_function
+   pl.response
+
+
+*Predictions*
+
+.. autosummary::
+    :toctree: _autosummary
+
+   pl.lap_min_time
+   pl.lap_min_time
 
 
 *Save figures*
@@ -461,6 +558,9 @@ External (ext)
     ext.scribe
     ext.coexp_measure
     ext.scifate_glmnet
+    ext.normalize_layers_pearson_residuals
+    ext.select_genes_by_pearson_residuals
+    ext.sctransform
 
 Utilities
 ~~~~~~~~~
