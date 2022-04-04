@@ -27,12 +27,12 @@ Preprocessing (pp)
 
    pp.convert2symbol
    pp.filter_cells
-   pp.filter_gene
+   pp.filter_genes
    pp.filter_genes_by_pattern
    pp.normalize_cells
    pp.scale
    pp.log1p
-   pp.pca
+   pp.pca_monocle
    pp.top_pca_genes
    pp.recipe_monocle
    pp.cell_cycle_scores
@@ -72,11 +72,11 @@ Tools (tl)
 .. autosummary::
     :toctree: _autosummary
 
-   tl.recipe_deg_data,
-   tl.recipe_kin_data,
-   tl.recipe_mix_kin_deg_data,
-   tl.recipe_one_shot_data,
-   tl.velocity_N,
+   tl.recipe_deg_data
+   tl.recipe_kin_data
+   tl.recipe_mix_kin_deg_data
+   tl.recipe_one_shot_data
+   tl.velocity_N
 
 *Dimension reduction*
 
@@ -94,7 +94,6 @@ Tools (tl)
     :toctree: _autosummary
 
    tl.hdbscan
-   tl.cluster_field
    tl.infomap
    tl.leiden
    tl.louvain
@@ -190,8 +189,8 @@ Vector field (vf)
 
    vf.VectorField
    vf.SparseVFC
-   vf.BaseVectorfield
-   vf.SvcVectorfield
+   vf.BaseVectorField
+   vf.SvcVectorField
    vf.graphize_vecfld
    vf.vector_field_function
 
@@ -200,10 +199,11 @@ Vector field (vf)
 .. autosummary::
     :toctree: _autosummary
 
+   vf.cluster_field
    vf.topography
    vf.FixedPoints
    vf.VectorField2D
-   vf.assign_fixedpoints,
+   vf.assign_fixedpoints
 
 *Beyond RNA velocity*
 
@@ -294,11 +294,10 @@ Prediction (pd)
    pd.andecestor
    pd.fate
    pd.fate_bias
-   pd.perturbation
-   pd.least_action
-   pd.state_graph
    pd.get_init_path
    pd.least_action
+   pd.perturbation
+   pd.state_graph
    pd.KO
    pd.rank_perturbation_cell_clusters
    pd.rank_perturbation_cells
@@ -497,7 +496,6 @@ Plotting (pl)
     :toctree: _autosummary
 
    pl.lap_min_time
-   pl.lap_min_time
 
 
 *Save figures*
@@ -530,7 +528,6 @@ Simulation (sim)
 .. autosummary::
     :toctree: _autosummary
 
-   sim.two_genes_motif
    sim.neurogenesis
    sim.toggle
    sim.Ying_model

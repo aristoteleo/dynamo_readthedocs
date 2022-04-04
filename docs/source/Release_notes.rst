@@ -8,18 +8,24 @@ Dynamo Ver 1.1.0
 Feature Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Following new function are added, exported or documented in API / class page: 
-  - *Preprocessing*: ``pp.convert2symbol, pp.filter_cells, pp.filter_gene, pp.filter_genes_by_pattern, pp.normalize_cells, pp.scale, pp.log1p, pp.pca``
-  - *Kinetic parameters and RNA/protein velocity*: ``tl.recipe_deg_data, tl.recipe_kin_data, tl.recipe_mix_kin_deg_data, tl.recipe_one_shot_data, tl.velocity_N``
+  
+  - *Preprocessing*: ``pp.convert2symbol, pp.filter_cells, pp.filter_gene,`` 
+    ``pp.filter_genes_by_pattern, pp.normalize_cells, pp.scale, pp.log1p, pp.pca``
+  - *Kinetic parameters and RNA/protein velocity*: ``tl.recipe_deg_data, tl.recipe_kin_data,``
+    ``tl.recipe_mix_kin_deg_data, tl.recipe_one_shot_data, tl.velocity_N``
   - *Labeling Velocity recipes*: ``tl.infomap, tl.leiden, tl.louvain, tl.scc``
   - *Clustering*: ``tl.run_scvelo, tl.run_velocyto, tl.vlm_to_adata``
   - *Converter and helper*: ``vf.graphize_vecfld, vf.vector_field_function``
   - *Vector field reconstruction*: ``vf.FixedPoints, vf.VectorField2D, vf.assign_fixedpoints``
   - *Beyond RNA velocity*: ``vf.jacobian, vf.sensitivity``
-  - *Vector field ranking*: ``vf.rank_cells, vf.rank_genes, vf.rank_expression_genes, vf.rank_jacobian_genes, vf.rank_s_divergence_genes, vf.rank_sensitivity_genes``
+  - *Vector field ranking*: ``vf.rank_cells, vf.rank_genes, vf.rank_expression_genes,``
+    ``vf.rank_jacobian_genes, vf.rank_s_divergence_genes, vf.rank_sensitivity_genes``
   - *Vector field clustering and graph*: ``vf.cluster_field, vf.streamline_clusters``
-  - *Prediction* ``pd.andecestor, pd.get_init_path, pd.least_action, pd.perturbation, pd.rank_perturbation_cell_clusters, pd.rank_perturbation_cells, pd.rank_perturbation_genes, pd.state_graph, pd.tree_model``
-  -  *Preprocessing plot*: ``pl.biplot, pl.loading, pl.highest_frac_genes, pl.bubble``
-  -  *Space plot*: ``pl.space``
+  - *Prediction* ``pd.andecestor, pd.get_init_path, pd.least_action, pd.perturbation,``
+    ``pd.rank_perturbation_cell_clusters, pd.rank_perturbation_cells, pd.rank_perturbation_genes,``
+    ``pd.state_graph, pd.tree_model``
+  - *Preprocessing plot*: ``pl.biplot, pl.loading, pl.highest_frac_genes, pl.bubble``
+  - *Space plot*: ``pl.space``
   - *Kinetics plot*: ``pl.sensitivity_kinetics``
   - *Vector field plots*: ``pl.cell_wise_vectors_3d, pl.plot_fixed_points_2d``
   - *differential geometry plots*: ``pl.acceleration``
@@ -27,7 +33,8 @@ Feature Changes
   - *fate plots* ``pl.fate``
   - *heatmap plots* ``pl.causality, pl.comb_logic, pl.plot_hill_function, pl.response``
   - *Predictions plots* ``pl.lap_min_time``
-  - *External functionality* ``ext.normalize_layers_pearson_residuals, ext.select_genes_by_pearson_residuals, ext.sctransform``
+  - *External functionality* ``ext.normalize_layers_pearson_residuals,``
+    ``ext.select_genes_by_pearson_residuals, ext.sctransform``
 
 - More differential geometry analyses
 
