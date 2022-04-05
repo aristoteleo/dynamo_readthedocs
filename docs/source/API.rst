@@ -23,7 +23,7 @@ Preprocessing (pp)
 ~~~~~~~~~~~~~~~~~~
 
 .. autosummary::
-      :toctree: _autosummary
+   :toctree: _autosummary
 
    pp.convert2symbol
    pp.filter_cells
@@ -51,7 +51,7 @@ Tools (tl)
 *kNN and moments of expressions*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    tl.neighbors
    tl.mnn
@@ -60,7 +60,7 @@ Tools (tl)
 *Kinetic parameters and RNA/protein velocity*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    tl.dynamics
 
@@ -70,7 +70,7 @@ Tools (tl)
 *Labeling Velocity recipes*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    tl.recipe_deg_data
    tl.recipe_kin_data
@@ -81,7 +81,7 @@ Tools (tl)
 *Dimension reduction*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    tl.reduceDimension
    tl.DDRTree
@@ -91,7 +91,7 @@ Tools (tl)
 *Clustering*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    tl.hdbscan
    tl.infomap
@@ -102,7 +102,7 @@ Tools (tl)
 *Velocity projection*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    tl.cell_velocities
    tl.confident_cell_velocities
@@ -110,7 +110,7 @@ Tools (tl)
 *Velocity metrics*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    tl.cell_wise_confidence
    tl.gene_wise_confidence
@@ -118,7 +118,7 @@ Tools (tl)
 *Markov chain*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    tl.generalized_diffusion_map
    tl.stationary_distribution
@@ -141,7 +141,7 @@ Tools (tl)
 *Markers and differential expressions*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    tl.moran_i
    tl.find_group_markers
@@ -158,7 +158,7 @@ Tools (tl)
 *Cell proliferation and apoptosis*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    tl.score_cells
    tl.cell_growth_rate
@@ -169,7 +169,7 @@ Tools (tl)
 *Converter and helper *
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    tl.converter
    tl.run_scvelo
@@ -185,7 +185,7 @@ Vector field (vf)
    Vector field class is internally to `vf.VectorField`. See our vector field classes here: `vector field`_
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    vf.VectorField
    vf.SparseVFC
@@ -197,7 +197,7 @@ Vector field (vf)
 *Vector field topology*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    vf.cluster_field
    vf.topography
@@ -208,7 +208,7 @@ Vector field (vf)
 *Beyond RNA velocity*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    vf.velocities
    vf.speed
@@ -223,7 +223,7 @@ Vector field (vf)
 *Beyond velocity vector field*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    vf.cell_accelerations
    vf.cell_curvatures
@@ -231,7 +231,7 @@ Vector field (vf)
 *Vector field ranking*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    vf.rank_cells
    vf.rank_genes
@@ -247,7 +247,7 @@ Vector field (vf)
 *Single cell potential: three approaches*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    vf.gen_fixed_points
    vf.gen_gradient
@@ -271,7 +271,7 @@ Vector field (vf)
 *Stochastic processes*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    vf.diffusionMatrix
 
@@ -279,7 +279,7 @@ Vector field (vf)
 *Vector field clustering and graph*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    vf.cluster_field
    vf.streamline_clusters
@@ -289,7 +289,7 @@ Prediction (pd)
 ~~~~~~~~~~~~~~~
 
 .. autosummary::
-   :toctree: _autosummary
+:toctree: _autosummary
 
    pd.andecestor
    pd.fate
@@ -313,7 +313,7 @@ Plotting (pl)
 *Preprocessing*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.basic_stats
    pl.show_fraction
@@ -335,7 +335,7 @@ Plotting (pl)
 *Scatter base*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.scatters
 
@@ -343,7 +343,7 @@ Plotting (pl)
 *Space plot*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.space
 
@@ -351,7 +351,7 @@ Plotting (pl)
 *Phase diagram: conventional scRNA-seq*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.phase_portraits
 
@@ -359,7 +359,7 @@ Plotting (pl)
 *Kinetic models: labeling based scRNA-seq*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.dynamics
 
@@ -367,7 +367,7 @@ Plotting (pl)
 *Kinetics*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.kinetic_curves
    pl.kinetic_heatmap
@@ -378,7 +378,7 @@ Plotting (pl)
 *Dimension reduction*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.pca
    pl.tsne
@@ -389,7 +389,7 @@ Plotting (pl)
 *Clustering*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.leiden
    pl.louvain
@@ -400,7 +400,7 @@ Plotting (pl)
 *Neighbor graph*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.nneighbors
    pl.state_graph
@@ -409,7 +409,7 @@ Plotting (pl)
 *Vector field plots: velocities and accelerations*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.cell_wise_vectors
    pl.cell_wise_vectors_3d
@@ -423,7 +423,7 @@ Plotting (pl)
 *Vector field topology*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.plot_flow_field
    pl.plot_fixed_points
@@ -438,7 +438,7 @@ Plotting (pl)
 *Beyond RNA velocity*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.speed
    pl.divergence
@@ -454,7 +454,7 @@ Plotting (pl)
 *Regulatory network*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.arcPlot
    pl.circosPlot
@@ -465,7 +465,7 @@ Plotting (pl)
 *Potential landscape*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.show_landscape
 
@@ -473,7 +473,7 @@ Plotting (pl)
 *Cell fate*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.fate
    pl.fate_bias
@@ -482,7 +482,7 @@ Plotting (pl)
 *Heatmaps*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.causality
    pl.comb_logic
@@ -493,7 +493,7 @@ Plotting (pl)
 *Predictions*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.lap_min_time
 
@@ -501,7 +501,7 @@ Plotting (pl)
 *Save figures*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    pl.save_fig
 
@@ -526,7 +526,7 @@ Simulation (sim)
 *Simple ODE vector field simulation*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    sim.neurogenesis
    sim.toggle
@@ -536,7 +536,7 @@ Simulation (sim)
 *Gillespie simulation*
 
 .. autosummary::
-    :toctree: _autosummary
+   :toctree: _autosummary
 
    sim.Gillespie
    sim.Simulator
@@ -567,14 +567,14 @@ Utilities
 .. autosummary::
    :toctree: _autosummary
 
-    get_all_dependencies_version
+   get_all_dependencies_version
 
 *Clean up adata*
 
 .. autosummary::
    :toctree: _autosummary
 
-    cleanup
+   cleanup
 
 *Figures configuration*
 
