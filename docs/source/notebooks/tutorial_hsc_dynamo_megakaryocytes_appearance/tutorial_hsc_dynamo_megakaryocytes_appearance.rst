@@ -356,11 +356,70 @@ red color indicates positive Jacobian).
 
 .. image:: output_37_0.png
    :width: 527px
-   
+
+
+Expression of FLI1 (Meg lineage master regulator) relative to KLF1 (Ery
+lineage master regulator) in progenitors.
+
+
+.. code:: ipython3
+
+    dyn.pl.umap(adata_labeling, color=["FLI1", "KLF1"], layer="X_total")
+
+
+.. image:: output_38_0.png
+
+
+Computing and visualizing speed, divergence, acceleration and curvature
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Similar to our other published notebook usage examples, we can use methods from `dyn.vf` to calculate speed, divergence, acceleration and curvature within specific basis. In the following code cell, we select `pca` as the basis. 
+
+
+.. code:: ipython3
+
+    basis = "pca"
+    dyn.vf.speed(adata_labeling, basis=basis)
+    dyn.vf.divergence(adata_labeling, basis=basis)
+    dyn.vf.acceleration(adata_labeling, basis=basis)
+    dyn.vf.curvature(adata_labeling, basis=basis)
+
+
+The results are saved to {quantity}_{basis} (e.g. ``speed_pca``). Then we can visualize via various visualization results.  
+
+
+.. code:: ipython3
+
+    adata_labeling.obs["speed_" + basis][:5]
+
+In the result below, we can observe the patterns of dynamics quantities including speed are consistent with the function of FLI1 (Meg lineage master regulator) and KLF1 (Ery
+lineage master regulator).
+
+.. code:: ipython3
+
+    import matplotlib.pyplot as plt
+
+    fig, axes = plt.subplots(ncols=2, nrows=2, constrained_layout=True, figsize=(12, 8))
+    axes
+    dyn.pl.umap(adata_labeling, color="speed_" + basis, ax=axes[0, 0], save_show_or_return="return")
+    dyn.pl.grid_vectors(
+        adata_labeling,
+        color="divergence_" + basis,
+        ax=axes[0, 1],
+        quiver_length=12,
+        quiver_size=12,
+        save_show_or_return="return",
+    )
+    dyn.pl.streamline_plot(adata_labeling, color="acceleration_" + basis, ax=axes[1, 0], save_show_or_return="return")
+    dyn.pl.streamline_plot(adata_labeling, color="curvature_" + basis, ax=axes[1, 1], save_show_or_return="return")
+    plt.show()
+
+
+.. image:: output_39_0.png
+
 
 
 A schematic diagram summarizing the interactions involving FLI1 and KLF1
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 These analyses collectively suggest that self-activation of FLI1 maintains its higher expression
 in the HSPC state, which biases the HSPCs to first commit toward the Meg lineage with high speed and
