@@ -5,16 +5,17 @@ One intriguing phenomenon observed in hematopoiesis is that commitment
 to and appearance of the Meg lineage occurs more rapidly than other
 lineages (Sanjuan-Pla et al., 2013; Yamamoto et al., 2013). However, the
 mechanisms underlying this process remain elusive. To mechanistically
-dissect this finding, we focused on all cell types derived from the
-MEP-like lineage.
+dissect this finding, we try to first reveal the timing of the maturation of
+megakaryocytes and then the underlying regulatory networks.
 
-| In this tutorial, we will guide you to 
-- learn vector field and manually select fixed points 
-- visualize topography with computed fixed points 
-- compute pseudotime (potential) 
-- visualize vector field pseudotime of cell types
+Specifically, in this tutorial, we will guide you through the following five
+major analyses:
 
-Import relevant packages
+- learn vector field of human hematopoiesis and identify fixed points of cell type
+- compute and visualize vector field based pseudotime (based on ddhodge algorithm)
+- perform differential geometry analyses to reveal a minimal network of Meg's early appearance
+
+To begin with, let us first import relevant packages
 
 .. code:: ipython3
 
@@ -38,50 +39,53 @@ Import relevant packages
     import warnings
     warnings.filterwarnings('ignore')
 
+Next, let us download and prepare the processed hematopoiesis adata object (see this notebook,
+will released soon, to find out how to estimate the labeling RNA velocity for
+this dataset) that comes with the dynamo package.
 
 .. code:: ipython3
 
     adata_labeling = dyn.sample_data.hematopoiesis()
 
+Before we perform the actual analyses, we will first introduce a cartoon that can be used to help understanding
+how dynamo can be used to perform many novel analyses that are not available with any other tools to gain
+mechanistic insights.
 
-take a glance at what is in ``adata`` object. All observations,
-embedding layers and other data in ``adata`` are computed within
-``dynamo``. Please refer to other dynamo tutorials regarding how to
-obtain these values from metadata and raw new/total and (or) raw
-spliced/unspliced gene expression values.
-
-A schematic of leveraging differential geometry
------------------------------------------------
-
--  ranking genes (using either raw or absolute values) across all cells
-   or in each cell group/state
--  gene set enrichment, network construction, and visualization
--  identifying top toggle-switch pairs driving cell fate bifurcations
+How to use dynamo to gain mechanistic insights with its unique differential geometry analyses
+----------------------------------------------------------------------------------------------
+In general, from the RNA velocity data, we can learn the vector field function in high dimensional
+space and then we can use it to perform differential analyses and gene-set enrichment analyses
+based on top-ranked acceleration or curvature genes, as well as the top-ranked genes with the
+strongest self-interactions, top-ranked regulators/targets, or top-ranked interactions for each
+gene in individual cell types or across all cell types, with either raw or absolute values.
+Integrating that ranking information, we can build regulatory networks across different cell types,
+which can then be visualized with ArcPlot, CircosPlot, or other tools. Lastly, dynamo can be also
+used to identify top toggle-switch pairs driving cell-fate bifurcations. We will discuss parts of these
+analyses in this notebook but you should check the extensive analyses demonstrated in the zebrafish
+differential geometry analyses notebook from here: `Zebrafish <https://dynamo-release.readthedocs.io/en/latest/notebooks/Differential_geometry.html>`_
 
 .. figure:: ../hsc_images/fig5_a.png
    :alt: fig5_A
 
-Visualize topography
---------------------
+Map the topography of human hematopoiesis and associative fixed points
+----------------------------------------------------------------------
 
-Lineage tree of hematopoiesis, lumped automatically from the vector field built in the UMAP space
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. figure:: ../hsc_images/fig5_c.png
-   :alt: fig5_c
-
-The reconstructed vector field and associated fixed points.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The color of digits in each node reflects the type of fixed point: red,
-emitting fixed point; black, absorbing fixed point. The color of the
-numbered nodes corresponds to the confidence of the fixed points.
-
-Manually select good fixed points found by topography
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To map the topography of a vector field space, we will need to first learn the vector field function in that space which
+can be done with the following code. Since the data we preprocessed in dynamo already include the vector field in the
+umap space. The following step can be skipped.
 
 .. code:: ipython3
+    dyn.vf.VectorField(adata_labeling, map_topography=False) # learn vector field for the umap space
 
+
+Associate fixed points to cell types
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+We next run the `vf.topography` function to retrieve fixed points. Because of the numerical instability of the learned
+vector field resulted from the noisy data, dynamo tends to identify many fixed points. Manually post-processing will be
+needed to associate each fix point to a particular cell state.
+
+.. code:: ipython3
     adata_labeling.uns['VecFld_umap'].keys()
 
 
@@ -115,13 +119,21 @@ Manually select good fixed points found by topography
    
 
 
-| In the resulted dictionary, ``Xss`` stands for the fixed points
-  coordinates and ``ftype`` is the specific fixed point type, denoted by
+As you can see, we have way more fixed points than we want. Therefore we manually select fixed points, simply by
+identifying points that are associated with a particular cell fate. Specifically, we will also leverage the
+``Xss, ftype`` keys that are associated with all those identified fixed points.
+
+| here ``Xss`` is for the fixed points
+  coordinates while ``ftype`` is for the specific fixed point type, denoted by
   integers.
-| ftype value mapping:
+| the integers of fixed points in ftype have following meaning:
 - -1: stable 
 - 0: saddle 
 - 1: unstable
+
+In the following figure, the color of digits in each node reflects the type of fixed point: red,
+emitting fixed point; black, absorbing fixed point. The color of the numbered nodes corresponds to
+the confidence of the fixed points.
 
 .. code:: ipython3
 
@@ -151,14 +163,23 @@ Manually select good fixed points found by topography
 .. image:: output_16_0.png
    :width: 590px
    
+It is worth mentioning that those fixed points are later used in the optimal path predictions as shown here:
+`LAP <https://dynamo-release.readthedocs.io/en/latest/notebooks/lap_tutorial/lap_tutorial.html>`_
+
+Lineage tree of hematopoiesis
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+We can then run the ``dyn.pd.tree_model(adata_labeling)`` function to lumped cells from each population from the vector
+field built in the UMAP space to create a lineage tree that nicely recapitulate the known hierarchy of each cell lineage.
+
+.. figure:: ../hsc_images/fig5_c.png
+   :alt: fig5_c
 
 
 Vector field pseudotime
 -----------------------
-
-In this section, we will show how to visualize vector field pseudotime
-with ``dynamo``. The vector field pseudotime is calculated based on the
-velocity transition matrix.
+We now move to demonstrate how we can use dynamo to reveal the early appearance of Meg lineage. Specifically we use
+ddhodge to calculate the vector field based pseudotime with the velocity transition matrix. More details can be found in
+the following:
 
 **Define a colormap we will use later**
 
@@ -176,8 +197,7 @@ velocity transition matrix.
     }
 
 
-**Initialize a Dataframe object that we will use to plot with
-visualization packages such as ``sns`` **
+**Initialize a Dataframe object that we will use for plotting with ``sns`` or ``matplotlib`` **
 
 .. code:: ipython3
 
@@ -186,8 +206,8 @@ visualization packages such as ``sns`` **
     df = adata_labeling[valid_indices].obs[["pca_ddhodge_potential", "umap_ddhodge_potential", "cell_type"]]
     df["cell_type"] = list(df["cell_type"])
 
-Building a graph, computing divergence and potential with ``graph_operators`` in ``dynamo``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use ddhodge algorith from ``dynamo`` to compute vector field based pseudotime
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: ipython3
 
@@ -198,9 +218,10 @@ Building a graph, computing divergence and potential with ``graph_operators`` in
     adata_labeling.obs["cosine_potential"] = potential_cosine
 
 
-Compute ``potential_fp`` and store in the dataframe object ``df`` we
-created above. Note that ``fp`` stands for ``fokkerplanck`` method.
-Please refer to the ``dynamo`` cell paper for more details on the
+The above uses the `cosine_transition_matrix` to compute the vector field based pseudotiem but you can also
+compute it with other kernels, such as the ``fp_transition_rate`` and store the results in the dataframe object ``df``
+we created above. Note that ``fp`` stands for ``fokkerplanck`` method.
+Please refer to the ``dynamo`` documentation for more details on the
 related methods.
 
 .. code:: ipython3
@@ -209,8 +230,8 @@ related methods.
     ddhodge_div = div(g)
     potential_fp = potential(g, ddhodge_div)
 
-set ``potential_fp`` and ``pseudotime_fp`` in adata.obs to visualize
-potential and time.
+set ``potential_fp`` and ``pseudotime_fp`` in adata.obs to facilitate visualizing the
+potential and pseudotime across cells.
 
 .. code:: ipython3
 
@@ -269,24 +290,26 @@ potential and time.
    
 
 
-Via the visualization results above from vectorfield analysis, we can
-observe that egakaryocytes appear earliest among the Meg, Ery, and Bas
-lineages.
+From the above analysis, we can clearly see that megakaryocytes appear earliest among the Meg, Ery, and Bas
+lineages, in line with what has been reported previously.
 
 Molecular mechanisms underlying the early appearance of the Meg lineage
 -----------------------------------------------------------------------
 
-| In this section, we will show: 
-- Self activation of FLI1 
-- Repression of KLF1 by FLI1 
-- FLI1 represses KLF1 
-- Schematic summarizing the interactions involving FLI1 and KLF1.
+Interestingly, this early appearance of Meg lineage is further reinforced by its considerably higher RNA speed
+(Figure S6B) and acceleration (Figure 5E) relative to all other lineages. When inspecting the expression of FLI1 and
+KLF1 (Siatecka and Bieker, 2011), known master regulators of Meg and Ery lineages, respectively, we observed high
+expression of FLI1, rather than KLF1, beginning at the HSPC state (Figure S6C).
+
+In order to reveal the underlying regulatory mechanism, we perform RNA Jacobian analyses for these two master
+regulators.  Our Jacobian analyses revealed mutual inhibition between FLI1 and KLF1 and self-activation of FLI1
+(Truong and Ben-David, 2000). More details can be found in the following:
+
+Compute RNA Jacobian between the two master regulators:  FLI1 and KLF1.
 
 .. code:: ipython3
 
     Meg_genes = ["FLI1", "KLF1"]
-
-Compute jacobian of selected genes
 
 .. code:: ipython3
 
@@ -299,8 +322,9 @@ Compute jacobian of selected genes
     Transforming subset Jacobian: 100%|██████████| 1947/1947 [00:00<00:00, 120423.96it/s]
 
 
-Next we use jacobian analyses to reveal mutual inhibition between FLI1
-and KLF1 (Figure 5F) and self-activation of FLI1.
+Next we will visualize the RNA Jacobian between FLI1 and KLF1 across cells. From the figure shown below, it is clear
+that FLI1 represses KLF1 (the blue color indicates negative Jacobian) while there is a self-activation for FLI1 (the
+red color indicates positive Jacobian).
 
 .. code:: ipython3
 
@@ -335,15 +359,14 @@ and KLF1 (Figure 5F) and self-activation of FLI1.
    
 
 
-Conclusion: a schematic diagram summarizing the interactions involving FLI1 and KLF1
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A schematic diagram summarizing the interactions involving FLI1 and KLF1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Analyses above collectively suggest self-activation of FLI1 maintains
-its higher expression in the HSPC state, which biases the HSPCs to first
-commit towards the Meg lineage with high speed and acceleration, while
-repressing the commitment into erythrocytes through inhibition of KLF1.
-Together with the mutual regulation we show ealier in this tutorial, we
-can generate the following schematic to summarize the gene network.
+These analyses collectively suggest that self-activation of FLI1 maintains its higher expression
+in the HSPC state, which biases the HSPCs to first commit toward the Meg lineage with high speed and
+acceleration, while repressing the commitment into erythrocytes through inhibition of KLF1 (see the
+schematic diagram below).
+
 
 .. figure:: ../hsc_images/fig5_f_iv.png
    :alt: fig5_f_iv
