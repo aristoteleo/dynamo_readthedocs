@@ -91,6 +91,7 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
    :caption: Labeling scRNA-seq
    :maxdepth: 3
 
+   notebooks/tutorial_hsc_velocity
    notebooks/scNT_seq_readthedocs
    notebooks/scEU_seq_rpe1_analysis_kinetic
    notebooks/scEU_seq_organoid_analysis_kinetic
@@ -100,7 +101,7 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
    :caption: Differential geometry
    :maxdepth: 1
    :hidden:
-   
+
    notebooks/hsc_differential_geometry_index
    notebooks/Differential_geometry.rst
 
