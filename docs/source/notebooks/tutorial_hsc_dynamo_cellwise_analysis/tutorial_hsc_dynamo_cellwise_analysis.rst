@@ -17,11 +17,9 @@ Let us first import relevant packages and load the processed hematopoiesis adata
     import pandas as pd
     import matplotlib.pyplot as plt
     
-    # import Scribe as sb
     import sys
     import os
     
-    # import scanpy as sc
     import dynamo as dyn
     import seaborn as sns
     

@@ -5,10 +5,10 @@ One intriguing phenomenon observed in hematopoiesis is that commitment
 to and appearance of the Meg lineage occurs more rapidly than other
 lineages (Sanjuan-Pla et al., 2013; Yamamoto et al., 2013). However, the
 mechanisms underlying this process remain elusive. To mechanistically
-dissect this finding, we try to first reveal the timing of the maturation of
+investigate these findings, we try to first reveal the timing of the maturation of
 megakaryocytes and then the underlying regulatory networks.
 
-Specifically, in this tutorial, we will guide you through the following five
+Specifically, in this tutorial, we will guide you through the following three
 major analyses:
 
 - learn vector field of human hematopoiesis and identify fixed points of cell type
@@ -24,12 +24,10 @@ To begin with, let us first import relevant packages
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
-    
-    # import Scribe as sb
+
     import sys
     import os
     
-    # import scanpy as sc
     import dynamo as dyn
     import seaborn as sns
     
@@ -39,8 +37,9 @@ To begin with, let us first import relevant packages
     import warnings
     warnings.filterwarnings('ignore')
 
-Next, let us download and prepare the processed hematopoiesis adata object (see this notebook,
-will released soon, to find out how to estimate the labeling RNA velocity for
+Next, let us download the processed hematopoiesis adata object
+(see `this notebook <https://dynamo-release.readthedocs.io/en/latest/notebooks/tutorial_hsc_velocity.html>`_
+to find out how to estimate the labeling RNA velocity for
 this dataset) that comes with the dynamo package.
 
 .. code:: ipython3
@@ -59,10 +58,11 @@ based on top-ranked acceleration or curvature genes, as well as the top-ranked g
 strongest self-interactions, top-ranked regulators/targets, or top-ranked interactions for each
 gene in individual cell types or across all cell types, with either raw or absolute values.
 Integrating that ranking information, we can build regulatory networks across different cell types,
-which can then be visualized with ArcPlot, CircosPlot, or other tools. Lastly, dynamo can be also
+which can then be visualized with ArcPlot, CircosPlot, or other visualizations. Lastly, dynamo can be also
 used to identify top toggle-switch pairs driving cell-fate bifurcations. We will discuss parts of these
-analyses in this notebook but you should check the extensive analyses demonstrated in the zebrafish
-differential geometry analyses notebook from here: `Zebrafish <https://dynamo-release.readthedocs.io/en/latest/notebooks/Differential_geometry.html>`_
+analyses in this notebook but you should also check the extensive analyses demonstrated in the zebrafish
+differential geometry analyses notebook from here:
+`Zebrafish <https://dynamo-release.readthedocs.io/en/latest/notebooks/Differential_geometry.html>`_
 
 .. figure:: ../hsc_images/fig5_a.png
    :alt: fig5_A
@@ -75,7 +75,7 @@ can be done with the following code. Since the data we preprocessed in dynamo al
 umap space. The following step can be skipped.
 
 .. code:: ipython3
-    dyn.vf.VectorField(adata_labeling, map_topography=False) # learn vector field for the umap space
+    dyn.vf.VectorField(adata_labeling, basis='umap', map_topography=False) # learn vector field for the umap space
 
 
 Associate fixed points to cell types
@@ -133,7 +133,7 @@ identifying points that are associated with a particular cell fate. Specifically
 
 In the following figure, the color of digits in each node reflects the type of fixed point: red,
 emitting fixed point; black, absorbing fixed point. The color of the numbered nodes corresponds to
-the confidence of the fixed points.
+the confidence of the fixed points with lighter (yellowish color) higher confidence and vice versa.
 
 .. code:: ipython3
 
@@ -163,7 +163,7 @@ the confidence of the fixed points.
 .. image:: output_16_0.png
    :width: 590px
    
-It is worth mentioning that those fixed points are later used in the optimal path predictions as shown here:
+It is worth noting that those fixed points are later used in the optimal path predictions as shown here:
 `LAP <https://dynamo-release.readthedocs.io/en/latest/notebooks/lap_tutorial/lap_tutorial.html>`_
 
 Lineage tree of hematopoiesis
@@ -220,7 +220,7 @@ Use ddhodge algorith from ``dynamo`` to compute vector field based pseudotime
 
 The above uses the `cosine_transition_matrix` to compute the vector field based pseudotiem but you can also
 compute it with other kernels, such as the ``fp_transition_rate`` and store the results in the dataframe object ``df``
-we created above. Note that ``fp`` stands for ``fokkerplanck`` method.
+we created above. Note that ``fp`` stands for ``fokker planck`` method.
 Please refer to the ``dynamo`` documentation for more details on the
 related methods.
 
@@ -299,9 +299,70 @@ Molecular mechanisms underlying the early appearance of the Meg lineage
 Interestingly, this early appearance of Meg lineage is further reinforced by its considerably higher RNA speed
 (Figure S6B) and acceleration (Figure 5E) relative to all other lineages. When inspecting the expression of FLI1 and
 KLF1 (Siatecka and Bieker, 2011), known master regulators of Meg and Ery lineages, respectively, we observed high
-expression of FLI1, rather than KLF1, beginning at the HSPC state (Figure S6C).
+expression of FLI1, rather than KLF1, beginning at the HSPC state (Figure S6C), as shown below:
 
-In order to reveal the underlying regulatory mechanism, we perform RNA Jacobian analyses for these two master
+
+High expression of FLI1, instead of KLF1, beginning at the progenitor state
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code:: ipython3
+
+    dyn.pl.umap(adata_labeling, color=["FLI1", "KLF1"], layer="X_total")
+
+
+.. image:: output_38_0.png
+
+
+High speed, acceleration and low divergence and curvature of the Meg lineage
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Here we will use dynamo to speed, divergence, acceleration and curvature on the pca space. Note that dynamo calculate
+acceleration and curvature as a `cell by gene` matrix, just like the gene expression matrix. Here we will plot the
+magnitude of the acceleration and curvature vectors, similar to caculating the speed of RNA velocity vectors. RNA divergence
+is a scalar for each cell.
+
+.. code:: ipython3
+
+    basis = "pca"
+    dyn.vf.speed(adata_labeling, basis=basis)
+    dyn.vf.divergence(adata_labeling, basis=basis)
+    dyn.vf.acceleration(adata_labeling, basis=basis)
+    dyn.vf.curvature(adata_labeling, basis=basis)
+
+
+Each of these quantities are saved to {quantity}_{basis} (e.g. ``speed_pca``). We now visualize these quantities on the
+umap space:
+
+
+.. code:: ipython3
+
+    adata_labeling.obs["speed_" + basis][:5]
+
+
+.. code:: ipython3
+
+    import matplotlib.pyplot as plt
+
+    fig, axes = plt.subplots(ncols=2, nrows=2, constrained_layout=True, figsize=(12, 8))
+    axes
+    dyn.pl.umap(adata_labeling, color="speed_" + basis, ax=axes[0, 0], save_show_or_return="return")
+    dyn.pl.grid_vectors(
+        adata_labeling,
+        color="divergence_" + basis,
+        ax=axes[0, 1],
+        quiver_length=12,
+        quiver_size=12,
+        save_show_or_return="return",
+    )
+    dyn.pl.streamline_plot(adata_labeling, color="acceleration_" + basis, ax=axes[1, 0], save_show_or_return="return")
+    dyn.pl.streamline_plot(adata_labeling, color="curvature_" + basis, ax=axes[1, 1], save_show_or_return="return")
+    plt.show()
+
+
+.. image:: output_39_0.png
+
+It is clear that the  Meg lineage has the highest RNA speed, acceleration and curvature while the lowest divergence across
+all lineages. The curvature for the Meg lineage is also low.
+
+In order to reveal the underlying regulatory mechanism governing this early appearance, we perform RNA Jacobian analyses for these two master
 regulators.  Our Jacobian analyses revealed mutual inhibition between FLI1 and KLF1 and self-activation of FLI1
 (Truong and Ben-David, 2000). More details can be found in the following:
 
@@ -358,73 +419,12 @@ red color indicates positive Jacobian).
    :width: 527px
 
 
-Expression of FLI1 (Meg lineage master regulator) relative to KLF1 (Ery
-lineage master regulator) in progenitors.
-
-
-.. code:: ipython3
-
-    dyn.pl.umap(adata_labeling, color=["FLI1", "KLF1"], layer="X_total")
-
-
-.. image:: output_38_0.png
-
-
-Computing and visualizing speed, divergence, acceleration and curvature
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Similar to our other published notebook usage examples, we can use methods from `dyn.vf` to calculate speed, divergence, acceleration and curvature within specific basis. In the following code cell, we select `pca` as the basis. 
-
-
-.. code:: ipython3
-
-    basis = "pca"
-    dyn.vf.speed(adata_labeling, basis=basis)
-    dyn.vf.divergence(adata_labeling, basis=basis)
-    dyn.vf.acceleration(adata_labeling, basis=basis)
-    dyn.vf.curvature(adata_labeling, basis=basis)
-
-
-The results are saved to {quantity}_{basis} (e.g. ``speed_pca``). Then we can visualize via various visualization results.  
-
-
-.. code:: ipython3
-
-    adata_labeling.obs["speed_" + basis][:5]
-
-In the result below, we can observe the patterns of dynamics quantities including speed are consistent with the function of FLI1 (Meg lineage master regulator) and KLF1 (Ery
-lineage master regulator).
-
-.. code:: ipython3
-
-    import matplotlib.pyplot as plt
-
-    fig, axes = plt.subplots(ncols=2, nrows=2, constrained_layout=True, figsize=(12, 8))
-    axes
-    dyn.pl.umap(adata_labeling, color="speed_" + basis, ax=axes[0, 0], save_show_or_return="return")
-    dyn.pl.grid_vectors(
-        adata_labeling,
-        color="divergence_" + basis,
-        ax=axes[0, 1],
-        quiver_length=12,
-        quiver_size=12,
-        save_show_or_return="return",
-    )
-    dyn.pl.streamline_plot(adata_labeling, color="acceleration_" + basis, ax=axes[1, 0], save_show_or_return="return")
-    dyn.pl.streamline_plot(adata_labeling, color="curvature_" + basis, ax=axes[1, 1], save_show_or_return="return")
-    plt.show()
-
-
-.. image:: output_39_0.png
-
-
-
 A schematic diagram summarizing the interactions involving FLI1 and KLF1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 These analyses collectively suggest that self-activation of FLI1 maintains its higher expression
 in the HSPC state, which biases the HSPCs to first commit toward the Meg lineage with high speed and
-acceleration, while repressing the commitment into erythrocytes through inhibition of KLF1 (see the
-schematic diagram below).
+acceleration, while repressing the commitment into erythrocytes through inhibition of KLF1:
 
 
 .. figure:: ../hsc_images/fig5_f_iv.png
