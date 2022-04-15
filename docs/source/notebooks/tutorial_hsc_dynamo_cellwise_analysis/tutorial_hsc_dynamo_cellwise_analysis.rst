@@ -1,13 +1,15 @@
-Cell-wise analyses: dominant interactions
-================================================================
+Cell-wise analyses: indepth analyses of Pu.1 and GATA1 interactions
+===================================================================
 
-To obtain mechanistic insights into key regulatory motifs from different
+To obtain deep mechanistic insights into key regulatory motifs
+(such as the Pu.1/SPI1-Gata1 network motif) from different
 perspectives, we developed three complementary strategies: cell-wise,
-trajectory-wise and plane-wise analyses. In this tutorial, we will
-introduce approaches for gene network motif analysis and guide you to
-perform cell-wise analyses of SPI1-GATA1 network motif.
+trajectory-wise and plane-wise analyses. In this tutorial, we will focus on
+analyzing the canonical SPI1-GATA1 network motif that play key roles in the bifurcation of
+GMP and MEP lineage. Specifically, we will guide you through a series of cell-wise regulatory network
+analyses.
 
-Import relevant packages
+Let us first import relevant packages and load the processed hematopoiesis adata object for scNT-seq HSC experiment reported in the dynamo Cell paper:
 
 .. code:: ipython3
 
@@ -33,16 +35,18 @@ Import relevant packages
 Three approaches for in-depth network motif characterizations
 -------------------------------------------------------------
 
-The schematic graph in this section shows the three approaches. -
-cell-wise analyses to reveal dominant interactions across all cells -
-trajectory-wise analyses reveal trajectory dependent interactions along
+Here we will use a cartoon to explain the three complementary network analyses empowered by dynamo.
+#. **Cell-wise analyses** to reveal dominant interactions across all cells
+
+#. **Trajectory-wise analyses** reveal trajectory dependent interactions along
 a trajectory (predicted either from vector field streamline, or least
-action path, see Figure 6). - Plane-wise analyses reveal direct
-interactions for any characteristic cell states by varying genes of
+action path, see Figure 6).
+
+#. **Plane-wise analyses** reveal direct interactions for any characteristic cell states by varying genes of
 interest while holding all other genes constant.
 
-In the next section, we will use **cell-wise analyses** to analyze
-PU.1/SPI1–GATA1 network motif.
+At this moment, we will focus on **cell-wise analyses**, the most common network interaction to analyze
+PU.1/SPI1–GATA1 network motif. Come back to check new tutorials on trajectory-wise and plane-wise analyses!
 
 .. figure:: ../hsc_images/fig5_h.png
    :alt: fig5_h
@@ -51,14 +55,12 @@ PU.1/SPI1–GATA1 network motif.
 Cell-wise analyses of the PU.1/SPI1–GATA1 network motif across all cells
 ------------------------------------------------------------------------
 
-We showcase cell-wise analyses with the canonical PU.1/SPI1-GATA1
-network motif.
-
-Streamline plot of the RNA velocities of SPI1 (x-axis) and GATA1 (y-axis)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The streamlines of SPI1 and GATA1 show that HSPCs bifurcate into
-GMP-like and MEP-like branches
+We now first showcase the streamline plot of the RNA velocities of SPI1 (x-axis) and GATA1 (y-axis). Intriguingly, similar
+to decades of modeling efforts in simulating the vector field of Pu.1 and Gata1. The RNA velocity streamlines of SPI1 and
+GATA1 measured from real single cell data reveal nicely a bifurcation from HSPCs first to MEP or GMP like cells, followed by
+committing toward Ery/Meg lineages on the one side and Mon/Neu on the other hand. Interesting, the Bas lineage is located in the
+between between the two branching, indicating again, a potential dual origin from both GMP-like and MEP-like progenitors.
+This is very neat!!!
 
 .. code:: ipython3
 

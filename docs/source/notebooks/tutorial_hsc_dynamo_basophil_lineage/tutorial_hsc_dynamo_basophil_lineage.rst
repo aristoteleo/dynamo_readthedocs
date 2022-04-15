@@ -7,7 +7,7 @@ suggests that they mostly originated from MEP-like cells (with a minor
 route from GMP-like cells), in line with recent scRNA-seq studies
 (Drissen et al., 2016; Pellin et al., 2019). To reconcile the
 discrepancy of two alternative trajectories of the Bas lineage, we
-leverage RNA differential geometry analyses enpowered with dynamo to
+leverage RNA differential geometry analyses empowered by dynamo to
 derive a minimal network model that explains Bas lineage’s dual origins.
 
 Let us first import relevant packages and load the preprocessed HSC scNT-seq
@@ -37,20 +37,21 @@ dataset that reported in the dynamo Cell paper.
 
 Regulatory network governing the Bas lineage’s dual origins
 -----------------------------------------------------------
-
 In order to reveal the minimal network of Bas lineage's dual origin, we
 start with identifying putative drivers of Meg/Ery versu Bas lineage bifurcation.
 We perform switch gene-pair analyses to identify gene pairs with antagonistic
 interactions for genes responsible for the Ery and Bas lineage bifurcations.
-This is done by selecting cells near the regions of the bifurcation pointing, following
-ranking switch gene pairs, something like the following:
+This is done by selecting cells near the regions of the bifurcation point, followed by
+ranking switch gene pairs. Something like the following:
 
 .. code:: ipython3
 
     # select cells near the bifurcation to get bif_adata
     dyn.vf.rank_jacobian_genes(bif_adata, groups='cell_type', mode='switch')
 
-Notably, the GATA2-PLEK pair ranked first. Similar to PLEK's exclusivity in Meg,
+Notably, the GATA2-PLEK pair ranked first
+(see `ranking table <https://ars.els-cdn.com/content/image/1-s2.0-S0092867421015774-mmc1.csv>`_).
+Similar to PLEK's exclusivity in Meg,
 the expression of GATA2 is specifically high in basophils, as shown below:
 
 .. code:: ipython3
@@ -67,17 +68,7 @@ the expression of GATA2 is specifically high in basophils, as shown below:
 Switch pair ranking analyses also prioritized the involvement of CEBPA and
 RUNX1, previously reported in (Guo et al., 2017), as well as GATA1, the
 master regulator of the GMP lineage. Next, we will perform Jacobian analyses
-to between these genes
-
-In this section, we will show
-
--  GATA2 has high expression in the Bas lineage
--
--  A minimal network governing GMP vs. Bas origin of Bas lineage
-
-GATA2 has high expression in the Bas lineage
-Next, we will calculate jacobian via ``dyn.vf.jacobian``. It shows that
-CEBPA represses RUNX1 and GATA2.
+to reveal interactions between these genes.
 
 .. code:: ipython3
 
@@ -90,10 +81,7 @@ CEBPA represses RUNX1 and GATA2.
         effectors=["RUNX1", "GATA2"],
         basis="umap"
     )
-    
-From the above Jacobian analyses, it is clear that CEBPA represses both RUNX1 and GATA2。
 
-Next we will also investigate the interactions between RUNX1 and GATA2:
 .. parsed-literal::
 
     Transforming subset Jacobian: 100%|██████████| 1947/1947 [00:00<00:00, 113006.61it/s]
@@ -106,6 +94,10 @@ Next we will also investigate the interactions between RUNX1 and GATA2:
    :width: 981px
    
 
+
+From the above Jacobian analyses, it is clear that CEBPA represses both RUNX1 and GATA2。
+
+Next we will also investigate the interactions between RUNX1 and GATA2:
 
 .. code:: ipython3
 
@@ -128,10 +120,10 @@ Next we will also investigate the interactions between RUNX1 and GATA2:
    :width: 975px
    
 
-It turns out that there RUNX1 and GATA2 form a community that has with mutual activation and self-activation.
+It turns out that RUNX1 and GATA2 form a community that has both mutual activation and self-activation.
 
 Subsequent Jacobian analyses also confirm the known repression from GATA1 to GATA2,
-activation from GATA2 back to GATA1, as reported and modeld in `Jan Krumsiek, 2011 <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0022649>`_. .
+activation from GATA2 back to GATA1, as reported and modeld in `Jan Krumsiek, 2011 <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0022649>`_.
 
 .. code:: ipython3
 
@@ -171,8 +163,8 @@ A minimal network governing GMP vs. Bas origin of Bas lineage
   from either GMP or MEP cells, consistent with (Drissen et al., 2019).
 
 | (For the interactions between KLF1 and FLI1 in the schematic
-  below, please refer to dynamo paper or our tutorial *Molecular
-  mechanism of earliest and fastest appearance of megakaryocytes*.)
+  below, please refer to dynamo paper or this
+  `tutorial <https://dynamo-release.readthedocs.io/en/latest/notebooks/tutorial_hsc_dynamo_megakaryocytes_appearance/tutorial_hsc_dynamo_megakaryocytes_appearance.html>`_ .)
 
 .. figure:: ../hsc_images/fig5_g_iv.png
    :alt: fig5_g_iv
