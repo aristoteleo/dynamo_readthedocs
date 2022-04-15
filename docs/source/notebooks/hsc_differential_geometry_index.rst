@@ -15,6 +15,8 @@ results because splicing data has biased capture of introns and lack the real ti
 splicing rate. Such limitations come from the data itself cannot in general be solved with computational models.
 
 .. toctree::
+    :maxdepth: 0
+
     ./tutorial_hsc_dynamo_megakaryocytes_appearance/tutorial_hsc_dynamo_megakaryocytes_appearance
     ./tutorial_hsc_dynamo_basophil_lineage/tutorial_hsc_dynamo_basophil_lineage
     ./tutorial_hsc_dynamo_cellwise_analysis/tutorial_hsc_dynamo_cellwise_analysis
