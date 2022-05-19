@@ -289,7 +289,7 @@ Prediction (pd)
 ~~~~~~~~~~~~~~~
 
 .. autosummary::
-:toctree: _autosummary
+   :toctree: _autosummary
 
    pd.andecestor
    pd.fate
