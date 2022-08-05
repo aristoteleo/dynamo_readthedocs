@@ -124,7 +124,6 @@ preprocess the zebrafish adata object (or use your own dataset):
    dyn.tl.reduceDimension(adata)
    dyn.tl.cell_velocities(adata)
 
-   dyn.tl.cell_velocities(adata)
    dyn.pl.streamline_plot(adata, color=['Cell_type'])
 
 Differential geometry analysis
