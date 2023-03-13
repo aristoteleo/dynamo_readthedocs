@@ -193,7 +193,7 @@ In dynamo, we have three standard visual representations of vector fields, inclu
 
     dyn.pl.cell_wise_vectors(adata, color=colors, ncols=3)
     dyn.pl.grid_vectors(adata, color=colors, ncols=3)
-    dyn.pl.stremline_plot(adata, color=colors, ncols=3)
+    dyn.pl.streamline_plot(adata, color=colors, ncols=3)
     dyn.pl.line_integral_conv(adata)
 
 Note that ``colors``  here is a list or str that can be either the column name in ``.obs`` or ``gene names``.
