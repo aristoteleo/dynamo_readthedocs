@@ -652,7 +652,7 @@ typical dynamo analysis workflow
     adata = adata[adata.obs.exp_type == 'Pulse', :]
     adata.layers['new'], adata.layers['total'] = adata.layers['ul'] + adata.layers['sl'], adata.layers['su'] + adata.layers['sl'] + adata.layers['uu'] + adata.layers['ul']
     del adata.layers['uu'], adata.layers['ul'], adata.layers['su'], adata.layers['sl']
-    adata = dyn.pp.recipe_monocle(adata, n_top_genes=1000, total_layers=False)
+    dyn.pp.recipe_monocle(adata, n_top_genes=1000, total_layers=False)
     dyn.pl.basic_stats(adata)
     dyn.pl.show_fraction(organoid)
 

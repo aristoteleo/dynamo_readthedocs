@@ -273,6 +273,7 @@ potential and pseudotime across cells.
     plt.xlim(0.0, 0.008)
     plt.ylim(0, 12)
     plt.xlabel("vector field pseudotime")
+    plt.show()
 
 
 
