@@ -21,6 +21,10 @@ Reference
 .. [Trapnell14] Cole Trapnell *et al.* (2014),
    *The dynamics and regulators of cell fate decisions are revealed by pseudotemporal ordering of single cells*,
    `Nature Biotechnology <https://www.nature.com/articles/nbt.2859>`__.
+   
+.. [Xqiu2011] Xiaojie Qiu,  *et al.* (2011),
+   *From Understanding the Development Landscape of the Canonical Fate-Switch Pair to Constructing a Dynamic Landscape for Two-Step Neural Differentiation*,
+   `Plos one <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0049271>`__.
 
 .. [Melsted19] Páll Melsted *et al.* (2019),
    *Modular and efficient pre-processing of single-cell RNA-seq*,
@@ -36,8 +40,10 @@ Reference
 
 .. [Xing2022] J. H. Xing (2022),
     Reconstructing governing equations for cell phenotypic transitions: integration of data science and systems biology, Physical Biology, 19: 061001.
+    
 .. [Xing2014] P. Wang, C. Song, H. Zhang, Z. Wu, X-J Tian, J. H. Xing (2014), 
-Epigenetic state network approach for describing cell phenotypic transitions, Interface Focus, 4(3): 20130068 (PMID 24904734).
+    Epigenetic state network approach for describing cell phenotypic transitions, Interface Focus, 4(3): 20130068 (PMID 24904734).
+
 .. [Xing2010] J. H. Xing (2010), 
-Mapping between dissipative and Hamiltonian systems, Journal of Physics A: Mathematical and Theoretical, 43:375003.
+    Mapping between dissipative and Hamiltonian systems, Journal of Physics A: Mathematical and Theoretical, 43:375003.
 
