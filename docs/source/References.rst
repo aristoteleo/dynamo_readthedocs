@@ -34,4 +34,10 @@ Reference
    *Scanpy: large-scale single-cell gene expression data analysis*,
    `Genome Biology <https://doi.org/10.1186/s13059-017-1382-0>`__.
 
+.. [Xing2022] J. H. Xing (2022),
+    Reconstructing governing equations for cell phenotypic transitions: integration of data science and systems biology, Physical Biology, 19: 061001.
+.. [Xing2014] P. Wang, C. Song, H. Zhang, Z. Wu, X-J Tian, J. H. Xing (2014), 
+Epigenetic state network approach for describing cell phenotypic transitions, Interface Focus, 4(3): 20130068 (PMID 24904734).
+.. [Xing2010] J. H. Xing (2010), 
+Mapping between dissipative and Hamiltonian systems, Journal of Physics A: Mathematical and Theoretical, 43:375003.
 
