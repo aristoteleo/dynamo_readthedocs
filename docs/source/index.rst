@@ -12,11 +12,17 @@ Single-cell (sc)RNA-seq, together with RNA velocity and metabolic labeling, reve
    :target: https://dynamo-release.readthedocs.io
 
 .. |package| image:: https://github.com/aristoteleo/dynamo-release/workflows/Python%20package/badge.svg
-   :target: https://github.com/aristoteleo/dynamo-release/runs/950435412
+   :target: https://github.com/aristoteleo/dynamo-release
 
-.. |PyPI| image:: https://github.com/aristoteleo/dynamo-release/workflows/Upload%20Python%20Package/badge.svg
-   :target: https://pypi.org/project/dynamo-release/
-   
+.. |PyPI| image:: https://img.shields.io/pypi/v/dynamo-release?logo=PyPI
+   :target: https://pypi.org/project/dynamo-release
+
+.. |PePy| image:: https://static.pepy.tech/badge/dynamo-release
+   :target: https://pepy.tech/project/dynamo-release
+
+.. |Stars| image:: https://img.shields.io/github/stars/aristoteleo/dynamo-release?logo=GitHub&color=red
+   :target: https://github.com/aristoteleo/dynamo-release/stargazers
+
 
 Highlights of dynamo
 ====================
