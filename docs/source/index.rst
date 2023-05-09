@@ -1,4 +1,4 @@
-|package| |PyPI| |Docs|
+|package| |Docs| |PyPI| |PePy| |Stars|
 
 **Dynamo**: Mapping Vector Field of Single Cells
 ===================================================
