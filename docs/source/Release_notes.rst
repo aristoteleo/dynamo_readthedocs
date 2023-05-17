@@ -9,46 +9,46 @@ Feature Changes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 - The preprocessing module has been refactored:
 
-  - Class *Preprocessor* is recommended for most preprocessing methods and recipes. `pp.recipe_monocle,`
-    `pp.recipe_velocyto` has been deprecated (`PR 497 <https://github.com/aristoteleo/dynamo-release/pull/497>`_
+  - Class *Preprocessor* is recommended for most preprocessing methods and recipes. ``pp.recipe_monocle,``
+    ``pp.recipe_velocyto`` has been deprecated (`PR 497 <https://github.com/aristoteleo/dynamo-release/pull/497>`_
     `PR 500 <https://github.com/aristoteleo/dynamo-release/pull/500>`_).
     Check the tutorials here for more instructions.
   - Normalization has been refactored (`PR 474 <https://github.com/aristoteleo/dynamo-release/pull/474>`_
-    `PR 475 <https://github.com/aristoteleo/dynamo-release/pull/475>`_): `pp.normalize_cell_expr_by_size_factors`
+    `PR 475 <https://github.com/aristoteleo/dynamo-release/pull/475>`_): ``pp.normalize_cell_expr_by_size_factors``
     has been deprecated, and new APIs are:
 
-    - `pp.normalize_cell_expr_by_size_factors` -> `pp.calc_sz_factor, pp.normalize`.
+    - ``pp.normalize_cell_expr_by_size_factors`` -> ``pp.calc_sz_factor, pp.normalize``.
 
   - Gene selection has been refactored (`PR 474 <https://github.com/aristoteleo/dynamo-release/pull/474>`_). Now support
-    gene selected by fano factors. APIs are `pp.select_genes_monocle` and `pp.select_genes_by_seurat_recipe`.
-  - PCA has been refactored (`PR 469 <https://github.com/aristoteleo/dynamo-release/pull/469>`_). `dyn.pp.pca_monocle`
+    genes selected by fano factors. APIs are ``pp.select_genes_monocle`` and ``pp.select_genes_by_seurat_recipe``.
+  - PCA has been refactored (`PR 469 <https://github.com/aristoteleo/dynamo-release/pull/469>`_). ``dyn.pp.pca_monocle``
     has been deprecated. The new API is:
 
-    - `pp.pca_monocle` -> `pp.pca`.
+    - ``pp.pca_monocle`` -> ``pp.pca``.
 
-  - Multiple new features added, includes gene selection by fano factors
+  - Multiple new features added, includes genes selection by fano factors
     (`PR 474 <https://github.com/aristoteleo/dynamo-release/pull/474>`_), external data integration methods
-    (`PR 473 <https://github.com/aristoteleo/dynamo-release/pull/473>`_) and `pp.regress_out`
+    (`PR 473 <https://github.com/aristoteleo/dynamo-release/pull/473>`_) and ``pp.regress_out``
     (`PR 470 <https://github.com/aristoteleo/dynamo-release/pull/470>`_
     `PR 483 <https://github.com/aristoteleo/dynamo-release/pull/483>`_
     `PR 484 <https://github.com/aristoteleo/dynamo-release/pull/484>`_).
   - Created more tests for preprocessing module (`PR 485 <https://github.com/aristoteleo/dynamo-release/pull/485>`_).
-  - Other deprecated APIs include: `pp.calc_sz_factor_legacy`, `pp.filter_cells_legacy`,
-    `pp.filter_genes_by_outliers_legacy`, `pp.select_genes_monocle_legacy`, `pp.select_genes_by_dispersion_general`,
-    `pp.cook_dist`, `pp.normalize_cell_expr_by_size_factors`. More information can be found on our preprocessing
+  - Other deprecated APIs include: ``pp.calc_sz_factor_legacy, pp.filter_cells_legacy``,
+    ``pp.filter_genes_by_outliers_legacy, pp.select_genes_monocle_legacy, pp.select_genes_by_dispersion_general``,
+    ``pp.cook_dist, pp.normalize_cell_expr_by_size_factors``. More information can be found on our preprocessing
     tutorials.
 
 - Debug:
 
-  - Fixed the bug that save_show_or_return lags not working
+  - Fixed the bug that save_show_or_return flags not working
     (`PR 414 <https://github.com/aristoteleo/dynamo-release/pull/414>`_).
-  - Enabled the leiden to accept the resolution parameters
+  - Enabled the leiden algorithm to accept the resolution parameters
     (`PR 441 <https://github.com/aristoteleo/dynamo-release/pull/441>`_).
-  - Fixed the wrong attribute name of anndata object in `utils_dimensionReduction.py
+  - Fixed the wrong attribute name of anndata object in `utils_dimensionReduction.py`
     (`PR 458 <https://github.com/aristoteleo/dynamo-release/pull/458>`_)`
   - Fixed the dimensionality issue in `moments.py`
     (`PR 461 <https://github.com/aristoteleo/dynamo-release/pull/461>`_).
-  - Fixed part of the bug that h5ad cannot be saved correctly
+  - Fixed part of the bug that h5ad file cannot be saved correctly
     (`PR 467 <https://github.com/aristoteleo/dynamo-release/pull/467>`_).
   - Fixed the bug that `pca_mean` will be `None` under some circumstances
     (`PR 482 <https://github.com/aristoteleo/dynamo-release/pull/482>`_).
