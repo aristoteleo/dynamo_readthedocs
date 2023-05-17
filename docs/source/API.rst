@@ -27,14 +27,29 @@ Preprocessing (pp)
 
    pp.convert2symbol
    pp.filter_cells
+   pp.filter_cells_by_outliers
    pp.filter_genes
    pp.filter_genes_by_pattern
+   pp.filter_genes_by_outliers
+   pp.filter_genes_by_clusters
+   pp.calc_sz_factor
+   pp.normalize
    pp.normalize_cells
+   pp.normalize_layers_pearson_residuals
+   pp.calc_Gini
+   pp.select_genes_monocle
+   pp.select_genes_by_pearson_residuals
    pp.scale
    pp.log1p
-   pp.pca_monocle
+   pp.pca
    pp.top_pca_genes
-   pp.recipe_monocle
+   pp.sctransform
+   pp.Preprocessor
+   pp.CnmfPreprocessor
+   pp.harmony_debatch
+   pp.integrate
+   pp.lambda_correction
+   pp.decode
    pp.cell_cycle_scores
 
 
