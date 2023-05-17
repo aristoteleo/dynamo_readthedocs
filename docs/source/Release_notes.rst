@@ -38,30 +38,31 @@ Feature Changes
     ``pp.cook_dist, pp.normalize_cell_expr_by_size_factors``. More information can be found on our preprocessing
     tutorials.
 
-- Debug:
 
-  - Fixed the bug that save_show_or_return flags not working
-    (`PR 414 <https://github.com/aristoteleo/dynamo-release/pull/414>`_).
-  - Enabled the leiden algorithm to accept the resolution parameters
-    (`PR 441 <https://github.com/aristoteleo/dynamo-release/pull/441>`_).
-  - Fixed the wrong attribute name of anndata object in `utils_dimensionReduction.py`
-    (`PR 458 <https://github.com/aristoteleo/dynamo-release/pull/458>`_)`
-  - Fixed the dimensionality issue in `moments.py`
-    (`PR 461 <https://github.com/aristoteleo/dynamo-release/pull/461>`_).
-  - Fixed part of the bug that h5ad file cannot be saved correctly
-    (`PR 467 <https://github.com/aristoteleo/dynamo-release/pull/467>`_).
-  - Fixed the bug that `pca_mean` will be `None` under some circumstances
-    (`PR 482 <https://github.com/aristoteleo/dynamo-release/pull/482>`_).
-  - Removing warning message for nxviz
-    (`PR 489 <https://github.com/aristoteleo/dynamo-release/pull/489>`_).
-  - Corrected the norm log-likelihood function
-    (`PR 495 <https://github.com/aristoteleo/dynamo-release/pull/495>`_).
-  - Removed deprecated parameters in gseapy functions
-    (`PR 496 <https://github.com/aristoteleo/dynamo-release/pull/496>`_).
-  - Fixed the bugs that functions will raise error when no fixed points are found in vector field by sampling
-    (`PR 501 <https://github.com/aristoteleo/dynamo-release/pull/501>`_).
-  - Removed unwanted operations in dimension reduction
-    (`PR 502 <https://github.com/aristoteleo/dynamo-release/pull/502>`_).
+DEBUG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Fixed the bug that save_show_or_return flags not working
+  (`PR 414 <https://github.com/aristoteleo/dynamo-release/pull/414>`_).
+- Enabled the leiden algorithm to accept the resolution parameters
+  (`PR 441 <https://github.com/aristoteleo/dynamo-release/pull/441>`_).
+- Fixed the wrong attribute name of anndata object in `utils_dimensionReduction.py`
+  (`PR 458 <https://github.com/aristoteleo/dynamo-release/pull/458>`_)`
+- Fixed the dimensionality issue in `moments.py`
+  (`PR 461 <https://github.com/aristoteleo/dynamo-release/pull/461>`_).
+- Fixed part of the bug that h5ad file cannot be saved correctly
+  (`PR 467 <https://github.com/aristoteleo/dynamo-release/pull/467>`_).
+- Fixed the bug that `pca_mean` will be `None` under some circumstances
+  (`PR 482 <https://github.com/aristoteleo/dynamo-release/pull/482>`_).
+- Removing warning message for nxviz
+  (`PR 489 <https://github.com/aristoteleo/dynamo-release/pull/489>`_).
+- Corrected the norm log-likelihood function
+  (`PR 495 <https://github.com/aristoteleo/dynamo-release/pull/495>`_).
+- Removed deprecated parameters in gseapy functions
+  (`PR 496 <https://github.com/aristoteleo/dynamo-release/pull/496>`_).
+- Fixed the bugs that functions will raise error when no fixed points are found in vector field by sampling
+  (`PR 501 <https://github.com/aristoteleo/dynamo-release/pull/501>`_).
+- Removed unwanted operations in dimension reduction
+  (`PR 502 <https://github.com/aristoteleo/dynamo-release/pull/502>`_).
 
 
 Tutorial Updates on Readthedocs
