@@ -14,7 +14,11 @@ contains steps such as ``filter_cells_by_outliers``,
 ``select_genes``. You can replace the implementation and default monocle
 parameters passed into these functions by modifying the attributes of
 the Preprocessor class. A detailed API graph of Preprocessing module can
-be found :download:`here <Preprocessor_tutorial_files/preprocessing_structure_final.pdf>`.
+be found here:
+
+.. raw:: html
+
+   <a href="Preprocessor_tutorial_files/preprocessing_structure_final.pdf" download>Preprocessing Module</a>
 
 
 
