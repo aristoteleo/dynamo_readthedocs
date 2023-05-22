@@ -91,9 +91,11 @@ can either use the `velocyto command line interface`_ or the `bustool from Pacht
 
 Preprocess data
 '''''''''''''''
-After loading data, you are ready to performs some preprocessing. You can run the ``recipe_monocle`` function that uses similar but generalized strategy from `Monocle 3`_ to normalize all datasets in different layers (the spliced and unspliced or new, i.e. metabolic labelled, and total mRNAs or others), followed by feature selection and PCA dimension reduction. ::
+After loading data, you are ready to performs some preprocessing. You can use the ``Preprocessor`` class that applies similar but generalized strategy from `Monocle 3`_ to normalize all datasets in different layers (the spliced and unspliced or new, i.e. metabolic labelled, and total mRNAs or others), followed by feature selection and PCA dimension reduction. ::
 
-    dyn.pp.recipe_monocle(adata)
+    from dynamo.preprocessing import Preprocessor
+    preprocessor = Preprocessor()
+    preprocessor.preprocess_adata(adata, recipe="monocle")
 
 Learn dynamics
 ''''''''''''''
