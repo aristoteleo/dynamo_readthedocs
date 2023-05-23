@@ -26,6 +26,16 @@ Feature Changes
 
     - ``pp.pca_monocle`` -> ``pp.pca``.
 
+  - sctransform and pearson residuals recipe has been refactored
+    (`PR 510 <https://github.com/aristoteleo/dynamo-release/pull/510>`_
+    `PR 512 <https://github.com/aristoteleo/dynamo-release/pull/512>`_). Now those advanced methods will only be
+    performed on X layer. Other layers will get normalized by size factors.
+  - Calculation of `ntr` rate and ``pp.cell_cycle_scores`` has been added to the Preprocessor
+    (`PR 513 <https://github.com/aristoteleo/dynamo-release/pull/513>`_). To enable cell cycle scores, set parameter
+    ``cell_cycle_score_enable`` to ``True`` when initializing the ``pp.Preprocessor``.
+  - Now the size factors normalization will normalize all layers with its own size factors by default
+    (`PR 521 <https://github.com/aristoteleo/dynamo-release/pull/521>`_). To normalize the labeled data with total size
+    factors, we need to set the ``total_szfactor`` to ``total_Size_Factor`` explicitly.
   - Multiple new features added, includes genes selection by fano factors
     (`PR 474 <https://github.com/aristoteleo/dynamo-release/pull/474>`_), external data integration methods
     (`PR 473 <https://github.com/aristoteleo/dynamo-release/pull/473>`_) and ``pp.regress_out``
