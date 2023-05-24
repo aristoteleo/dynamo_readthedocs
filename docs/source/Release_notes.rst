@@ -3,6 +3,105 @@ Release notes
 ==================
 
 
+Dynamo Ver 1.3.0
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+Feature Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+- The preprocessing module has been refactored:
+
+  - Class *Preprocessor* is recommended for most preprocessing methods and recipes. ``pp.recipe_monocle,``
+    ``pp.recipe_velocyto`` has been deprecated (`PR 497 <https://github.com/aristoteleo/dynamo-release/pull/497>`_
+    `PR 500 <https://github.com/aristoteleo/dynamo-release/pull/500>`_).
+    Check the tutorials here for more instructions.
+  - Normalization has been refactored (`PR 474 <https://github.com/aristoteleo/dynamo-release/pull/474>`_
+    `PR 475 <https://github.com/aristoteleo/dynamo-release/pull/475>`_): ``pp.normalize_cell_expr_by_size_factors``
+    has been deprecated, and new APIs are:
+
+    - ``pp.normalize_cell_expr_by_size_factors`` -> ``pp.calc_sz_factor, pp.normalize``.
+
+  - Gene selection has been refactored (`PR 474 <https://github.com/aristoteleo/dynamo-release/pull/474>`_). Now support
+    genes selected by fano factors. APIs are ``pp.select_genes_monocle`` and ``pp.select_genes_by_seurat_recipe``.
+  - PCA has been refactored (`PR 469 <https://github.com/aristoteleo/dynamo-release/pull/469>`_). ``dyn.pp.pca_monocle``
+    has been deprecated. The new API is:
+
+    - ``pp.pca_monocle`` -> ``pp.pca``.
+
+  - sctransform and pearson residuals recipe has been refactored
+    (`PR 510 <https://github.com/aristoteleo/dynamo-release/pull/510>`_
+    `PR 512 <https://github.com/aristoteleo/dynamo-release/pull/512>`_). Now those advanced methods will only be
+    performed on X layer. Other layers will get normalized by size factors.
+  - Calculation of `ntr` rate and ``pp.cell_cycle_scores`` has been added to the Preprocessor
+    (`PR 513 <https://github.com/aristoteleo/dynamo-release/pull/513>`_). To enable cell cycle scores, set parameter
+    ``cell_cycle_score_enable`` to ``True`` when initializing the ``pp.Preprocessor``.
+  - Now the size factors normalization will normalize all layers with its own size factors by default
+    (`PR 521 <https://github.com/aristoteleo/dynamo-release/pull/521>`_). To normalize the labeled data with total size
+    factors, we need to set the ``total_szfactor`` to ``total_Size_Factor`` explicitly.
+  - Multiple new features added, includes genes selection by fano factors
+    (`PR 474 <https://github.com/aristoteleo/dynamo-release/pull/474>`_), external data integration methods
+    (`PR 473 <https://github.com/aristoteleo/dynamo-release/pull/473>`_) and ``pp.regress_out``
+    (`PR 470 <https://github.com/aristoteleo/dynamo-release/pull/470>`_
+    `PR 483 <https://github.com/aristoteleo/dynamo-release/pull/483>`_
+    `PR 484 <https://github.com/aristoteleo/dynamo-release/pull/484>`_).
+  - Created more tests for preprocessing module (`PR 485 <https://github.com/aristoteleo/dynamo-release/pull/485>`_).
+  - Other deprecated APIs include: ``pp.calc_sz_factor_legacy, pp.filter_cells_legacy``,
+    ``pp.filter_genes_by_outliers_legacy, pp.select_genes_monocle_legacy, pp.select_genes_by_dispersion_general``,
+    ``pp.cook_dist, pp.normalize_cell_expr_by_size_factors``. More information can be found on our preprocessing
+    tutorials.
+
+
+DEBUG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Fixed the bug that save_show_or_return flags not working
+  (`PR 414 <https://github.com/aristoteleo/dynamo-release/pull/414>`_).
+- Enabled the leiden algorithm to accept the resolution parameters
+  (`PR 441 <https://github.com/aristoteleo/dynamo-release/pull/441>`_).
+- Fixed the wrong attribute name of anndata object in `utils_dimensionReduction.py`
+  (`PR 458 <https://github.com/aristoteleo/dynamo-release/pull/458>`_)`
+- Fixed the dimensionality issue in `moments.py`
+  (`PR 461 <https://github.com/aristoteleo/dynamo-release/pull/461>`_).
+- Fixed part of the bug that h5ad file cannot be saved correctly
+  (`PR 467 <https://github.com/aristoteleo/dynamo-release/pull/467>`_).
+- Fixed the bug that `pca_mean` will be `None` under some circumstances
+  (`PR 482 <https://github.com/aristoteleo/dynamo-release/pull/482>`_).
+- Removing warning message for nxviz
+  (`PR 489 <https://github.com/aristoteleo/dynamo-release/pull/489>`_).
+- Corrected the norm log-likelihood function
+  (`PR 495 <https://github.com/aristoteleo/dynamo-release/pull/495>`_).
+- Removed deprecated parameters in gseapy functions
+  (`PR 496 <https://github.com/aristoteleo/dynamo-release/pull/496>`_).
+- Fixed the bugs that functions will raise error when no fixed points are found in vector field by sampling
+  (`PR 501 <https://github.com/aristoteleo/dynamo-release/pull/501>`_).
+- Removed unwanted operations in dimension reduction
+  (`PR 502 <https://github.com/aristoteleo/dynamo-release/pull/502>`_).
+
+
+Tutorial Updates on Readthedocs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Documentation, Tutorials, and readthedocs update:
+
+  - Update requirements for readthedocs (`PR 466 <https://github.com/aristoteleo/dynamo-release/pull/466>`_).
+  - Update readme (`PR 479 <https://github.com/aristoteleo/dynamo-release/pull/479>`_).
+  - Fixed documentation error caused by importing Literal
+    (`PR 486 <https://github.com/aristoteleo/dynamo-release/pull/486>`_).
+  - Fixed readthedocs error caused by the new version of urllib3
+    (`PR 488 <https://github.com/aristoteleo/dynamo-release/pull/488>`_).
+
+
+Other Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Docstring and type hints update:
+
+  - Updated docstring and type hints for tools module
+    (`PR 419 <https://github.com/aristoteleo/dynamo-release/pull/419>`_).
+  - Updated docstring and type hints for vector field module
+    (`PR 434 <https://github.com/aristoteleo/dynamo-release/pull/434>`_).
+  - Updated the docstring and type hints for simulation and predicting module
+    (`PR 457 <https://github.com/aristoteleo/dynamo-release/pull/457>`_).
+  - Update the docstring and type hints for hzplot
+    (`PR 456 <https://github.com/aristoteleo/dynamo-release/pull/456>`_).
+
+
+
 Dynamo Ver 1.1.0
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Feature Changes
