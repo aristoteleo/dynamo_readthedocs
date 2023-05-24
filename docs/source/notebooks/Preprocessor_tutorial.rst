@@ -30,7 +30,7 @@ attributes of the Preprocessor class.
 
 
 .. image:: Preprocessor_tutorial_files/preprocessing_structure_final.pdf
-    :target: https://github.com/Sichao25/dynamo-tutorials/blob/debug_notebooks/images/preprocessing_structure_final.pdf
+    :target: https://github.com/aristoteleo/dynamo-tutorials/blob/master/images/preprocessing_structure_final.pdf
 
 
 The recipes in dynamo
