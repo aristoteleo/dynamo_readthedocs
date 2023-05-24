@@ -12,7 +12,7 @@ Feature Changes
   - Class *Preprocessor* is recommended for most preprocessing methods and recipes. ``pp.recipe_monocle,``
     ``pp.recipe_velocyto`` has been deprecated (`PR 497 <https://github.com/aristoteleo/dynamo-release/pull/497>`_
     `PR 500 <https://github.com/aristoteleo/dynamo-release/pull/500>`_).
-    Check the tutorials here for more instructions.
+    Check the tutorials `here <notebooks/Preprocessor_tutorial.rst>`_ for more instructions.
   - Normalization has been refactored (`PR 474 <https://github.com/aristoteleo/dynamo-release/pull/474>`_
     `PR 475 <https://github.com/aristoteleo/dynamo-release/pull/475>`_): ``pp.normalize_cell_expr_by_size_factors``
     has been deprecated, and new APIs are:
@@ -45,8 +45,8 @@ Feature Changes
   - Created more tests for preprocessing module (`PR 485 <https://github.com/aristoteleo/dynamo-release/pull/485>`_).
   - Other deprecated APIs include: ``pp.calc_sz_factor_legacy, pp.filter_cells_legacy``,
     ``pp.filter_genes_by_outliers_legacy, pp.select_genes_monocle_legacy, pp.select_genes_by_dispersion_general``,
-    ``pp.cook_dist, pp.normalize_cell_expr_by_size_factors``. More information can be found on our preprocessing
-    tutorials.
+    ``pp.cook_dist, pp.normalize_cell_expr_by_size_factors``. More information can be found on our
+    `preprocessing tutorials <notebooks/Preprocessor_tutorial.rst>`_.
 
 
 DEBUG
