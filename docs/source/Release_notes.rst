@@ -43,6 +43,9 @@ Feature Changes
     `PR 483 <https://github.com/aristoteleo/dynamo-release/pull/483>`_
     `PR 484 <https://github.com/aristoteleo/dynamo-release/pull/484>`_).
   - Created more tests for preprocessing module (`PR 485 <https://github.com/aristoteleo/dynamo-release/pull/485>`_).
+  - Replaced ``adata.obsm["X"]`` with ``adata.obsm["X_pca"]``
+    (`PR 514 <https://github.com/aristoteleo/dynamo-release/pull/514>`_).
+  - Removed some console output. They can still be displayed with ``DEBUG`` logging mode.
   - Other deprecated APIs include: ``pp.calc_sz_factor_legacy, pp.filter_cells_legacy``,
     ``pp.filter_genes_by_outliers_legacy, pp.select_genes_monocle_legacy, pp.select_genes_by_dispersion_general``,
     ``pp.cook_dist, pp.normalize_cell_expr_by_size_factors``. More information can be found on our
