@@ -1,29 +1,44 @@
+.. raw:: html
+
+    <div class="note">
+      <a href="https://colab.research.google.com/github/aristoteleo/dynamo-tutorials/blob/master/Preprocessor_tutorial.ipynb" target="_parent">
+      <img src="https://user-images.githubusercontent.com/7456281/93841442-99c3e180-fc61-11ea-9c87-07760b5dfc9a.png" width="119" alt="Open In Colab"/></a>
+      <a href="https://nbviewer.jupyter.org/github/aristoteleo/dynamo-tutorials/blob/master/Preprocessor_tutorial.ipynb" target="_parent">
+      <img src="https://user-images.githubusercontent.com/7456281/93841447-9c263b80-fc61-11ea-99b2-4eafe9958ee4.png" width="119" alt="Open In nbviewer"/></a>
+    </div>
+
+
 Preprocessing Tutorial
 ======================
 
-This tutorial is designed to show you how to utilize Dynamo to
-preprocess data. In this version, we introduce the ``Preprocessor``
-class, which allows you to freely explore different preprocessing
-recipes with configurable parameters inside the class. The
-``Preprocessor`` currently includes several existing recipes such as
-``monocle``, ``pearson residual``, ``seurat``, and ``sctransform``.
-Furthermore, you can easily replace each preprocessing step with your
-own implementation. For example, the Preprocessor’s monocle pipeline
-contains steps such as ``filter_cells_by_outliers``,
-``filter_genes_by_outliers``, ``normalize_by_cells``, and
-``select_genes``. You can replace the implementation and default monocle
-parameters passed into these functions by modifying the attributes of
-the Preprocessor class. A detailed API graph of Preprocessing module can
-be found here:
+This tutorial is designed to show you how Dynamo preprocess the regular
+scRNA-seq or time-resolved metabolic labeling enabled scRNA-seq data. In
+this new release of ``dynamo 1.3.0``, we introduce the ``Preprocessor``
+class (many parts of it has been implemented previously and but
+extensively updated and refined in this release), which allows you to
+convenietntly explore different preprocessing recipes with configurable
+parameters inside the class. The ``Preprocessor`` currently includes
+several existing recipes such as ``monocle``, ``pearson residual``,
+``seurat``, and ``sctransform``. Furthermore, you can easily replace
+each preprocessing step with your own method of preprocessing. For
+example, the Preprocessor’s monocle pipeline contains steps such as
+``filter_cells_by_outliers``, ``filter_genes_by_outliers``,
+``normalize_by_cells``, and ``select_genes``. You can replace the
+default preprocessing steps with your own method and modify default
+monocle parameters passed into these functions by reconfiguring the
+attributes of the Preprocessor class.
 
-.. raw:: html
 
-   <a href="Preprocessor_tutorial_files/preprocessing_structure_final.pdf" download>Preprocessing Module</a>
-
+.. image:: Preprocessor_tutorial_files/preprocessing_structure_final.pdf
+    :target: https://github.com/aristoteleo/dynamo-tutorials/blob/master/images/preprocessing_structure_final.pdf
 
 
 The recipes in dynamo
 ---------------------
+
+To make your life easy, currently dynamo supports 4 major receipe for
+preprocessing. Please find at the end of this tutorial how you can
+customize your preprocessing method.
 
 -  ``Monocle``: Monocle recipe uses similar but generalized strategy
    from `Monocle 3 <https://cole-trapnell-lab.github.io/monocle3/>`__ to
@@ -37,8 +52,8 @@ The recipes in dynamo
 -  ``Pearson Residuals``: Pearson Residuals recipe implements a
    preprocessing pipeline proposed in the study by Lause, Berens, and
    Kobak (2021) that uses Pearson Residuals for the normalization of
-   single-cell RNA-seq UMI data. This performs several steps including
-   standardization, filtering of cells and genes by outliers,
+   single-cell RNA-seq UMI data. This method performs several steps
+   including standardization, filtering of cells and genes by outliers,
    select_genes_by_pearson_residuals, appending or excluding gene lists,
    normalize_layers_pearson_residuals, regression, and PCA. This
    pipeline aims to preprocess the data using the Pearson residuals
@@ -71,7 +86,8 @@ The recipes in dynamo
    expression data using regularized negative binomial regression and an
    integrated analysis approach for multimodal single-cell data. This
    pipeline aims to preprocess the data using the sctransform method to
-   account for downstream analysis. please refer to the
+   account for downstream analysis. For more details, please refer to
+   the
    `paper <https://www.sciencedirect.com/science/article/pii/S0092867421005833>`__,
    `code <https://github.com/Ukyeon/dynamo-release/blob/e7dd31408dabe5ce44e79a489badb106626a7109/dynamo/preprocessing/Preprocessor.py#L619>`__,
    and `R code <https://github.com/satijalab/sctransform>`__.
@@ -111,24 +127,27 @@ preprocessing procedure, simply uncomment the code snippet below
 Glossary of keys generated during preprocessing
 -----------------------------------------------
 
+you do need to update all list to series…
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 -  ``adata.obs.pass_basic_filter``: a *series* of boolean variables
    indicating whether cells pass certain basic filters. In monocle
    recipe, the basic filtering is based on thresholding of expression
    values.
--  ``adata.var.pass_basic_filter``: a list of boolean variables
+-  ``adata.var.pass_basic_filter``: a *series* of boolean variables
    indicating whether genes pass certain basic filters. In monocle
    recipe, the basic filtering is based on thresholding of expression
    values.
--  ``adata.var.use_for_pca``: a list of boolean variables points to
+-  ``adata.var.use_for_pca``: a *series* of boolean variables points to
    feature genes selected for PCA dimension reduction and following
    downstream RNA velocity and vector field analysis. In many recipes,
    this key is equivalent to highly variable genes.
--  ``adata.var.highly_variable_scores``: a list of float number scores
-   indicating how variable each gene is, typically generated during gene
-   feature selection (``preprocessor.select_genes``). Note only part of
-   recipes do not have this highly variable scores. E.g. ``seuratV3``
-   recipe implemented in dynamo does not have highly variable scores due
-   to its thresholding nature.
+-  ``adata.var.highly_variable_scores``: a *series* of float number
+   scores indicating how variable each gene is, typically generated
+   during gene feature selection (``preprocessor.select_genes``). Note
+   only part of recipes do not have this highly variable scores. E.g.
+   ``seuratV3`` recipe implemented in dynamo does not have highly
+   variable scores due to its thresholding nature.
 -  ``adata.layers['X_spliced']``: spliced expression matrix after
    normalization used in downstream computation.
 -  ``data.layers['X_unspliced']``: unspliced expression matrix after
@@ -167,7 +186,22 @@ Applying Monocle Recipe
 
 .. code:: ipython3
 
-    preprocessor = dyn.pp.Preprocessor()
+    adata
+
+
+
+
+.. parsed-literal::
+
+    AnnData object with n_obs × n_vars = 4181 × 16940
+        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch'
+        layers: 'spliced', 'unspliced'
+
+
+
+.. code:: ipython3
+
+    preprocessor = Preprocessor()
     preprocessor.preprocess_adata(adata, recipe="monocle")
     
     # Alternative
@@ -181,7 +215,8 @@ Applying Monocle Recipe
     |-----------> filtered out 14 outlier cells
     |-----------> filtered out 12746 outlier genes
     |-----> PCA dimension reduction
-    |-----> [Preprocessor-monocle] completed [2.8872s]
+    |-----> <insert> X_pca to obsm in AnnData Object.
+    |-----> [Preprocessor-monocle] completed [3.5468s]
 
 
 .. code:: ipython3
@@ -194,37 +229,43 @@ Applying Monocle Recipe
 .. parsed-literal::
 
     AnnData object with n_obs × n_vars = 4167 × 16940
-        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'initial_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size'
-        var: 'nCells', 'nCounts', 'pass_basic_filter', 'score', 'log_cv', 'log_m', 'frac', 'use_for_pca'
+        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'initial_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'ntr'
+        var: 'nCells', 'nCounts', 'pass_basic_filter', 'log_cv', 'score', 'log_m', 'frac', 'use_for_pca', 'ntr'
         uns: 'pp', 'velocyto_SVR', 'feature_selection', 'PCs', 'explained_variance_ratio_', 'pca_mean'
         obsm: 'X_pca'
-        layers: 'spliced', 'unspliced', 'X_unspliced', 'X_spliced'
+        layers: 'spliced', 'unspliced', 'X_spliced', 'X_unspliced'
 
 
 
 .. code:: ipython3
 
     dyn.tl.reduceDimension(adata, basis="pca")
-    dyn.pl.umap(adata, color=celltype_key)
+    # pointsize can be used to set the size of data points (cells) while alpha set the transparency value of the data points 
+    dyn.pl.umap(adata, color=celltype_key, pointsize=0.2, alpha=0.4) 
 
 
 .. parsed-literal::
 
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
-    |-----> [UMAP] completed [26.3331s]
+    |-----> <insert> X_umap to obsm in AnnData Object.
+    |-----> [UMAP] completed [27.4297s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
 
 
-.. image:: Preprocessor_tutorial_files/output_19_1.png
-   :width: 421px
-   :height: 340px
+.. image:: Preprocessor_tutorial_files/output_20_1.png
 
 
 Applying Pearson Residuals Recipe
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Please note that pearson residual or sctransform transformation should
+only be performed for adata.X and not applied to different layers. This
+is because RNA velocity do have physical meanings, and otherwise
+spliced/unspliced data will reseult in negative values after
+transformation.
 
 .. code:: ipython3
 
@@ -245,39 +286,38 @@ Applying Pearson Residuals Recipe
     |-----> extracting highly variable genes
     |-----------> filtered out 350 outlier genes
     |-----> applying Pearson residuals to layer <X>
-    |-----> [pearson residual normalization] completed [1.1453s]
-    |-----------> skipping set X as layer in adata.layers
-    |-----> applying Pearson residuals to layer <spliced>
-    |-----> [pearson residual normalization] completed [32.5155s]
-    |-----> applying Pearson residuals to layer <unspliced>
-    |-----> [pearson residual normalization] completed [26.9369s]
+    |-----> replacing layer <X> with pearson residual normalized data.
+    |-----> [pearson residual normalization for X] completed [1.1042s]
     |-----> PCA dimension reduction
-    |-----> [Preprocessor-pearson residual] completed [62.9958s]
+    |-----> <insert> X_pca to obsm in AnnData Object.
+    |-----> [Preprocessor-pearson residual] completed [4.8708s]
 
 
 .. code:: ipython3
 
     dyn.tl.reduceDimension(adata)
-    dyn.pl.umap(adata, color=celltype_key)
+    dyn.pl.umap(adata, color=celltype_key, pointsize=0.2, alpha=0.4)
 
 
 .. parsed-literal::
 
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
-    |-----> [UMAP] completed [16.2982s]
+    |-----> <insert> X_umap to obsm in AnnData Object.
+    |-----> [UMAP] completed [16.7289s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
 
 
-.. image:: Preprocessor_tutorial_files/output_22_1.png
-   :width: 421px
-   :height: 340px
+.. image:: Preprocessor_tutorial_files/output_23_1.png
 
 
 Applying Sctransform Recipe
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sctransform transformation is only applied to adata.X and not applied to
+different layers, as stated above.
 
 .. code:: ipython3
 
@@ -304,31 +344,29 @@ Applying Sctransform Recipe
     |-----? Sctransform recipe will subset the data first with default gene selection function for efficiency. If you want to disable this, please perform sctransform without recipe.
     |-----> sctransform adata on layer: X
     |-----------> set sctransform results to adata.X
-    |-----> sctransform adata on layer: spliced
-    |-----> sctransform adata on layer: unspliced
     |-----> PCA dimension reduction
-    |-----> [Preprocessor-sctransform] completed [50.6737s]
+    |-----> <insert> X_pca to obsm in AnnData Object.
+    |-----> [Preprocessor-sctransform] completed [16.6057s]
 
 
 .. code:: ipython3
 
     dyn.tl.reduceDimension(adata)
-    dyn.pl.umap(adata, color=celltype_key)
+    dyn.pl.umap(adata, color=celltype_key, pointsize=0.2, alpha=0.4)
 
 
 .. parsed-literal::
 
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
-    |-----> [UMAP] completed [15.5111s]
+    |-----> <insert> X_umap to obsm in AnnData Object.
+    |-----> [UMAP] completed [16.2677s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
 
 
-.. image:: Preprocessor_tutorial_files/output_25_1.png
-   :width: 421px
-   :height: 340px
+.. image:: Preprocessor_tutorial_files/output_26_1.png
 
 
 Applying Seurat Recipe
@@ -356,40 +394,41 @@ Applying Seurat Recipe
     |-----------> choose 2000 top genes
     |-----> number of selected highly variable genes: 2000
     |-----> PCA dimension reduction
-    |-----> [Preprocessor-seurat] completed [1.2582s]
+    |-----> <insert> X_pca to obsm in AnnData Object.
+    |-----> [Preprocessor-seurat] completed [1.4041s]
 
 
 .. code:: ipython3
 
     dyn.tl.reduceDimension(adata)
-    dyn.pl.umap(adata, color=celltype_key)
+    dyn.pl.umap(adata, color=celltype_key, pointsize=0.2, alpha=0.4)
 
 
 .. parsed-literal::
 
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
-    |-----> [UMAP] completed [16.4698s]
+    |-----> <insert> X_umap to obsm in AnnData Object.
+    |-----> [UMAP] completed [16.0549s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
 
 
-.. image:: Preprocessor_tutorial_files/output_28_1.png
-   :width: 421px
-   :height: 340px
+.. image:: Preprocessor_tutorial_files/output_29_1.png
 
 
 Customize function parameters configured in Preprocessor
 --------------------------------------------------------
 
-In this example, we will use the monocle recipe to demonstrate how to
-select genes. We can set the recipe to be ``dynamo_monocle``,
-``seurat``, or others to apply different criteria for selecting genes.
-We can also set the ``select_genes_kwargs`` parameter in the
-preprocessor to pass additional desired parameters. By default, the
-recipe is set to ``dynamo_monocle``. We can change it to ``seurat`` and
-add other constraint parameters if needed.
+In this example, we will use the monocle recipe to demonstrate how we
+can configure Preprocessor cluster to select genes based on your needs.
+Note that we can set the recipe to be ``dynamo_monocle``, ``seurat``, or
+others to apply different criteria for selecting genes. We can also set
+the ``select_genes_kwargs`` parameter in the preprocessor to pass
+additional desired parameters. By default, the recipe is set to
+``dynamo_monocle``. We can change it to ``seurat`` and add other
+constraint parameters if needed.
 
 .. code:: ipython3
 
@@ -423,7 +462,8 @@ To set the preprocessing steps and their corresponding function
 parameters for the monocle recipe, we can call
 ``preprocessor.config_monocle_recipe()``. By default, the constructor
 parameters of the Preprocessor for preprocessing are set to the monocle
-recipe used in Dynamo papers.
+recipe used in report the Dynamo cell paper
+`dynamo <https://www.cell.com/cell/pdf/S0092-8674(21)01577-4.pdf>`__.
 
 If you would like to customize the dataset to better fit your
 preferences, you can adjust the parameters before running the recipe.
@@ -436,20 +476,19 @@ mitochondria genes.
 
 .. code:: ipython3
 
-    dyn.pl.basic_stats(adata)
+    dyn.pl.basic_stats(adata, figsize=(3, 2))
 
 
 
-.. image:: Preprocessor_tutorial_files/output_37_0.png
-   :width: 1196px
-   :height: 296px
+.. image:: Preprocessor_tutorial_files/output_38_0.png
 
 
-You can plot the rank by gene expression fraction
+You can visualize the rank of the fraction of UMI to the total UMI per
+cell for the top 20 genes
 
 .. code:: ipython3
 
-    dyn.pl.highest_frac_genes(adata)
+    dyn.pl.highest_frac_genes(adata, figsize=(6, 2))
 
 
 .. parsed-literal::
@@ -458,10 +497,7 @@ You can plot the rank by gene expression fraction
 
 
 
-.. image:: Preprocessor_tutorial_files/output_39_1.png
-   :width: 1005px
-   :height: 470px
-
+.. image:: Preprocessor_tutorial_files/output_40_1.png
 
 
 
@@ -475,6 +511,9 @@ You can get rid of any cells that have mitochondrial gene expression
 percentage greater than pMito or total counts greater than nCounts. You
 can adjust the threshold values as per your requirements.
 
+Note that in our particular case, our data doesn’t have mitochondria
+counts.
+
 .. code:: ipython3
 
     import seaborn as sns
@@ -482,14 +521,24 @@ can adjust the threshold values as per your requirements.
     
     # Create the first figure
     df = adata.obs.loc[:, ["nCounts", "pMito", "nGenes"]]
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 4))  # Adjust the figsize as desired
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6, 3))  # Adjust the figsize as desired
     
-    sns.regplot(data=df, x="nCounts", y="pMito", ax=ax1)
+    sns.regplot(data=df, 
+                x="nCounts", 
+                y="pMito", 
+                ax=ax1,
+                scatter_kws={"color": "black",  "alpha": 0.1}, 
+                line_kws={"color": "red"})
     ax1.set_xlabel("nCounts")
     ax1.set_ylabel("pMito")
     
     # Create the second figure
-    sns.regplot(data=df, x="nCounts", y="nGenes", ax=ax2)
+    sns.regplot(data=df, 
+                x="nCounts", 
+                y="nGenes", 
+                ax=ax2, 
+                scatter_kws={"color": "black",  "alpha": 0.1}, 
+                line_kws={"color": "red"})
     ax2.set_xlabel("nCounts")
     ax2.set_ylabel("nGenes")
     
@@ -500,9 +549,7 @@ can adjust the threshold values as per your requirements.
 
 
 
-.. image:: Preprocessor_tutorial_files/output_41_0.png
-   :width: 896px
-   :height: 397px
+.. image:: Preprocessor_tutorial_files/output_42_0.png
 
 
 And modify some values of parameters based on the information above.
@@ -572,28 +619,28 @@ Let`s run the monocle recipe again.
     |-----------> filtered out 125 outlier cells
     |-----------> filtered out 13035 outlier genes
     |-----> PCA dimension reduction
-    |-----> [Preprocessor-monocle] completed [2.8375s]
+    |-----> <insert> X_pca to obsm in AnnData Object.
+    |-----> [Preprocessor-monocle] completed [2.9955s]
 
 
 .. code:: ipython3
 
     dyn.tl.reduceDimension(adata, basis="pca")
-    dyn.pl.umap(adata, color=celltype_key)
+    dyn.pl.umap(adata, color=celltype_key, pointsize=0.2, alpha=0.4)
 
 
 .. parsed-literal::
 
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
-    |-----> [UMAP] completed [25.8460s]
+    |-----> <insert> X_umap to obsm in AnnData Object.
+    |-----> [UMAP] completed [25.0124s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
 
 
-.. image:: Preprocessor_tutorial_files/output_48_1.png
-   :width: 421px
-   :height: 340px
+.. image:: Preprocessor_tutorial_files/output_49_1.png
 
 
 Let`s run the seurat recipe in this time.
@@ -653,7 +700,7 @@ Let`s run the seurat recipe in this time.
 
     preprocessor.preprocess_adata_seurat(adata)
     dyn.tl.reduceDimension(adata, basis="pca")
-    dyn.pl.umap(adata, color=celltype_key)
+    dyn.pl.umap(adata, color=celltype_key, pointsize=0.2, alpha=0.4)
 
 
 .. parsed-literal::
@@ -665,18 +712,18 @@ Let`s run the seurat recipe in this time.
     |-----------> choose 2500 top genes
     |-----> number of selected highly variable genes: 2500
     |-----> PCA dimension reduction
-    |-----> [Preprocessor-seurat] completed [1.4598s]
+    |-----> <insert> X_pca to obsm in AnnData Object.
+    |-----> [Preprocessor-seurat] completed [1.4892s]
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
-    |-----> [UMAP] completed [16.1007s]
+    |-----> <insert> X_umap to obsm in AnnData Object.
+    |-----> [UMAP] completed [15.9357s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
 
 
-.. image:: Preprocessor_tutorial_files/output_53_1.png
-   :width: 421px
-   :height: 340px
+.. image:: Preprocessor_tutorial_files/output_54_1.png
 
 
 Customize and run each functions directly.
@@ -684,10 +731,10 @@ Customize and run each functions directly.
 
 We understand that some of you may prefer to use the each function by
 calling your own customized parameters. To cater to these needs, we have
-prepared a tutorial that will provide guidance on how you can utilize
-the conventional steps with our new preprocessor class. This way, you
-can still take advantage of the benefits of the preprocessor while also
-incorporating your own specific requirements.
+prepared the following guidances help you utilizing the conventional
+steps with our new preprocessor class. This way, you can still take
+advantage of the benefits of the preprocessor while also incorporating
+your own specific requirements.
 
 .. code:: ipython3
 
@@ -792,10 +839,10 @@ incorporating your own specific requirements.
 .. parsed-literal::
 
     AnnData object with n_obs × n_vars = 3937 × 16940
-        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'initial_cell_size'
+        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'initial_cell_size'
         var: 'nCells', 'nCounts', 'pass_basic_filter'
         uns: 'pp'
-        layers: 'spliced', 'unspliced', 'X_unspliced', 'X_spliced'
+        layers: 'spliced', 'unspliced', 'X_spliced', 'X_unspliced'
 
 
 
@@ -813,10 +860,10 @@ incorporating your own specific requirements.
 .. parsed-literal::
 
     AnnData object with n_obs × n_vars = 3937 × 16940
-        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'initial_cell_size'
-        var: 'nCells', 'nCounts', 'pass_basic_filter', 'score', 'log_cv', 'log_m', 'frac', 'use_for_pca'
+        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'initial_cell_size'
+        var: 'nCells', 'nCounts', 'pass_basic_filter', 'log_cv', 'score', 'log_m', 'frac', 'use_for_pca'
         uns: 'pp', 'velocyto_SVR', 'feature_selection'
-        layers: 'spliced', 'unspliced', 'X_unspliced', 'X_spliced'
+        layers: 'spliced', 'unspliced', 'X_spliced', 'X_unspliced'
 
 
 
@@ -827,7 +874,7 @@ incorporating your own specific requirements.
 
 .. parsed-literal::
 
-    |-----> [regress out] completed [28.0288s]
+    |-----> [regress out] completed [28.5796s]
 
 
 .. code:: ipython3
@@ -835,36 +882,40 @@ incorporating your own specific requirements.
     pp.pca(adata)
 
 
+.. parsed-literal::
+
+    |-----> <insert> X_pca to obsm in AnnData Object.
+
+
 
 
 .. parsed-literal::
 
     AnnData object with n_obs × n_vars = 3937 × 16940
-        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'initial_cell_size'
-        var: 'nCells', 'nCounts', 'pass_basic_filter', 'score', 'log_cv', 'log_m', 'frac', 'use_for_pca'
+        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'initial_cell_size'
+        var: 'nCells', 'nCounts', 'pass_basic_filter', 'log_cv', 'score', 'log_m', 'frac', 'use_for_pca'
         uns: 'pp', 'velocyto_SVR', 'feature_selection', 'PCs', 'explained_variance_ratio_', 'pca_mean'
         obsm: 'X_pca'
-        layers: 'spliced', 'unspliced', 'X_unspliced', 'X_spliced'
+        layers: 'spliced', 'unspliced', 'X_spliced', 'X_unspliced'
 
 
 
 .. code:: ipython3
 
     dyn.tl.reduceDimension(adata, basis="pca")
-    dyn.pl.umap(adata, color="Cell_type")
+    dyn.pl.umap(adata, color="Cell_type", pointsize=0.2, alpha=0.4)
 
 
 .. parsed-literal::
 
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
-    |-----> [UMAP] completed [21.0582s]
+    |-----> <insert> X_umap to obsm in AnnData Object.
+    |-----> [UMAP] completed [21.4056s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
 
 
-.. image:: Preprocessor_tutorial_files/output_66_1.png
-   :width: 421px
-   :height: 340px
+.. image:: Preprocessor_tutorial_files/output_67_1.png
 

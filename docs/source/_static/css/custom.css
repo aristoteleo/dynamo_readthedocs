@@ -23,6 +23,10 @@
     font-size: 13px;
 }
 
+.scrollit {
+    overflow-x:auto;
+}
+
 /* Sidebar header (and topbar for mobile) */
 .wy-side-nav-search, .wy-nav-top {
     background: #1b1b1b;

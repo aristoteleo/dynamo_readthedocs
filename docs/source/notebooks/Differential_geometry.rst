@@ -1,3 +1,13 @@
+.. raw:: html
+
+    <div class="note">
+      <a href="https://colab.research.google.com/github/aristoteleo/dynamo-tutorials/blob/master/Differential_geometry.ipynb" target="_parent">
+      <img src="https://user-images.githubusercontent.com/7456281/93841442-99c3e180-fc61-11ea-9c87-07760b5dfc9a.png" width="119" alt="Open In Colab"/></a>
+      <a href="https://nbviewer.jupyter.org/github/aristoteleo/dynamo-tutorials/blob/master/Differential_geometry.ipynb" target="_parent">
+      <img src="https://user-images.githubusercontent.com/7456281/93841447-9c263b80-fc61-11ea-99b2-4eafe9958ee4.png" width="119" alt="Open In nbviewer"/></a>
+    </div>
+
+
 Zebrafish pigementation
 =======================
 
@@ -174,8 +184,6 @@ the processed zebrafish adata object here for all downstream analysis.
 
 
 .. image:: Differential_geometry_files/output_8_1.png
-   :width: 587px
-   :height: 390px
 
 
 If you confronted errors when saving dynamo processed adata object,
@@ -392,8 +400,6 @@ positive and negative values. The same applies to ``acceleration`` and
 
 
 .. image:: Differential_geometry_files/output_32_1.png
-   :width: 914px
-   :height: 349px
 
 
 This is for acceleration of genes ``tfec`` and ``pnp4a``.
@@ -410,8 +416,6 @@ This is for acceleration of genes ``tfec`` and ``pnp4a``.
 
 
 .. image:: Differential_geometry_files/output_34_1.png
-   :width: 932px
-   :height: 349px
 
 
 This is for curvature of genes ``tfec`` and ``pnp4a``.
@@ -428,8 +432,6 @@ This is for curvature of genes ``tfec`` and ``pnp4a``.
 
 
 .. image:: Differential_geometry_files/output_36_1.png
-   :width: 914px
-   :height: 349px
 
 
 The purpose for us to develop vaious differential geometry analyses is
@@ -566,14 +568,10 @@ the effects of changing the expression of ``tfec`` to the velocity of
 
 
 .. image:: Differential_geometry_files/output_52_0.png
-   :width: 1380px
-   :height: 564px
 
 
 
 .. image:: Differential_geometry_files/output_52_1.png
-   :width: 526px
-   :height: 350px
 
 
 Similarly, we can also visualize the regulation from ``tfec`` to
@@ -588,8 +586,6 @@ of the gene expression level of ``tfec`` (*x-axis*) to ``pnp4a``
 
 
 .. image:: Differential_geometry_files/output_54_0.png
-   :width: 526px
-   :height: 350px
 
 
 Ranking for Jacobian matrices
@@ -697,84 +693,86 @@ stored for each gene. See below:
             text-align: right;
         }
     </style>
-    <table border="1" class="dataframe">
-      <thead>
-        <tr style="text-align: right;">
-          <th></th>
-          <th>tmsb4x</th>
-          <th>tmsb4x_values</th>
-          <th>rplp2l</th>
-          <th>rplp2l_values</th>
-          <th>rpl7a</th>
-          <th>rpl7a_values</th>
-          <th>pvalb1</th>
-          <th>pvalb1_values</th>
-          <th>gfap</th>
-          <th>gfap_values</th>
-          <th>...</th>
-          <th>slc4a4a</th>
-          <th>slc4a4a_values</th>
-          <th>ccna2</th>
-          <th>ccna2_values</th>
-          <th>ddc</th>
-          <th>ddc_values</th>
-          <th>top2a</th>
-          <th>top2a_values</th>
-          <th>slc6a2</th>
-          <th>slc6a2_values</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>0</th>
-          <td>si:dkey-183i3.5</td>
-          <td>0.001557</td>
-          <td>si:dkey-183i3.5</td>
-          <td>0.001826</td>
-          <td>si:dkey-183i3.5</td>
-          <td>0.001525</td>
-          <td>si:dkey-183i3.5</td>
-          <td>0.001295</td>
-          <td>mt2</td>
-          <td>0.001241</td>
-          <td>...</td>
-          <td>mt2</td>
-          <td>0.000326</td>
-          <td>hmgn2</td>
-          <td>0.001233</td>
-          <td>tubb5</td>
-          <td>0.000438</td>
-          <td>hmgn2</td>
-          <td>0.000979</td>
-          <td>tubb5</td>
-          <td>0.000425</td>
-        </tr>
-        <tr>
-          <th>1</th>
-          <td>zgc:136930</td>
-          <td>0.001212</td>
-          <td>calm2b</td>
-          <td>0.001520</td>
-          <td>calm2b</td>
-          <td>0.001270</td>
-          <td>mcl1b</td>
-          <td>0.001133</td>
-          <td>gfap</td>
-          <td>0.001165</td>
-          <td>...</td>
-          <td>gfap</td>
-          <td>0.000276</td>
-          <td>hmgb2a</td>
-          <td>0.000899</td>
-          <td>elavl4</td>
-          <td>0.000422</td>
-          <td>hmgb2a</td>
-          <td>0.000703</td>
-          <td>elavl4</td>
-          <td>0.000409</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="scrollit">
+        <table border="1" class="dataframe">
+          <thead>
+            <tr style="text-align: right;">
+              <th></th>
+              <th>tmsb4x</th>
+              <th>tmsb4x_values</th>
+              <th>rplp2l</th>
+              <th>rplp2l_values</th>
+              <th>rpl7a</th>
+              <th>rpl7a_values</th>
+              <th>pvalb1</th>
+              <th>pvalb1_values</th>
+              <th>gfap</th>
+              <th>gfap_values</th>
+              <th>...</th>
+              <th>slc4a4a</th>
+              <th>slc4a4a_values</th>
+              <th>ccna2</th>
+              <th>ccna2_values</th>
+              <th>ddc</th>
+              <th>ddc_values</th>
+              <th>top2a</th>
+              <th>top2a_values</th>
+              <th>slc6a2</th>
+              <th>slc6a2_values</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>0</th>
+              <td>si:dkey-183i3.5</td>
+              <td>0.001557</td>
+              <td>si:dkey-183i3.5</td>
+              <td>0.001826</td>
+              <td>si:dkey-183i3.5</td>
+              <td>0.001525</td>
+              <td>si:dkey-183i3.5</td>
+              <td>0.001295</td>
+              <td>mt2</td>
+              <td>0.001241</td>
+              <td>...</td>
+              <td>mt2</td>
+              <td>0.000326</td>
+              <td>hmgn2</td>
+              <td>0.001233</td>
+              <td>tubb5</td>
+              <td>0.000438</td>
+              <td>hmgn2</td>
+              <td>0.000979</td>
+              <td>tubb5</td>
+              <td>0.000425</td>
+            </tr>
+            <tr>
+              <th>1</th>
+              <td>zgc:136930</td>
+              <td>0.001212</td>
+              <td>calm2b</td>
+              <td>0.001520</td>
+              <td>calm2b</td>
+              <td>0.001270</td>
+              <td>mcl1b</td>
+              <td>0.001133</td>
+              <td>gfap</td>
+              <td>0.001165</td>
+              <td>...</td>
+              <td>gfap</td>
+              <td>0.000276</td>
+              <td>hmgb2a</td>
+              <td>0.000899</td>
+              <td>elavl4</td>
+              <td>0.000422</td>
+              <td>hmgb2a</td>
+              <td>0.000703</td>
+              <td>elavl4</td>
+              <td>0.000409</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
     <p>2 rows × 934 columns</p>
     </div>
 
@@ -857,8 +855,6 @@ Network can then be visualized as an Arcplot:
 
 
 .. image:: Differential_geometry_files/output_75_0.png
-   :width: 485px
-   :height: 538px
 
 
 Similarly, network can also be built with other criteria and visualized
@@ -977,14 +973,10 @@ based pseudotime (*x-axis*).
 
 
 .. image:: Differential_geometry_files/output_89_0.png
-   :width: 424px
-   :height: 422px
 
 
 
 .. image:: Differential_geometry_files/output_89_1.png
-   :width: 1146px
-   :height: 595px
 
 
 Note that if you want to visualize the gene expression for a specific
@@ -1008,8 +1000,6 @@ cell-type annotations.
 
 
 .. image:: Differential_geometry_files/output_91_1.png
-   :width: 955px
-   :height: 348px
 
 
 We can then collect cells from ``Proliferating Progenitor``,
@@ -1033,8 +1023,6 @@ visualize the expression kinetic heatmap for the melanophore lineage.
 
 
 .. image:: Differential_geometry_files/output_93_0.png
-   :width: 1139px
-   :height: 589px
 
 
 Visualize the **gene velocity dynamics** as a function of vector field
@@ -1055,8 +1043,6 @@ based pseudotime (*x-axis*).
 
 
 .. image:: Differential_geometry_files/output_95_0.png
-   :width: 1139px
-   :height: 589px
 
 
 Visualize the **gene acceleration dynamics** as a function of vector
@@ -1076,8 +1062,6 @@ field based pseudotime (*x-axis*).
 
 
 .. image:: Differential_geometry_files/output_97_0.png
-   :width: 1139px
-   :height: 589px
 
 
 Visualize the **gene curvature dynamics** as a function of vector field
@@ -1097,8 +1081,6 @@ based pseudotime (*x-axis*).
 
 
 .. image:: Differential_geometry_files/output_99_0.png
-   :width: 1139px
-   :height: 589px
 
 
 Build transition graph between cell states
@@ -1164,8 +1146,6 @@ Next, a state graph can be visualized with ``dyn.pl.state_graph``.
 
 
 .. image:: Differential_geometry_files/output_104_2.png
-   :width: 583px
-   :height: 391px
 
 
 Save results
