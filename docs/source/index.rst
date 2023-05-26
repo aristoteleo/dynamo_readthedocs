@@ -85,6 +85,15 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
 
 .. toctree::
    :hidden:
+   :caption: Preprocessing
+   :maxdepth: 1
+
+
+   Preprocessor_tutorial
+
+
+.. toctree::
+   :hidden:
    :caption: Conventional scRNA-seq
    :maxdepth: 1
    

@@ -106,6 +106,8 @@ extensions = [
     "sphinxcontrib.bibtex",
     # 'sphinx_gallery.gen_gallery',
     'sphinx_gallery.load_style',
+    # pdf embed
+    'sphinxcontrib.pdfembed',
 ]
 
 sphinx_gallery_conf = {
