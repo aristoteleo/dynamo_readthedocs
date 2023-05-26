@@ -28,6 +28,10 @@ default preprocessing steps with your own method and modify default
 monocle parameters passed into these functions by reconfiguring the
 attributes of the Preprocessor class.
 
+Here is a flowchart depicting the structure of the preprocessing module in Dynamo 1.3. It lists all python files and
+main functions implemented in the preprocessing module. By clicking on a block (e.g. normalization), you will be
+directed to the corresponding file, and clicking on a specific API (e.g. calc_sz_factor) will take you to the
+associated functions.
 
 :pdfembed:`src:_static/preprocessing_structure_final.pdf, height:800, width:700, align:left`
 
@@ -35,7 +39,7 @@ attributes of the Preprocessor class.
 The recipes in dynamo
 ---------------------
 
-To make your life easy, currently dynamo supports 4 major receipe for
+To make your life easy, currently dynamo supports 4 major recipe for
 preprocessing. Please find at the end of this tutorial how you can
 customize your preprocessing method.
 
@@ -254,7 +258,7 @@ Applying Monocle Recipe
 
 
 
-.. image:: Preprocessor_tutorial_files/output_20_1.png
+.. image:: _static/Preprocessor_tutorial_files/output_20_1.png
 
 
 Applying Pearson Residuals Recipe
@@ -309,7 +313,7 @@ transformation.
 
 
 
-.. image:: Preprocessor_tutorial_files/output_23_1.png
+.. image:: _static/Preprocessor_tutorial_files/output_23_1.png
 
 
 Applying Sctransform Recipe
@@ -365,7 +369,7 @@ different layers, as stated above.
 
 
 
-.. image:: Preprocessor_tutorial_files/output_26_1.png
+.. image:: _static/Preprocessor_tutorial_files/output_26_1.png
 
 
 Applying Seurat Recipe
@@ -414,7 +418,7 @@ Applying Seurat Recipe
 
 
 
-.. image:: Preprocessor_tutorial_files/output_29_1.png
+.. image:: _static/Preprocessor_tutorial_files/output_29_1.png
 
 
 Customize function parameters configured in Preprocessor
@@ -479,7 +483,7 @@ mitochondria genes.
 
 
 
-.. image:: Preprocessor_tutorial_files/output_38_0.png
+.. image:: _static/Preprocessor_tutorial_files/output_38_0.png
 
 
 You can visualize the rank of the fraction of UMI to the total UMI per
@@ -496,7 +500,7 @@ cell for the top 20 genes
 
 
 
-.. image:: Preprocessor_tutorial_files/output_40_1.png
+.. image:: _static/Preprocessor_tutorial_files/output_40_1.png
 
 
 
@@ -548,7 +552,7 @@ counts.
 
 
 
-.. image:: Preprocessor_tutorial_files/output_42_0.png
+.. image:: _static/Preprocessor_tutorial_files/output_42_0.png
 
 
 And modify some values of parameters based on the information above.
@@ -639,7 +643,7 @@ Let`s run the monocle recipe again.
 
 
 
-.. image:: Preprocessor_tutorial_files/output_49_1.png
+.. image:: _static/Preprocessor_tutorial_files/output_49_1.png
 
 
 Let`s run the seurat recipe in this time.
@@ -722,7 +726,7 @@ Let`s run the seurat recipe in this time.
 
 
 
-.. image:: Preprocessor_tutorial_files/output_54_1.png
+.. image:: _static/Preprocessor_tutorial_files/output_54_1.png
 
 
 Customize and run each functions directly.
@@ -916,5 +920,5 @@ your own specific requirements.
 
 
 
-.. image:: Preprocessor_tutorial_files/output_67_1.png
+.. image:: _static/Preprocessor_tutorial_files/output_67_1.png
 
