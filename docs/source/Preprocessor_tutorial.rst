@@ -29,8 +29,7 @@ monocle parameters passed into these functions by reconfiguring the
 attributes of the Preprocessor class.
 
 
-.. image:: Preprocessor_tutorial_files/preprocessing_structure_final.pdf
-    :target: https://github.com/aristoteleo/dynamo-tutorials/blob/master/images/preprocessing_structure_final.pdf
+:pdfembed:`src:_static/preprocessing_structure_final.pdf, height:800, width:700, align:left`
 
 
 The recipes in dynamo

@@ -89,7 +89,7 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
    :maxdepth: 1
 
 
-   notebooks/Preprocessor_tutorial
+   Preprocessor_tutorial
 
 
 .. toctree::
