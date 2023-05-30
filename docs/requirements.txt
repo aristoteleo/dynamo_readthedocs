@@ -2,7 +2,6 @@ setuptools
 sphinx>=4.0.2
 sphinx-rtd-theme>=0.5.1
 sphinx_autodoc_typehints
-sphinxcontrib-pdfembed @ git+https://github.com/SuperKogito/sphinxcontrib-pdfembed@d75fb37
 
 # converting notebooks to html
 ipykernel>=5.1.0
