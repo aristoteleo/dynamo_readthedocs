@@ -80,7 +80,7 @@ Import relevant packages
 
 .. parsed-literal::
 
-    /Users/xiaojieqiu/opt/anaconda3/envs/dynamo_mkl/lib/python3.9/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+    /Users/xiaojieqiu/opt/anaconda3/envs/test/lib/python3.9/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
       from .autonotebook import tqdm as notebook_tqdm
 
 
@@ -105,7 +105,8 @@ Load processed data or data preprocessing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you followed the **zebrafish pigmentation** tutorial, you can load
-the processed zebrafish adata object here for all downstream analysis.
+the processed zebrafish adata object. Also, you can start from scratch
+using the following code.
 
 .. code:: ipython3
 
@@ -133,7 +134,9 @@ the processed zebrafish adata object here for all downstream analysis.
     adata = dyn.sample_data.zebrafish()
     
     preprocessor = dyn.pp.Preprocessor(cell_cycle_score_enable=True)
-    preprocessor.preprocess_adata(adata, recipe='monocle')
+    preprocessor.config_monocle_recipe(adata)
+    preprocessor.filter_cells_by_outliers_kwargs["keep_filtered"] = True
+    preprocessor.preprocess_adata_monocle(adata)
     
     dyn.tl.dynamics(adata, cores=3)
     
@@ -153,18 +156,18 @@ the processed zebrafish adata object here for all downstream analysis.
     |-----> PCA dimension reduction
     |-----> <insert> X_pca to obsm in AnnData Object.
     |-----> computing cell phase...
-    |-----> [Cell Phase Estimation] completed [4.9675s]
-    |-----> [Cell Cycle Scores Estimation] completed [0.2288s]
-    |-----> [Preprocessor-monocle] completed [2.3514s]
+    |-----> [Cell Phase Estimation] completed [4.9645s]
+    |-----> [Cell Cycle Scores Estimation] completed [0.2311s]
+    |-----> [Preprocessor-monocle] completed [2.3065s]
     |-----> dynamics_del_2nd_moments_key is None. Using default value from DynamoAdataConfig: dynamics_del_2nd_moments_key=False
     |-----------> removing existing M layers:[]...
     |-----------> making adata smooth...
     |-----> calculating first/second moments...
-    |-----> [moments calculation] completed [16.3130s]
+    |-----> [moments calculation] completed [19.7981s]
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
     |-----> <insert> X_umap to obsm in AnnData Object.
-    |-----> [UMAP] completed [14.5781s]
+    |-----> [UMAP] completed [14.7580s]
     |-----> incomplete neighbor graph info detected: connectivities and distances do not exist in adata.obsp, indices not in adata.uns.neighbors.
     |-----> Neighbor graph is broken, recomputing....
     |-----> Start computing neighbor graph...
@@ -172,12 +175,10 @@ the processed zebrafish adata object here for all downstream analysis.
     |-----> fetching X data from layer:None, basis:pca
     |-----> method arg is None, choosing methods automatically...
     |-----------> method ball_tree selected
-    |-----> 0 genes are removed because of nan velocity values.
-    |-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 100.0000%|-----> [calculating transition matrix via pearson kernel with sqrt transform.] completed [4.4069s]
-    |-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [0.5564s]
-    |-----> 0 genes are removed because of nan velocity values.
+    |-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 100.0000%|-----> [calculating transition matrix via pearson kernel with sqrt transform.] completed [3.9327s]
+    |-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [0.5575s]
     Using existing pearson_transition_matrix found in .obsp.
-    |-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [0.5448s]
+    |-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [0.5458s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
@@ -185,25 +186,6 @@ the processed zebrafish adata object here for all downstream analysis.
 
 .. image:: Differential_geometry_files/output_8_1.png
 
-
-If you confronted errors when saving dynamo processed adata object,
-please see the very end of this tutorial.
-
-If you would like to start from scratch, use the following code to
-preprocess the zebrafish adata object (or use your own dataset):
-
-.. code:: python
-
-   adata = dyn.sample_data.zebrafish()
-
-   dyn.pp.recipe_monocle(adata)
-   dyn.tl.dynamics(adata, cores=3)
-
-   dyn.tl.reduceDimension(adata)
-   dyn.tl.cell_velocities(adata)
-
-   dyn.tl.cell_velocities(adata)
-   dyn.pl.streamline_plot(adata, color=['Cell_type'])
 
 Differential geometry analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -249,9 +231,8 @@ first project the RNA velocities into PCA space.
 
 .. parsed-literal::
 
-    |-----> 0 genes are removed because of nan velocity values.
     Using existing pearson_transition_matrix found in .obsp.
-    |-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [0.5750s]
+    |-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [0.6055s]
 
 
 Then we will use the ``dyn.vf.VectorField`` function to learns the
@@ -283,8 +264,8 @@ Related information for the learned vector field are stored in adata.
     |-----> Learning vector field with method: sparsevfc.
     |-----> [SparseVFC] begins...
     |-----> Sampling control points based on data velocity magnitude...
-    |-----> [SparseVFC] completed [0.0670s]
-    |-----> [VectorField] completed [0.1500s]
+    |-----> [SparseVFC] completed [0.1007s]
+    |-----> [VectorField] completed [0.1855s]
 
 
 Velocity, acceleration and curvature ranking
@@ -347,7 +328,7 @@ velocity.
 
 .. parsed-literal::
 
-    |-----> [Calculating acceleration] in progress: 100.0000%|-----> [Calculating acceleration] completed [0.1028s]
+    |-----> [Calculating acceleration] in progress: 100.0000%|-----> [Calculating acceleration] completed [0.1130s]
 
 
 .. code:: ipython3
@@ -371,8 +352,8 @@ absolute curvature values in different cell groups.
 
 .. parsed-literal::
 
-    |-----> [Calculating acceleration] in progress: 100.0000%|-----> [Calculating acceleration] completed [0.1112s]
-    |-----> [Calculating curvature] in progress: 100.0000%|-----> [Calculating curvature] completed [0.1405s]
+    |-----> [Calculating acceleration] in progress: 100.0000%|-----> [Calculating acceleration] completed [0.1051s]
+    |-----> [Calculating curvature] in progress: 100.0000%|-----> [Calculating curvature] completed [0.1327s]
 
 
 .. code:: ipython3
@@ -399,7 +380,7 @@ positive and negative values. The same applies to ``acceleration`` and
 
 
 
-.. image:: Differential_geometry_files/output_32_1.png
+.. image:: Differential_geometry_files/output_29_1.png
 
 
 This is for acceleration of genes ``tfec`` and ``pnp4a``.
@@ -415,7 +396,7 @@ This is for acceleration of genes ``tfec`` and ``pnp4a``.
 
 
 
-.. image:: Differential_geometry_files/output_34_1.png
+.. image:: Differential_geometry_files/output_31_1.png
 
 
 This is for curvature of genes ``tfec`` and ``pnp4a``.
@@ -431,7 +412,7 @@ This is for curvature of genes ``tfec`` and ``pnp4a``.
 
 
 
-.. image:: Differential_geometry_files/output_36_1.png
+.. image:: Differential_geometry_files/output_33_1.png
 
 
 The purpose for us to develop vaious differential geometry analyses is
@@ -542,7 +523,7 @@ long as they are genes used for pca dimension reduction, that is
 
 .. parsed-literal::
 
-    Transforming subset Jacobian: 100%|████████| 4181/4181 [00:26<00:00, 160.39it/s]
+    Transforming subset Jacobian: 100%|████████| 4181/4181 [00:11<00:00, 375.53it/s]
 
 
 We can take advantage of the cell-wise ``jacobian matrix`` to
@@ -567,11 +548,11 @@ the effects of changing the expression of ``tfec`` to the velocity of
 
 
 
-.. image:: Differential_geometry_files/output_52_0.png
+.. image:: Differential_geometry_files/output_49_0.png
 
 
 
-.. image:: Differential_geometry_files/output_52_1.png
+.. image:: Differential_geometry_files/output_49_1.png
 
 
 Similarly, we can also visualize the regulation from ``tfec`` to
@@ -585,7 +566,7 @@ of the gene expression level of ``tfec`` (*x-axis*) to ``pnp4a``
 
 
 
-.. image:: Differential_geometry_files/output_54_0.png
+.. image:: Differential_geometry_files/output_51_0.png
 
 
 Ranking for Jacobian matrices
@@ -693,86 +674,84 @@ stored for each gene. See below:
             text-align: right;
         }
     </style>
-    <div class="scrollit">
-        <table border="1" class="dataframe">
-          <thead>
-            <tr style="text-align: right;">
-              <th></th>
-              <th>tmsb4x</th>
-              <th>tmsb4x_values</th>
-              <th>rplp2l</th>
-              <th>rplp2l_values</th>
-              <th>rpl7a</th>
-              <th>rpl7a_values</th>
-              <th>pvalb1</th>
-              <th>pvalb1_values</th>
-              <th>gfap</th>
-              <th>gfap_values</th>
-              <th>...</th>
-              <th>slc4a4a</th>
-              <th>slc4a4a_values</th>
-              <th>ccna2</th>
-              <th>ccna2_values</th>
-              <th>ddc</th>
-              <th>ddc_values</th>
-              <th>top2a</th>
-              <th>top2a_values</th>
-              <th>slc6a2</th>
-              <th>slc6a2_values</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>0</th>
-              <td>si:dkey-183i3.5</td>
-              <td>0.001557</td>
-              <td>si:dkey-183i3.5</td>
-              <td>0.001826</td>
-              <td>si:dkey-183i3.5</td>
-              <td>0.001525</td>
-              <td>si:dkey-183i3.5</td>
-              <td>0.001295</td>
-              <td>mt2</td>
-              <td>0.001241</td>
-              <td>...</td>
-              <td>mt2</td>
-              <td>0.000326</td>
-              <td>hmgn2</td>
-              <td>0.001233</td>
-              <td>tubb5</td>
-              <td>0.000438</td>
-              <td>hmgn2</td>
-              <td>0.000979</td>
-              <td>tubb5</td>
-              <td>0.000425</td>
-            </tr>
-            <tr>
-              <th>1</th>
-              <td>zgc:136930</td>
-              <td>0.001212</td>
-              <td>calm2b</td>
-              <td>0.001520</td>
-              <td>calm2b</td>
-              <td>0.001270</td>
-              <td>mcl1b</td>
-              <td>0.001133</td>
-              <td>gfap</td>
-              <td>0.001165</td>
-              <td>...</td>
-              <td>gfap</td>
-              <td>0.000276</td>
-              <td>hmgb2a</td>
-              <td>0.000899</td>
-              <td>elavl4</td>
-              <td>0.000422</td>
-              <td>hmgb2a</td>
-              <td>0.000703</td>
-              <td>elavl4</td>
-              <td>0.000409</td>
-            </tr>
-          </tbody>
-        </table>
-    </div>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>tmsb4x</th>
+          <th>tmsb4x_values</th>
+          <th>rplp2l</th>
+          <th>rplp2l_values</th>
+          <th>rpl7a</th>
+          <th>rpl7a_values</th>
+          <th>pvalb1</th>
+          <th>pvalb1_values</th>
+          <th>gfap</th>
+          <th>gfap_values</th>
+          <th>...</th>
+          <th>slc4a4a</th>
+          <th>slc4a4a_values</th>
+          <th>ccna2</th>
+          <th>ccna2_values</th>
+          <th>ddc</th>
+          <th>ddc_values</th>
+          <th>top2a</th>
+          <th>top2a_values</th>
+          <th>slc6a2</th>
+          <th>slc6a2_values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>si:dkey-183i3.5</td>
+          <td>0.001557</td>
+          <td>si:dkey-183i3.5</td>
+          <td>0.001826</td>
+          <td>si:dkey-183i3.5</td>
+          <td>0.001525</td>
+          <td>si:dkey-183i3.5</td>
+          <td>0.001295</td>
+          <td>mt2</td>
+          <td>0.001241</td>
+          <td>...</td>
+          <td>mt2</td>
+          <td>0.000326</td>
+          <td>hmgn2</td>
+          <td>0.001233</td>
+          <td>tubb5</td>
+          <td>0.000438</td>
+          <td>hmgn2</td>
+          <td>0.000979</td>
+          <td>tubb5</td>
+          <td>0.000425</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>zgc:136930</td>
+          <td>0.001212</td>
+          <td>calm2b</td>
+          <td>0.001520</td>
+          <td>calm2b</td>
+          <td>0.001270</td>
+          <td>mcl1b</td>
+          <td>0.001133</td>
+          <td>gfap</td>
+          <td>0.001165</td>
+          <td>...</td>
+          <td>gfap</td>
+          <td>0.000276</td>
+          <td>hmgb2a</td>
+          <td>0.000899</td>
+          <td>elavl4</td>
+          <td>0.000422</td>
+          <td>hmgb2a</td>
+          <td>0.000703</td>
+          <td>elavl4</td>
+          <td>0.000409</td>
+        </tr>
+      </tbody>
+    </table>
     <p>2 rows × 934 columns</p>
     </div>
 
@@ -843,7 +822,7 @@ chondrocyte cells.
 
 .. parsed-literal::
 
-    |-----> [iterating reg_groups] in progress: 100.0000%|-----> [iterating reg_groups] completed [1.3277s]
+    |-----> [iterating reg_groups] in progress: 100.0000%|-----> [iterating reg_groups] completed [1.3526s]
 
 
 Network can then be visualized as an Arcplot:
@@ -854,7 +833,7 @@ Network can then be visualized as an Arcplot:
 
 
 
-.. image:: Differential_geometry_files/output_75_0.png
+.. image:: Differential_geometry_files/output_72_0.png
 
 
 Similarly, network can also be built with other criteria and visualized
@@ -880,7 +859,7 @@ select 10 top genes with highest absolute acceleration values in
 
 .. parsed-literal::
 
-    |-----> [iterating reg_groups] in progress: 100.0000%|-----> [iterating reg_groups] completed [1.4511s]
+    |-----> [iterating reg_groups] in progress: 100.0000%|-----> [iterating reg_groups] completed [1.4601s]
 
 
 We can then focus on analyzing ``Unknown`` cell type network and
@@ -920,6 +899,7 @@ Lastly, we can visulize the network with ``dyn.pl.circosPlot``.
 
 
 
+
 .. parsed-literal::
 
     <Axes: >
@@ -949,7 +929,7 @@ etc.) during zebrafish pigmentation.
     |-----> graphizing vectorfield...
     |-----------? nbrs_idx argument is ignored and recomputed because nbrs_idx is not None and return_nbrs=True
     |-----------> calculating neighbor indices...
-    |-----> [ddhodge completed] completed [28.0423s]
+    |-----> [ddhodge completed] completed [32.4428s]
 
 
 .. code:: ipython3
@@ -972,11 +952,11 @@ based pseudotime (*x-axis*).
 
 
 
-.. image:: Differential_geometry_files/output_89_0.png
+.. image:: Differential_geometry_files/output_86_0.png
 
 
 
-.. image:: Differential_geometry_files/output_89_1.png
+.. image:: Differential_geometry_files/output_86_1.png
 
 
 Note that if you want to visualize the gene expression for a specific
@@ -999,7 +979,7 @@ cell-type annotations.
 
 
 
-.. image:: Differential_geometry_files/output_91_1.png
+.. image:: Differential_geometry_files/output_88_1.png
 
 
 We can then collect cells from ``Proliferating Progenitor``,
@@ -1022,7 +1002,7 @@ visualize the expression kinetic heatmap for the melanophore lineage.
 
 
 
-.. image:: Differential_geometry_files/output_93_0.png
+.. image:: Differential_geometry_files/output_90_0.png
 
 
 Visualize the **gene velocity dynamics** as a function of vector field
@@ -1042,7 +1022,7 @@ based pseudotime (*x-axis*).
 
 
 
-.. image:: Differential_geometry_files/output_95_0.png
+.. image:: Differential_geometry_files/output_92_0.png
 
 
 Visualize the **gene acceleration dynamics** as a function of vector
@@ -1061,7 +1041,7 @@ field based pseudotime (*x-axis*).
 
 
 
-.. image:: Differential_geometry_files/output_97_0.png
+.. image:: Differential_geometry_files/output_94_0.png
 
 
 Visualize the **gene curvature dynamics** as a function of vector field
@@ -1080,7 +1060,7 @@ based pseudotime (*x-axis*).
 
 
 
-.. image:: Differential_geometry_files/output_99_0.png
+.. image:: Differential_geometry_files/output_96_0.png
 
 
 Build transition graph between cell states
@@ -1115,9 +1095,9 @@ build a transition graph between different cell types:
 
     |-----> Estimating the transition probability between cell types...
     |-----> Applying vector field
-    |-----> [KDTree parameter preparation computation] in progress: 0.0000%|-----> [KDTree computation] completed [0.0030s]
-    |-----> [iterate groups] in progress: 100.0000%|-----> [iterate groups] completed [44.0507s]
-    |-----> [State graph estimation] completed [0.0009s]
+    |-----> [KDTree parameter preparation computation] in progress: 0.0000%|-----> [KDTree computation] completed [0.0037s]
+    |-----> [iterate groups] in progress: 100.0000%|-----> [iterate groups] completed [42.6583s]
+    |-----> [State graph estimation] completed [0.0007s]
 
 
 Next, a state graph can be visualized with ``dyn.pl.state_graph``.
@@ -1145,7 +1125,7 @@ Next, a state graph can be visualized with ``dyn.pl.state_graph``.
 
 
 
-.. image:: Differential_geometry_files/output_104_2.png
+.. image:: Differential_geometry_files/output_101_2.png
 
 
 Save results
