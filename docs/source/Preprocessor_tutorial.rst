@@ -39,7 +39,7 @@ associated functions.
 The recipes in dynamo
 ---------------------
 
-To make your life easy, currently dynamo supports 4 major receipe for
+To make your life easy, currently dynamo supports 4 major recipes for
 preprocessing. Please find at the end of this tutorial how you can
 customize your preprocessing method.
 
