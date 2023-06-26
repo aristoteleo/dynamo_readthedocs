@@ -75,6 +75,7 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
    :maxdepth: 3
 
    ten_minutes_to_dynamo
+   Dynamics
    API
    Class
    FAQ
