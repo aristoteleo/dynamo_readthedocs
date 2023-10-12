@@ -759,8 +759,8 @@ stored for each gene. See below:
 
 From the above table, we can see that in the previously “Unknown” cell
 type, the top two regulators of tmsb4x gene (the first column in the
-above table) are ``mbpb`` and ``si:ch211-156j16.1`` with their aggregate
-regulation strength based on Jacobian ``0.001429`` and ``0.001422``,
+above table) are ``si:dkey-183i3.5`` and ``zgc:136930`` with their aggregate
+regulation strength based on Jacobian ``0.001557`` and ``0.001212``,
 respectively. The same applies to other columns and similarly to the
 ``full_eff_rank`` dictionary.
 
