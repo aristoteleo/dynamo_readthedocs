@@ -22,6 +22,10 @@ To install the newest version of dynamo, you can git clone our repo and then pip
     git clone https://github.com/aristoteleo/dynamo-release.git
     pip install dynamo-release/ --user
 
+Conda version is also available::
+
+    conda install -c conda-forge dynamo-release
+
 Note that ``--user`` flag is used to install the package to your home directory, in case you don't have the root privilege.
 
 Alternatively, you can install dynamo when you are in the dynamo-release folder by directly using python's setup install::
