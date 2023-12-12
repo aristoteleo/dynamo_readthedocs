@@ -1,6 +1,114 @@
 ==================
 Release notes
 ==================
+Dynamo Ver 1.4.0
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+Feature Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Shiny web application for in silico perturbation and least square action path analyses
+  (`PR 582 <https://github.com/aristoteleo/dynamo-release/pull/582>`_).
+
+- More 3D plots (`PR 597 <https://github.com/aristoteleo/dynamo-release/pull/597>`_):
+
+  - 3D scatters with Plotly and Pyvista ``dyn.pl.scatters_interactive()``.
+  - 3D vectors with Plotly and Pyvista ``dyn.pl.cell_wise_vectors_3d()``.
+  - 3D topography with Plotly and Pyvista ``dyn.pl.topography_3d()``.
+  - 3D animation with Pyvista ``dyn.mv.PyvistaAnim()``.
+
+- Saved the velocity parameters in ``adata.varm`` instead of ``adata.var``
+  (`PR 579 <https://github.com/aristoteleo/dynamo-release/pull/579>`_).
+
+- DDRtree based pseudotime and graph learning (`PR 564 <https://github.com/aristoteleo/dynamo-release/pull/564>`_):
+  ``dyn.tl.order_cells()``, ``dyn.tl.construct_velocity_tree()``.
+
+- Integrated `hnswlib` fast nearest neighbors method (`PR 552 <https://github.com/aristoteleo/dynamo-release/pull/552>`_).
+
+- A helper functon to convert the AnnData object from Dynamo to Scvelo, or vice versa
+  (`PR 551 <https://github.com/aristoteleo/dynamo-release/pull/551>`_).
+
+- The tools module has been reorganized (`PR 625 <https://github.com/aristoteleo/dynamo-release/pull/625>`_):
+
+  - Deprecate files `dynamo_fitting.py`, `dynamo_bk.py`, `dynamics_deprecated.py`, `utils_moments_deprecated.py`.
+  - Deprecate legacy functions in `construct_velocity_tree.py`,`pseudotime.py`, `moments.py`, `clustering.py`.
+  - Merge `utils_markers.py` and `markers.py`.
+  - Merge `time_series.py` (learns a direct principal graph by integrating the transition matrix between and DDRTree)
+    and `construct_velocity_tree.py`(Integrate pseudotime ordering with velocity to automatically assign the direction
+    of the learned trajectory.) to `DDRTree_graph.py`.
+  - Reorganize some functions to utils in the following file: `time_series.py`, `multiomics.py`.
+  - Rename: `DDRTree_py.py` to `DDRTree.py`, `psl_py.py` to `psl.py`.
+
+- Deprecate infomap clustering (`PR 555 <https://github.com/aristoteleo/dynamo-release/pull/555>`_).
+
+
+DEBUG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Fixed the bug that the ``dyn.pl.kinetic_heatmap()`` couldn't be transposed caused by wrong initialization
+  (`PR 558 <https://github.com/aristoteleo/dynamo-release/pull/558>`_).
+- Fixed the bug that ``dyn.pl.cell_wise_vectors()`` only output one color
+  (`PR 559 <https://github.com/aristoteleo/dynamo-release/pull/559>`_).
+- Debugged the sampling method in tools modules
+  (`PR 565 <https://github.com/aristoteleo/dynamo-release/pull/565>`_).
+- Fixed the panda error in ``dyn.tl.gene_wise_confidence()``
+  (`PR 567 <https://github.com/aristoteleo/dynamo-release/pull/567>`_).
+- Fixed the bug that `pysal` submodules were not imported explicitly
+  (`PR 568 <https://github.com/aristoteleo/dynamo-release/pull/568>`_).
+- Debugged ``dyn.tl.score_cells()`` (`PR 569 <https://github.com/aristoteleo/dynamo-release/pull/569>`_).
+- Debugged the ambiguous if statement in ``dyn.tl.psl()``
+  (`PR 573 <https://github.com/aristoteleo/dynamo-release/pull/573>`_).
+- Updated all the expired links of sample dataset (`PR 577 <https://github.com/aristoteleo/dynamo-release/pull/577>`_).
+- Fixed the bug that processed AnnData object couldn't be saved under some cases
+  (`PR 580 <https://github.com/aristoteleo/dynamo-release/pull/580>`_).
+- Debugged `pp/transform.py` (`PR 581 <https://github.com/aristoteleo/dynamo-release/pull/581>`_).
+- Debugged ``dyn.tl.cell_velocities()`` (`PR 585 <https://github.com/aristoteleo/dynamo-release/pull/585>`_).
+- Debugged ``dyn.pl.kinetic_curves()`` (`PR 587 <https://github.com/aristoteleo/dynamo-release/pull/587>`_).
+- Fixed the error caused by wrong type hints in ``dyn.tl.BaseVectorField.find_fixed_points()``
+  (`PR 597 <https://github.com/aristoteleo/dynamo-release/pull/597>`_).
+- Fixed the error caused by excessive memory usage in tests
+  (`PR 602 <https://github.com/aristoteleo/dynamo-release/pull/602>`_).
+- Fixed the KeyError in ``dyn.pp.convert2symbol()`` when all genes are found
+  (`PR 603 <https://github.com/aristoteleo/dynamo-release/pull/603>`_).
+- Fixed the issue that ``dyn.pp.highest_frac_genes()`` didn't support sparse input
+  (`PR 604 <https://github.com/aristoteleo/dynamo-release/pull/604>`_).
+- Debugged ``dyn.tl.cell_growth_rate()`` (`PR 606 <https://github.com/aristoteleo/dynamo-release/pull/606>`_).
+- Debugged the arclength sampling method in ``dyn.pd.fate()``
+  (`PR 592 <https://github.com/aristoteleo/dynamo-release/pull/592>`_
+  `PR 610 <https://github.com/aristoteleo/dynamo-release/pull/610>`_).
+- Removed unnecessary import of pandas (`PR 614 <https://github.com/aristoteleo/dynamo-release/pull/614>`_).
+- Debugged the ``dyn.pl.topography()`` when the color is not provided
+  (`PR 617 <https://github.com/aristoteleo/dynamo-release/pull/617>`_).
+- Fixed the error that list object doesn't have to_list() method in ``dyn.vf.hessian()``
+  (`PR 623 <https://github.com/aristoteleo/dynamo-release/pull/623>`_).
+- Fixed the ambiguous if statement in the ``dyn.tl.MarkovChain.is_normalized()``
+  (`PR 626 <https://github.com/aristoteleo/dynamo-release/pull/626>`_).
+- Debugged the ``dyn.pd.classify_clone_cell_type()`` (`PR 627 <https://github.com/aristoteleo/dynamo-release/pull/627>`_).
+- Fixed the input of ``minimize()`` in ``dyn.pd.lap_T()``
+  (`PR 628 <https://github.com/aristoteleo/dynamo-release/pull/628>`_).
+- Fixed the bug that average parameter didn't work in ``dyn.pd.fate()``
+  (`PR 629 <https://github.com/aristoteleo/dynamo-release/pull/629>`_).
+
+
+Others
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Now available on (`conda forge <https://anaconda.org/conda-forge/dynamo-release>`_).
+- Removed `cdlib` dependency (`PR 532 <https://github.com/aristoteleo/dynamo-release/pull/532>`_).
+- Removed `KDEpy` dependency (`PR 533 <https://github.com/aristoteleo/dynamo-release/pull/533>`_).
+- Added code coverage report (`PR 555 <https://github.com/aristoteleo/dynamo-release/pull/555>`_).
+- Optimized the structure of the umap dimension reduction
+  (`PR 556 <https://github.com/aristoteleo/dynamo-release/pull/556>`_).
+- Optimized the structure and supported sparse input in ``tools/graph_calculus.py``
+  (`PR 557 <https://github.com/aristoteleo/dynamo-release/pull/557>`_).
+- Updated `networkx` API (`PR 560 <https://github.com/aristoteleo/dynamo-release/pull/560>`_).
+- Replaced `python-igraph` dependency with `igraph` (`PR 563 <https://github.com/aristoteleo/dynamo-release/pull/563>`_).
+- Added docstrings for tools module (`PR 570 <https://github.com/aristoteleo/dynamo-release/pull/570>`_).
+- Removed duplicate size factor calculation (`PR 596 <https://github.com/aristoteleo/dynamo-release/pull/596>`_).
+- Implemented a helper function for saving the plots (`PR 609 <https://github.com/aristoteleo/dynamo-release/pull/609>`_).
+- Added docstrings for estimation module (`PR 611 <https://github.com/aristoteleo/dynamo-release/pull/611>`_).
+- Merged ``dyn.pd.rank_cells()`` and ``dyn.pd.rank_cell_groups()``
+  (`PR 613 <https://github.com/aristoteleo/dynamo-release/pull/613>`_).
+- Added the conda badge (`PR 618 <https://github.com/aristoteleo/dynamo-release/pull/618>`_).
+- Handled the duplicate files when downloading sample data
+  (`PR 621 <https://github.com/aristoteleo/dynamo-release/pull/621>`_).
+
 
 
 Dynamo Ver 1.3.0
