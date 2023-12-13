@@ -41,7 +41,7 @@ from source, using the following script::
 In order to ensure dynamo run properly, your python environment needs to satisfy dynamo's `dependencies`_. We provide a helper function for you to check the versions of dynamo's all dependencies. ::
 
     import dynamo as dyn
-    dyn.get_all_dependencies_version()
+    dyn.session_info()
 
 
 Architecture of dynamo
@@ -177,6 +177,14 @@ Again, you only need to simply run the following function to get all those infor
 
     dyn.vf.topography(adata, basis='umap')
 
+Predict cell fate
+'''''''''''''''''''''''
+Cell fate prediction is a crucial problem in single cell analysis. With the continuous vector field function learned,
+Dynamo is able to calculate the historical and future cell states over arbitrary time scales. You can use the following
+function to predict the cell fate on given initial cells. ::
+
+    dyn.pd.fate(adata, init_cells)
+
 Map potential landscape
 '''''''''''''''''''''''
 The concept of potential landscape is widely appreciated across various biological disciplines, for example the adaptive landscape in population genetics, protein-folding funnel landscape in biochemistry, epigenetic landscape in developmental biology. In the context of cell fate transition, for example, differentiation, carcinogenesis, etc, a potential landscape will not only offers an intuitive description of the global dynamics of the biological process but also provides key insights to understand the multi-stability and transition rate between different cell types as well as to quantify the optimal path of cell fate transition.
@@ -221,6 +229,16 @@ Plotting functions in dynamo are designed to be extremely flexible. For example,
     plt.show()
 
 The above creates a 2x2 plot that puts `cell_wise_vectors`, `grid_vectors`, `streamline_plot` and `topography` plots together.
+
+Last but not least, Dynamo also provides functions to create movie of cell fate predictions. The animation needs
+predicted cell fate information in your dataset and requires a topography plot as the foundation. ::
+
+    from matplotlib import animation
+
+    fig, ax = plt.subplots()
+    ax = dyn.pl.topography(adata, ax=ax)
+    instance = dyn.mv.StreamFuncAnim(adata=adata, ax=ax)
+    anim = animation.FuncAnimation(instance.fig, instance.update, init_func=instance.init_background)
 
 Compatibility
 ^^^^^^^^^^^^^
