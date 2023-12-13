@@ -43,7 +43,8 @@ Feature Changes
 DEBUG
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Fixed the bug that the ``dyn.pl.kinetic_heatmap()`` couldn't be transposed caused by wrong initialization
-  (`PR 558 <https://github.com/aristoteleo/dynamo-release/pull/558>`_).
+  (`PR 558 <https://github.com/aristoteleo/dynamo-release/pull/558>`_
+  `PR 636 <https://github.com/aristoteleo/dynamo-release/pull/636>`_).
 - Fixed the bug that ``dyn.pl.cell_wise_vectors()`` only output one color
   (`PR 559 <https://github.com/aristoteleo/dynamo-release/pull/559>`_).
 - Debugged the sampling method in tools modules
@@ -101,13 +102,16 @@ Others
 - Replaced `python-igraph` dependency with `igraph` (`PR 563 <https://github.com/aristoteleo/dynamo-release/pull/563>`_).
 - Added docstrings for tools module (`PR 570 <https://github.com/aristoteleo/dynamo-release/pull/570>`_).
 - Removed duplicate size factor calculation (`PR 596 <https://github.com/aristoteleo/dynamo-release/pull/596>`_).
-- Implemented a helper function for saving the plots (`PR 609 <https://github.com/aristoteleo/dynamo-release/pull/609>`_).
+- Implemented a helper function for saving the plots
+  (`PR 609 <https://github.com/aristoteleo/dynamo-release/pull/609>`_
+  `PR 635 <https://github.com/aristoteleo/dynamo-release/pull/635>`_).
 - Added docstrings for estimation module (`PR 611 <https://github.com/aristoteleo/dynamo-release/pull/611>`_).
 - Merged ``dyn.pd.rank_cells()`` and ``dyn.pd.rank_cell_groups()``
   (`PR 613 <https://github.com/aristoteleo/dynamo-release/pull/613>`_).
 - Added the conda badge (`PR 618 <https://github.com/aristoteleo/dynamo-release/pull/618>`_).
 - Handled the duplicate files when downloading sample data
   (`PR 621 <https://github.com/aristoteleo/dynamo-release/pull/621>`_).
+- Debugged the ROC curve in Shiny app (`PR 637 <https://github.com/aristoteleo/dynamo-release/pull/637>`_).
 
 
 
