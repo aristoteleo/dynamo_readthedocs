@@ -22,6 +22,9 @@ Data IO
 Preprocessing (pp)
 ~~~~~~~~~~~~~~~~~~
 
+:pdfembed:`src:_static/preprocessing_structure_final.pdf, height:800, width:700, align:left`
+
+
 .. autosummary::
    :toctree: _autosummary
 
@@ -62,6 +65,9 @@ Estimation (est)
 
 Tools (tl)
 ~~~~~~~~~~
+
+:pdfembed:`src:_static/tools_structure.pdf, height:800, width:700, align:left`
+
 
 *kNN and moments of expressions*
 

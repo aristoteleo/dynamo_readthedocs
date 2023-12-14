@@ -127,6 +127,7 @@ If you want to contribute to the development of dynamo, please check out CONTRIB
 
    notebooks/lap_tutorial/lap_tutorial
    notebooks/perturbation_tutorial/perturbation_tutorial
+   Shiny
 
 .. toctree::
    :caption: Gallery
