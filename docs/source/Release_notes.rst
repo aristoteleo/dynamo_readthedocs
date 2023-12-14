@@ -86,6 +86,7 @@ DEBUG
   (`PR 628 <https://github.com/aristoteleo/dynamo-release/pull/628>`_).
 - Fixed the bug that average parameter didn't work in ``dyn.pd.fate()``
   (`PR 629 <https://github.com/aristoteleo/dynamo-release/pull/629>`_).
+- Debugged the ``dyn.pl.line_integral_conv()`` (`PR 639 <https://github.com/aristoteleo/dynamo-release/pull/639>`_).
 
 
 Others
