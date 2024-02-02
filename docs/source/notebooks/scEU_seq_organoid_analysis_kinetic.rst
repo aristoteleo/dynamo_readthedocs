@@ -20,6 +20,7 @@ tutorial for details on how to analyze the cell cycle dataset.
 
 .. code:: ipython3
 
+    # !pip install git+https://github.com/aristoteleo/dynamo-release@master
     import warnings
     warnings.filterwarnings('ignore')
     

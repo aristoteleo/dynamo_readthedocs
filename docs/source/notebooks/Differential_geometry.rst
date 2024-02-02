@@ -62,7 +62,8 @@ Import relevant packages
 
 .. code:: ipython3
 
-    # !pip install dynamo-release --upgrade --quiet
+    # !pip install git+https://github.com/aristoteleo/dynamo-release@master
+    # !pip install gseapy
     
     import dynamo as dyn
     
