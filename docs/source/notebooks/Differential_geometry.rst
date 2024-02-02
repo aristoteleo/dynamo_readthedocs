@@ -1,13 +1,3 @@
-.. raw:: html
-
-    <div class="note">
-      <a href="https://colab.research.google.com/github/aristoteleo/dynamo-tutorials/blob/master/Differential_geometry.ipynb" target="_parent">
-      <img src="https://user-images.githubusercontent.com/7456281/93841442-99c3e180-fc61-11ea-9c87-07760b5dfc9a.png" width="119" alt="Open In Colab"/></a>
-      <a href="https://nbviewer.jupyter.org/github/aristoteleo/dynamo-tutorials/blob/master/Differential_geometry.ipynb" target="_parent">
-      <img src="https://user-images.githubusercontent.com/7456281/93841447-9c263b80-fc61-11ea-99b2-4eafe9958ee4.png" width="119" alt="Open In nbviewer"/></a>
-    </div>
-
-
 Zebrafish pigementation
 =======================
 
@@ -58,20 +48,24 @@ In this tutorial, we will cover following topics:
    kinetics along pseudotime trajectory
 -  learn and visualize models of cell-fate transitions
 
+.. code:: ipython3
+
+    !pip install git+https://github.com/aristoteleo/dynamo-release@master
+    !pip install gseapy
+
 Import relevant packages
 
 .. code:: ipython3
 
-    # !pip install git+https://github.com/aristoteleo/dynamo-release@master
-    # !pip install gseapy
+    # !pip install dynamo-release --upgrade --quiet
     
     import dynamo as dyn
     
     # set white background
-    dyn.configuration.set_figure_params(background='white') 
+    dyn.configuration.set_figure_params(background='white')
     
-    import matplotlib.pyplot as plt 
-    import numpy as np 
+    import matplotlib.pyplot as plt
+    import numpy as np
     import pandas as pd
     from gseapy.plot import barplot, dotplot
     
@@ -81,7 +75,7 @@ Import relevant packages
 
 .. parsed-literal::
 
-    /Users/xiaojieqiu/opt/anaconda3/envs/test/lib/python3.9/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+    /Users/xiaojieqiu/opt/anaconda3/envs/protocol/lib/python3.9/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
       from .autonotebook import tqdm as notebook_tqdm
 
 
@@ -106,8 +100,8 @@ Load processed data or data preprocessing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you followed the **zebrafish pigmentation** tutorial, you can load
-the processed zebrafish adata object. Also, you can start from scratch
-using the following code.
+the processed zebrafish adata object here for all downstream analysis.
+Otherwise, you need to preprocess the data before further analyses.
 
 .. code:: ipython3
 
@@ -118,6 +112,7 @@ using the following code.
 .. parsed-literal::
 
     |-----> Downloading data to ./data/zebrafish.h5ad
+    |-----> File ./data/zebrafish.h5ad already exists.
 
 
 
@@ -132,43 +127,39 @@ using the following code.
 
 .. code:: ipython3
 
-    adata = dyn.sample_data.zebrafish()
-    
     preprocessor = dyn.pp.Preprocessor(cell_cycle_score_enable=True)
     preprocessor.config_monocle_recipe(adata)
     preprocessor.filter_cells_by_outliers_kwargs["keep_filtered"] = True
     preprocessor.preprocess_adata_monocle(adata)
     
-    dyn.tl.dynamics(adata, cores=3)
+    dyn.tl.dynamics(adata, model='stochastic', cores=3)
     
     dyn.tl.reduceDimension(adata)
-    dyn.tl.cell_velocities(adata)
+    dyn.tl.cell_velocities(adata, method='pearson', other_kernels_dict={'transform': 'sqrt'})
     
-    dyn.tl.cell_velocities(adata)
     dyn.pl.streamline_plot(adata, color=['Cell_type'])
 
 
 .. parsed-literal::
 
-    |-----> Downloading data to ./data/zebrafish.h5ad
     |-----> Running monocle preprocessing pipeline...
     |-----------> filtered out 14 outlier cells
     |-----------> filtered out 12746 outlier genes
     |-----> PCA dimension reduction
     |-----> <insert> X_pca to obsm in AnnData Object.
     |-----> computing cell phase...
-    |-----> [Cell Phase Estimation] completed [4.9645s]
-    |-----> [Cell Cycle Scores Estimation] completed [0.2311s]
-    |-----> [Preprocessor-monocle] completed [2.3065s]
+    |-----> [Cell Phase Estimation] completed [20.3804s]
+    |-----> [Cell Cycle Scores Estimation] completed [0.2950s]
+    |-----> [Preprocessor-monocle] completed [2.4452s]
     |-----> dynamics_del_2nd_moments_key is None. Using default value from DynamoAdataConfig: dynamics_del_2nd_moments_key=False
     |-----------> removing existing M layers:[]...
     |-----------> making adata smooth...
     |-----> calculating first/second moments...
-    |-----> [moments calculation] completed [19.7981s]
+    |-----> [moments calculation] completed [20.2756s]
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
     |-----> <insert> X_umap to obsm in AnnData Object.
-    |-----> [UMAP] completed [14.7580s]
+    |-----> [UMAP] completed [7.8265s]
     |-----> incomplete neighbor graph info detected: connectivities and distances do not exist in adata.obsp, indices not in adata.uns.neighbors.
     |-----> Neighbor graph is broken, recomputing....
     |-----> Start computing neighbor graph...
@@ -176,17 +167,37 @@ using the following code.
     |-----> fetching X data from layer:None, basis:pca
     |-----> method arg is None, choosing methods automatically...
     |-----------> method ball_tree selected
-    |-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 100.0000%|-----> [calculating transition matrix via pearson kernel with sqrt transform.] completed [3.9327s]
-    |-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [0.5575s]
-    Using existing pearson_transition_matrix found in .obsp.
-    |-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [0.5458s]
+    |-----> [calculating transition matrix via pearson kernel with sqrt transform.] in progress: 100.0000%|-----> [calculating transition matrix via pearson kernel with sqrt transform.] completed [4.0390s]
+    |-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [0.5539s]
+    |-----> method arg is None, choosing methods automatically...
+    |-----------> method kd_tree selected
+    |-----> method arg is None, choosing methods automatically...
+    |-----------> method kd_tree selected
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
 
 
-.. image:: Differential_geometry_files/output_8_1.png
+.. image:: Differential_geometry_files/output_9_1.png
 
+
+If you confronted errors when saving dynamo processed adata object,
+please see the very end of this tutorial.
+
+If you would like to start from scratch, use the following code to
+preprocess the zebrafish adata object (or use your own dataset):
+
+.. code:: python
+
+   adata = dyn.sample_data.zebrafish()
+
+   dyn.pp.recipe_monocle(adata)
+   dyn.tl.dynamics(adata, cores=3)
+
+   dyn.tl.reduceDimension(adata)
+   dyn.tl.cell_velocities(adata)
+
+   dyn.pl.streamline_plot(adata, color=['Cell_type'])
 
 Differential geometry analysis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -233,7 +244,9 @@ first project the RNA velocities into PCA space.
 .. parsed-literal::
 
     Using existing pearson_transition_matrix found in .obsp.
-    |-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [0.6055s]
+    |-----> [projecting velocity vector to low dimensional embedding] in progress: 100.0000%|-----> [projecting velocity vector to low dimensional embedding] completed [0.6104s]
+    |-----> method arg is None, choosing methods automatically...
+    |-----------> method kd_tree selected
 
 
 Then we will use the ``dyn.vf.VectorField`` function to learns the
@@ -252,8 +265,8 @@ Related information for the learned vector field are stored in adata.
 
 .. code:: ipython3
 
-    dyn.vf.VectorField(adata, 
-                       basis='pca', 
+    dyn.vf.VectorField(adata,
+                       basis='pca',
                        M=100)
 
 
@@ -265,8 +278,10 @@ Related information for the learned vector field are stored in adata.
     |-----> Learning vector field with method: sparsevfc.
     |-----> [SparseVFC] begins...
     |-----> Sampling control points based on data velocity magnitude...
-    |-----> [SparseVFC] completed [0.1007s]
-    |-----> [VectorField] completed [0.1855s]
+    |-----> method arg is None, choosing methods automatically...
+    |-----------> method ball_tree selected
+    |-----> [SparseVFC] completed [0.0889s]
+    |-----> [VectorField] completed [0.1640s]
 
 
 Velocity, acceleration and curvature ranking
@@ -295,8 +310,8 @@ group when ``groups`` is set or for all cells if it is not set.
 
 .. code:: ipython3
 
-    dyn.vf.rank_velocity_genes(adata, 
-                               groups='Cell_type', 
+    dyn.vf.rank_velocity_genes(adata,
+                               groups='Cell_type',
                                vkey="velocity_S");
 
 Ranking results are saved in ``.uns`` with the pattern
@@ -329,14 +344,14 @@ velocity.
 
 .. parsed-literal::
 
-    |-----> [Calculating acceleration] in progress: 100.0000%|-----> [Calculating acceleration] completed [0.1130s]
+    |-----> [Calculating acceleration] in progress: 100.0000%|-----> [Calculating acceleration] completed [0.1120s]
 
 
 .. code:: ipython3
 
-    dyn.vf.rank_acceleration_genes(adata, 
-                                   groups='Cell_type', 
-                                   akey="acceleration", 
+    dyn.vf.rank_acceleration_genes(adata,
+                                   groups='Cell_type',
+                                   akey="acceleration",
                                    prefix_store="rank");
     rank_acceleration = adata.uns['rank_acceleration'];
     rank_abs_acceleration = adata.uns['rank_abs_acceleration'];
@@ -353,8 +368,8 @@ absolute curvature values in different cell groups.
 
 .. parsed-literal::
 
-    |-----> [Calculating acceleration] in progress: 100.0000%|-----> [Calculating acceleration] completed [0.1051s]
-    |-----> [Calculating curvature] in progress: 100.0000%|-----> [Calculating curvature] completed [0.1327s]
+    |-----> [Calculating acceleration] in progress: 100.0000%|-----> [Calculating acceleration] completed [0.1114s]
+    |-----> [Calculating curvature] in progress: 100.0000%|-----> [Calculating curvature] completed [0.1288s]
 
 
 .. code:: ipython3
@@ -381,7 +396,7 @@ positive and negative values. The same applies to ``acceleration`` and
 
 
 
-.. image:: Differential_geometry_files/output_29_1.png
+.. image:: Differential_geometry_files/output_33_1.png
 
 
 This is for acceleration of genes ``tfec`` and ``pnp4a``.
@@ -397,7 +412,7 @@ This is for acceleration of genes ``tfec`` and ``pnp4a``.
 
 
 
-.. image:: Differential_geometry_files/output_31_1.png
+.. image:: Differential_geometry_files/output_35_1.png
 
 
 This is for curvature of genes ``tfec`` and ``pnp4a``.
@@ -413,7 +428,7 @@ This is for curvature of genes ``tfec`` and ``pnp4a``.
 
 
 
-.. image:: Differential_geometry_files/output_33_1.png
+.. image:: Differential_geometry_files/output_37_1.png
 
 
 The purpose for us to develop vaious differential geometry analyses is
@@ -453,6 +468,15 @@ pathways, indicative of a potential chondrocytic origin.
 
     <Axes: title={'center': 'abs acceleration ranking'}, xlabel='Combined Score'>
 
+
+
+.. code:: ipython3
+
+    plt.show()
+
+
+
+.. image:: Differential_geometry_files/output_43_0.png
 
 
 Jacobian Calculation and Ranking
@@ -524,7 +548,7 @@ long as they are genes used for pca dimension reduction, that is
 
 .. parsed-literal::
 
-    Transforming subset Jacobian: 100%|████████| 4181/4181 [00:11<00:00, 375.53it/s]
+    Transforming subset Jacobian: 100%|█████████| 4181/4181 [03:21<00:00, 20.76it/s]
 
 
 We can take advantage of the cell-wise ``jacobian matrix`` to
@@ -549,11 +573,7 @@ the effects of changing the expression of ``tfec`` to the velocity of
 
 
 
-.. image:: Differential_geometry_files/output_49_0.png
-
-
-
-.. image:: Differential_geometry_files/output_49_1.png
+.. image:: Differential_geometry_files/output_54_0.png
 
 
 Similarly, we can also visualize the regulation from ``tfec`` to
@@ -567,7 +587,7 @@ of the gene expression level of ``tfec`` (*x-axis*) to ``pnp4a``
 
 
 
-.. image:: Differential_geometry_files/output_51_0.png
+.. image:: Differential_geometry_files/output_56_0.png
 
 
 Ranking for Jacobian matrices
@@ -611,20 +631,20 @@ API pages of online documentation. ``dyn.vf.rank_jacobian_genes``
 
 .. code:: ipython3
 
-    full_reg_rank = dyn.vf.rank_jacobian_genes(adata, 
-                                               groups='Cell_type', 
-                                               mode="full_reg", 
-                                               abs=True, 
+    full_reg_rank = dyn.vf.rank_jacobian_genes(adata,
+                                               groups='Cell_type',
+                                               mode="full_reg",
+                                               abs=True,
                                                output_values=True,
                                                return_df=True)
 
 .. code:: ipython3
 
-    full_eff_rank = dyn.vf.rank_jacobian_genes(adata, 
-                                               groups='Cell_type', 
-                                               mode='full_eff', 
-                                               abs=True, 
-                                               exclude_diagonal=True, 
+    full_eff_rank = dyn.vf.rank_jacobian_genes(adata,
+                                               groups='Cell_type',
+                                               mode='full_eff',
+                                               abs=True,
+                                               exclude_diagonal=True,
                                                output_values=True,
                                                return_df=True)
 
@@ -760,10 +780,10 @@ stored for each gene. See below:
 
 From the above table, we can see that in the previously “Unknown” cell
 type, the top two regulators of tmsb4x gene (the first column in the
-above table) are ``si:dkey-183i3.5`` and ``zgc:136930`` with their aggregate
-regulation strength based on Jacobian ``0.001557`` and ``0.001212``,
-respectively. The same applies to other columns and similarly to the
-``full_eff_rank`` dictionary.
+above table) are ``si:dkey-183i3.5`` and ``zgc:136930`` with their
+aggregate regulation strength based on Jacobian ``0.001557`` and
+``0.001212``, respectively. The same applies to other columns and
+similarly to the ``full_eff_rank`` dictionary.
 
 .. code:: ipython3
 
@@ -823,7 +843,7 @@ chondrocyte cells.
 
 .. parsed-literal::
 
-    |-----> [iterating reg_groups] in progress: 100.0000%|-----> [iterating reg_groups] completed [1.3526s]
+    |-----> [iterating reg_groups] in progress: 100.0000%|-----> [iterating reg_groups] completed [1.3620s]
 
 
 Network can then be visualized as an Arcplot:
@@ -834,7 +854,7 @@ Network can then be visualized as an Arcplot:
 
 
 
-.. image:: Differential_geometry_files/output_72_0.png
+.. image:: Differential_geometry_files/output_77_0.png
 
 
 Similarly, network can also be built with other criteria and visualized
@@ -860,7 +880,7 @@ select 10 top genes with highest absolute acceleration values in
 
 .. parsed-literal::
 
-    |-----> [iterating reg_groups] in progress: 100.0000%|-----> [iterating reg_groups] completed [1.4601s]
+    |-----> [iterating reg_groups] in progress: 100.0000%|-----> [iterating reg_groups] completed [1.5151s]
 
 
 We can then focus on analyzing ``Unknown`` cell type network and
@@ -869,8 +889,8 @@ constrain the edges by removing all edges with weight <= 0.0015.
 
 .. code:: ipython3
 
-    network = nx.from_pandas_edgelist(edges_list['Unknown'].drop_duplicates().query("weight > 0.0015"), 
-                                      'regulator', 'target', 
+    network = nx.from_pandas_edgelist(edges_list['Unknown'].drop_duplicates().query("weight > 0.0015"),
+                                      'regulator', 'target',
                                       edge_attr='weight',
                                       create_using=nx.DiGraph())
 
@@ -900,11 +920,19 @@ Lastly, we can visulize the network with ``dyn.pl.circosPlot``.
 
 
 
-
 .. parsed-literal::
 
     <Axes: >
 
+
+
+.. code:: ipython3
+
+    plt.show()
+
+
+
+.. image:: Differential_geometry_files/output_87_0.png
 
 
 Visualize gene expression, velocity, acceleration, curvature as a function of vector field based pseudotime.
@@ -930,7 +958,9 @@ etc.) during zebrafish pigmentation.
     |-----> graphizing vectorfield...
     |-----------? nbrs_idx argument is ignored and recomputed because nbrs_idx is not None and return_nbrs=True
     |-----------> calculating neighbor indices...
-    |-----> [ddhodge completed] completed [32.4428s]
+    |-----> method arg is None, choosing methods automatically...
+    |-----------> method ball_tree selected
+    |-----> [ddhodge completed] completed [44.2815s]
 
 
 .. code:: ipython3
@@ -942,22 +972,18 @@ based pseudotime (*x-axis*).
 
 .. code:: ipython3
 
-    dyn.pl.kinetic_heatmap(adata, 
-                           genes=transition_genes, 
+    dyn.pl.kinetic_heatmap(adata,
+                           genes=transition_genes,
                            tkey='pca_ddhodge_potential',
-                           gene_order_method='maximum', 
-                           mode='pseudotime', 
+                           gene_order_method='maximum',
+                           mode='pseudotime',
                            color_map='viridis',
-                           yticklabels=False,    
+                           yticklabels=False,
                           )
 
 
 
-.. image:: Differential_geometry_files/output_86_0.png
-
-
-
-.. image:: Differential_geometry_files/output_86_1.png
+.. image:: Differential_geometry_files/output_92_0.png
 
 
 Note that if you want to visualize the gene expression for a specific
@@ -975,12 +1001,14 @@ cell-type annotations.
 
 .. parsed-literal::
 
+    |-----> method arg is None, choosing methods automatically...
+    |-----------> method kd_tree selected
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
 
 
-.. image:: Differential_geometry_files/output_88_1.png
+.. image:: Differential_geometry_files/output_94_1.png
 
 
 We can then collect cells from ``Proliferating Progenitor``,
@@ -992,18 +1020,18 @@ visualize the expression kinetic heatmap for the melanophore lineage.
 
     subset = adata[adata.obs.Cell_type.isin(['Proliferating Progenitor', 'Pigment Progenitor', 'Melanophore'])]
     
-    dyn.pl.kinetic_heatmap(subset, 
-                           genes=transition_genes, 
+    dyn.pl.kinetic_heatmap(subset,
+                           genes=transition_genes,
                            tkey='pca_ddhodge_potential',
-                           gene_order_method='maximum', 
-                           mode='pseudotime', 
+                           gene_order_method='maximum',
+                           mode='pseudotime',
                            color_map='viridis',
-                           yticklabels=False,    
+                           yticklabels=False,
                           )
 
 
 
-.. image:: Differential_geometry_files/output_90_0.png
+.. image:: Differential_geometry_files/output_96_0.png
 
 
 Visualize the **gene velocity dynamics** as a function of vector field
@@ -1011,19 +1039,19 @@ based pseudotime (*x-axis*).
 
 .. code:: ipython3
 
-    dyn.pl.kinetic_heatmap(adata, 
-                           genes=transition_genes, 
+    dyn.pl.kinetic_heatmap(adata,
+                           genes=transition_genes,
                            tkey='pca_ddhodge_potential',
-                           gene_order_method='maximum', 
+                           gene_order_method='maximum',
                            layer='velocity_S',
-                           mode='pseudotime', 
+                           mode='pseudotime',
                            color_map='RdBu_r',
-                           yticklabels=False,  
+                           yticklabels=False,
                           )
 
 
 
-.. image:: Differential_geometry_files/output_92_0.png
+.. image:: Differential_geometry_files/output_98_0.png
 
 
 Visualize the **gene acceleration dynamics** as a function of vector
@@ -1031,18 +1059,18 @@ field based pseudotime (*x-axis*).
 
 .. code:: ipython3
 
-    dyn.pl.kinetic_heatmap(adata, 
-                           genes=transition_genes, 
+    dyn.pl.kinetic_heatmap(adata,
+                           genes=transition_genes,
                            tkey='pca_ddhodge_potential',
-                           gene_order_method='maximum', 
+                           gene_order_method='maximum',
                            layer='acceleration',
-                           mode='pseudotime', 
-                           yticklabels=False,  
+                           mode='pseudotime',
+                           yticklabels=False,
                            color_map='RdBu_r')
 
 
 
-.. image:: Differential_geometry_files/output_94_0.png
+.. image:: Differential_geometry_files/output_100_0.png
 
 
 Visualize the **gene curvature dynamics** as a function of vector field
@@ -1050,18 +1078,18 @@ based pseudotime (*x-axis*).
 
 .. code:: ipython3
 
-    dyn.pl.kinetic_heatmap(adata, 
-                           genes=transition_genes, 
+    dyn.pl.kinetic_heatmap(adata,
+                           genes=transition_genes,
                            tkey='pca_ddhodge_potential',
-                           gene_order_method='maximum', 
+                           gene_order_method='maximum',
                            layer='curvature',
-                           mode='pseudotime', 
-                           yticklabels=False,  
+                           mode='pseudotime',
+                           yticklabels=False,
                            color_map='RdBu_r')
 
 
 
-.. image:: Differential_geometry_files/output_96_0.png
+.. image:: Differential_geometry_files/output_102_0.png
 
 
 Build transition graph between cell states
@@ -1096,8 +1124,8 @@ build a transition graph between different cell types:
 
     |-----> Estimating the transition probability between cell types...
     |-----> Applying vector field
-    |-----> [KDTree parameter preparation computation] in progress: 0.0000%|-----> [KDTree computation] completed [0.0037s]
-    |-----> [iterate groups] in progress: 100.0000%|-----> [iterate groups] completed [42.6583s]
+    |-----> [KDTree parameter preparation computation] in progress: 0.0000%|-----> [KDTree computation] completed [0.0047s]
+    |-----> [iterate groups] in progress: 100.0000%|-----> [iterate groups] completed [45.5362s]
     |-----> [State graph estimation] completed [0.0007s]
 
 
@@ -1105,10 +1133,10 @@ Next, a state graph can be visualized with ``dyn.pl.state_graph``.
 
 .. code:: ipython3
 
-    dyn.pl.state_graph(adata, 
-                       color=['Cell_type'], 
-                       group='Cell_type', 
-                       basis='umap', 
+    dyn.pl.state_graph(adata,
+                       color=['Cell_type'],
+                       group='Cell_type',
+                       basis='umap',
                        show_legend='on data',
                        method='vf');
 
@@ -1126,7 +1154,7 @@ Next, a state graph can be visualized with ``dyn.pl.state_graph``.
 
 
 
-.. image:: Differential_geometry_files/output_101_2.png
+.. image:: Differential_geometry_files/output_107_2.png
 
 
 Save results
@@ -1179,15 +1207,6 @@ Alternatively, you can save the data via pickle dump:
 Dynamo save utility
 ^^^^^^^^^^^^^^^^^^^
 
-Note that there may be intermediate results stored in adata.uns that can
-may lead to errors when writing the ``h5ad`` object. For now, we suggest
-users to call ``dyn.cleanup(adata)`` first to remove these data objects
-before saving the adata object.
-
-.. code:: ipython3
-
-    dyn.cleanup(adata);
-
 call ``AnnData`` ``write_h5ad`` to save the entire adata information.
 
 .. code:: ipython3
@@ -1199,3 +1218,9 @@ You can load in the data later if need:
 .. code:: python
 
    _adata = dyn.read_h5ad(("./tutorial_processed_zebrafish_data.h5ad"))
+
+Note that there may be intermediate results stored in adata.uns that can
+may lead to errors when writing the ``h5ad`` object. If any, we suggest
+users to call ``dyn.import(adata)``/``dyn.export(adata)`` to save these
+data objects instead of AnnData methods.
+
