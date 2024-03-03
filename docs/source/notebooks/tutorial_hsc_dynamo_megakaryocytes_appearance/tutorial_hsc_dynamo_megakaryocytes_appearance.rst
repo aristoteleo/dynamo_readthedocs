@@ -1,31 +1,23 @@
-.. raw:: html
-
-    <div class="note">
-      <a href="https://colab.research.google.com/github/aristoteleo/dynamo-tutorials/blob/master/tutorial_hsc_dynamo_megakaryocytes_appearance.ipynb" target="_parent">
-      <img src="https://user-images.githubusercontent.com/7456281/93841442-99c3e180-fc61-11ea-9c87-07760b5dfc9a.png" width="119" alt="Open In Colab"/></a>
-      <a href="https://nbviewer.jupyter.org/github/aristoteleo/dynamo-tutorials/blob/master/tutorial_hsc_dynamo_megakaryocytes_appearance.ipynb" target="_parent">
-      <img src="https://user-images.githubusercontent.com/7456281/93841447-9c263b80-fc61-11ea-99b2-4eafe9958ee4.png" width="119" alt="Open In nbviewer"/></a>
-    </div>
-
-
-Molecular mechanism of megakaryocytes
+Molecular mechnism of earliest and fastest appearance of megakaryocytes
 =======================================================================
 
 One intriguing phenomenon observed in hematopoiesis is that commitment
 to and appearance of the Meg lineage occurs more rapidly than other
 lineages (Sanjuan-Pla et al., 2013; Yamamoto et al., 2013). However, the
 mechanisms underlying this process remain elusive. To mechanistically
-investigate these findings, we try to first reveal the timing of the maturation of
-megakaryocytes and then the underlying regulatory networks.
+dissect this finding, we focused on all cell types derived from the
+MEP-like lineage.
 
-Specifically, in this tutorial, we will guide you through the following three
-major analyses:
+In this tutorial, we will guide you to - learn vector field and manually
+select fixed points - visualize topography with computed fixed points -
+compute pseudotime (potential) - visualize vector field pseudotime of
+cell types
 
-- learn vector field of human hematopoiesis and identify fixed points of cell type
-- compute and visualize vector field based pseudotime (based on ddhodge algorithm)
-- perform differential geometry analyses to reveal a minimal network of Meg's early appearance
+Import relevant packages
 
-To begin with, let us first import relevant packages
+.. code:: ipython3
+
+    !pip install git+https://github.com/aristoteleo/dynamo-release@master
 
 .. code:: ipython3
 
@@ -34,10 +26,12 @@ To begin with, let us first import relevant packages
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
-
+    
+    # import Scribe as sb
     import sys
     import os
     
+    # import scanpy as sc
     import dynamo as dyn
     import seaborn as sns
     
@@ -47,56 +41,56 @@ To begin with, let us first import relevant packages
     import warnings
     warnings.filterwarnings('ignore')
 
-Next, let us download the processed hematopoiesis adata object
-(see `this notebook <https://dynamo-release.readthedocs.io/en/latest/notebooks/tutorial_hsc_velocity.html>`_
-to find out how to estimate the labeling RNA velocity for
-this dataset) that comes with the dynamo package.
 
 .. code:: ipython3
 
     adata_labeling = dyn.sample_data.hematopoiesis()
 
-Before we perform the actual analyses, we will first introduce a cartoon that can be used to help understanding
-how dynamo can be used to perform many novel analyses that are not available with any other tools to gain
-mechanistic insights.
 
-How to use dynamo to gain mechanistic insights with its unique differential geometry analyses
-----------------------------------------------------------------------------------------------
-In general, from the RNA velocity data, we can learn the vector field function in high dimensional
-space and then we can use it to perform differential analyses and gene-set enrichment analyses
-based on top-ranked acceleration or curvature genes, as well as the top-ranked genes with the
-strongest self-interactions, top-ranked regulators/targets, or top-ranked interactions for each
-gene in individual cell types or across all cell types, with either raw or absolute values.
-Integrating that ranking information, we can build regulatory networks across different cell types,
-which can then be visualized with ArcPlot, CircosPlot, or other visualizations. Lastly, dynamo can be also
-used to identify top toggle-switch pairs driving cell-fate bifurcations. We will discuss parts of these
-analyses in this notebook but you should also check the extensive analyses demonstrated in the zebrafish
-differential geometry analyses notebook from here:
-`Zebrafish <https://dynamo-release.readthedocs.io/en/latest/notebooks/Differential_geometry.html>`_
+take a glance at what is in ``adata`` object. All observations,
+embedding layers and other data in ``adata`` are computed within
+``dynamo``. Please refer to other dynamo tutorials regarding how to
+obtain these values from metadata and raw new/total and (or) raw
+spliced/unspliced gene expression values.
 
-.. figure:: ../hsc_images/fig5_a.png
+A schematic of leveraging differential geometry
+-----------------------------------------------
+
+-  ranking genes (using either raw or absolute values) across all cells
+   or in each cell group/state
+-  gene set enrichment, network construction, and visualization
+-  identifying top toggle-switch pairs driving cell fate bifurcations
+
+.. figure:: https://github.com/aristoteleo/dynamo-tutorials/blob/master/images/fig5_a.png?raw=1
    :alt: fig5_A
 
-Map the topography of human hematopoiesis and associative fixed points
-----------------------------------------------------------------------
+   fig5_A
 
-To map the topography of a vector field space, we will need to first learn the vector field function in that space which
-can be done with the following code. Since the data we preprocessed in dynamo already include the vector field in the
-umap space. The following step can be skipped.
+Visualize topography
+--------------------
+
+Lineage tree of hematopoiesis, lumped automatically from the vector field built in the UMAP space
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. figure:: https://github.com/aristoteleo/dynamo-tutorials/blob/master/images/fig5_C.png?raw=1
+   :alt: fig5_C
+
+   fig5_C
+
+The reconstructed vector field and associated fixed points.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The color of digits in each node reflects the type of fixed point: red,
+emitting fixed point; black, absorbing fixed point. The color of the
+numbered nodes corresponds to the confidence of the fixed points.
+
+Manually select good fixed points found by topography
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: ipython3
-    dyn.vf.VectorField(adata_labeling, basis='umap', map_topography=False) # learn vector field for the umap space
 
+    adata_labeling.uns["VecFld_umap"].keys()
 
-Associate fixed points to cell types
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-We next run the `vf.topography` function to retrieve fixed points. Because of the numerical instability of the learned
-vector field resulted from the noisy data, dynamo tends to identify many fixed points. Manually post-processing will be
-needed to associate each fix point to a particular cell state.
-
-.. code:: ipython3
-    adata_labeling.uns['VecFld_umap'].keys()
 
 
 
@@ -109,7 +103,28 @@ needed to associate each fix point to a particular cell state.
 
 .. code:: ipython3
 
-    dyn.vf.topography(adata_labeling, n=750, basis='umap');
+    dyn.vf.topography(adata_labeling, n=750, basis="umap")
+
+
+
+.. parsed-literal::
+
+    |-----> method arg is None, choosing methods automatically...
+    |-----------> method kd_tree selected
+
+
+
+
+.. parsed-literal::
+
+    AnnData object with n_obs × n_vars = 1947 × 1956
+        obs: 'batch', 'time', 'cell_type', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'new_Size_Factor', 'initial_new_cell_size', 'total_Size_Factor', 'initial_total_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'Size_Factor', 'initial_cell_size', 'ntr', 'cell_cycle_phase', 'leiden', 'control_point_pca', 'inlier_prob_pca', 'obs_vf_angle_pca', 'pca_ddhodge_div', 'pca_ddhodge_potential', 'acceleration_pca', 'curvature_pca', 'n_counts', 'mt_frac', 'jacobian_det_pca', 'manual_selection', 'divergence_pca', 'curv_leiden', 'curv_louvain', 'SPI1->GATA1_jacobian', 'jacobian', 'umap_ori_leiden', 'umap_ori_louvain', 'umap_ddhodge_div', 'umap_ddhodge_potential', 'curl_umap', 'divergence_umap', 'acceleration_umap', 'control_point_umap_ori', 'inlier_prob_umap_ori', 'obs_vf_angle_umap_ori', 'curvature_umap_ori'
+        var: 'gene_name', 'gene_id', 'nCells', 'nCounts', 'pass_basic_filter', 'use_for_pca', 'frac', 'ntr', 'time_3_alpha', 'time_3_beta', 'time_3_gamma', 'time_3_half_life', 'time_3_alpha_b', 'time_3_alpha_r2', 'time_3_gamma_b', 'time_3_gamma_r2', 'time_3_gamma_logLL', 'time_3_delta_b', 'time_3_delta_r2', 'time_3_bs', 'time_3_bf', 'time_3_uu0', 'time_3_ul0', 'time_3_su0', 'time_3_sl0', 'time_3_U0', 'time_3_S0', 'time_3_total0', 'time_3_beta_k', 'time_3_gamma_k', 'time_5_alpha', 'time_5_beta', 'time_5_gamma', 'time_5_half_life', 'time_5_alpha_b', 'time_5_alpha_r2', 'time_5_gamma_b', 'time_5_gamma_r2', 'time_5_gamma_logLL', 'time_5_bs', 'time_5_bf', 'time_5_uu0', 'time_5_ul0', 'time_5_su0', 'time_5_sl0', 'time_5_U0', 'time_5_S0', 'time_5_total0', 'time_5_beta_k', 'time_5_gamma_k', 'use_for_dynamics', 'gamma', 'gamma_r2', 'use_for_transition', 'gamma_k', 'gamma_b'
+        uns: 'PCs', 'VecFld_pca', 'VecFld_umap', 'X_umap_neighbors', 'cell_phase_genes', 'cell_type_colors', 'dynamics', 'explained_variance_ratio_', 'feature_selection', 'grid_velocity_pca', 'grid_velocity_umap', 'grid_velocity_umap_ori_perturbation', 'grid_velocity_umap_test', 'jacobian_pca', 'leiden', 'neighbors', 'pca_mean', 'pp', 'response'
+        obsm: 'X', 'X_pca', 'X_pca_SparseVFC', 'X_umap', 'X_umap_SparseVFC', 'X_umap_ori_perturbation', 'X_umap_test', 'acceleration_pca', 'acceleration_umap', 'cell_cycle_scores', 'curvature_pca', 'curvature_umap', 'j_delta_x_perturbation', 'velocity_pca', 'velocity_pca_SparseVFC', 'velocity_umap', 'velocity_umap_SparseVFC', 'velocity_umap_ori_perturbation', 'velocity_umap_test'
+        layers: 'M_n', 'M_nn', 'M_t', 'M_tn', 'M_tt', 'X_new', 'X_total', 'velocity_alpha_minus_gamma_s'
+        obsp: 'X_umap_connectivities', 'X_umap_distances', 'connectivities', 'cosine_transition_matrix', 'distances', 'fp_transition_rate', 'moments_con', 'pca_ddhodge', 'perturbation_transition_matrix', 'umap_ddhodge'
+
 
 
 .. code:: ipython3
@@ -124,35 +139,23 @@ needed to associate each fix point to a particular cell state.
 
 
 
-.. image:: output_13_0.png
-   :width: 602px
-   
+
+.. image:: output_14_0.png
 
 
-As you can see, we have way more fixed points than we want. Therefore we manually select fixed points, simply by
-identifying points that are associated with a particular cell fate. Specifically, we will also leverage the
-``Xss, ftype`` keys that are associated with all those identified fixed points.
-
-| here ``Xss`` is for the fixed points
-  coordinates while ``ftype`` is for the specific fixed point type, denoted by
+| In the resulted dictionary, ``Xss`` stands for the fixed points
+  coordinates and ``ftype`` is the specific fixed point type, denoted by
   integers.
-| the integers of fixed points in ftype have following meaning:
-- -1: stable 
-- 0: saddle 
-- 1: unstable
-
-In the following figure, the color of digits in each node reflects the type of fixed point: red,
-emitting fixed point; black, absorbing fixed point. The color of the numbered nodes corresponds to
-the confidence of the fixed points with lighter (yellowish color) higher confidence and vice versa.
+| ftype value mapping:
+| - -1: stable - 0: saddle - 1: unstable
 
 .. code:: ipython3
 
-    Xss, ftype = adata_labeling.uns['VecFld_umap']['Xss'], adata_labeling.uns['VecFld_umap']['ftype']
-    # good_fixed_points = [0, 2, 5, 29, 11, 28] # n=250
-    good_fixed_points = [2, 8, 1, 195, 4, 5] # n=750
+    Xss, ftype = adata_labeling.uns["VecFld_umap"]["Xss"], adata_labeling.uns["VecFld_umap"]["ftype"]
+    good_fixed_points = [1, 2, 3, 4, 5, 8]  # n=750
     
-    adata_labeling.uns['VecFld_umap']['Xss'] = Xss[good_fixed_points]
-    adata_labeling.uns['VecFld_umap']['ftype'] = ftype[good_fixed_points]
+    adata_labeling.uns["VecFld_umap"]["Xss"] = Xss[good_fixed_points]
+    adata_labeling.uns["VecFld_umap"]["ftype"] = ftype[good_fixed_points]
 
 
 .. code:: ipython3
@@ -170,26 +173,15 @@ the confidence of the fixed points with lighter (yellowish color) higher confide
 
 
 
-.. image:: output_16_0.png
-   :width: 590px
-   
-It is worth noting that those fixed points are later used in the optimal path predictions as shown here:
-`LAP <https://dynamo-release.readthedocs.io/en/latest/notebooks/lap_tutorial/lap_tutorial.html>`_
-
-Lineage tree of hematopoiesis
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-We can then run the ``dyn.pd.tree_model(adata_labeling)`` function to lumped cells from each population from the vector
-field built in the UMAP space to create a lineage tree that nicely recapitulate the known hierarchy of each cell lineage.
-
-.. figure:: ../hsc_images/fig5_c.png
-   :alt: fig5_c
+.. image:: output_17_0.png
 
 
 Vector field pseudotime
 -----------------------
-We now move to demonstrate how we can use dynamo to reveal the early appearance of Meg lineage. Specifically we use
-ddhodge to calculate the vector field based pseudotime with the velocity transition matrix. More details can be found in
-the following:
+
+In this section, we will show how to visualize vector field pseudotime
+with ``dynamo``. The vector field pseudotime is calculated based on the
+velocity transition matrix.
 
 **Define a colormap we will use later**
 
@@ -207,7 +199,8 @@ the following:
     }
 
 
-**Initialize a Dataframe object that we will use for plotting with ``sns`` or ``matplotlib`` **
+**Initialize a Dataframe object that we will use to plot with
+visualization packages such as ``sns``**
 
 .. code:: ipython3
 
@@ -216,22 +209,23 @@ the following:
     df = adata_labeling[valid_indices].obs[["pca_ddhodge_potential", "umap_ddhodge_potential", "cell_type"]]
     df["cell_type"] = list(df["cell_type"])
 
-Use ddhodge algorith from ``dynamo`` to compute vector field based pseudotime
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Building a graph, computing divergence and potential with ``graph_operators`` in ``dynamo``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: ipython3
 
     from dynamo.tools.graph_operators import build_graph, div, potential
+    
     g = build_graph(adata_labeling.obsp["cosine_transition_matrix"])
     ddhodge_div = div(g)
     potential_cosine = potential(g, -ddhodge_div)
     adata_labeling.obs["cosine_potential"] = potential_cosine
 
 
-The above uses the `cosine_transition_matrix` to compute the vector field based pseudotiem but you can also
-compute it with other kernels, such as the ``fp_transition_rate`` and store the results in the dataframe object ``df``
-we created above. Note that ``fp`` stands for ``fokker planck`` method.
-Please refer to the ``dynamo`` documentation for more details on the
+Compute ``potential_fp`` and store in the dataframe object ``df`` we
+created above. Note that ``fp`` stands for ``fokkerplanck`` method.
+Please refer to the ``dynamo`` cell paper for more details on the
 related methods.
 
 .. code:: ipython3
@@ -240,13 +234,15 @@ related methods.
     ddhodge_div = div(g)
     potential_fp = potential(g, ddhodge_div)
 
-set ``potential_fp`` and ``pseudotime_fp`` in adata.obs to facilitate visualizing the
-potential and pseudotime across cells.
+
+set ``potential_fp`` and ``pseudotime_fp`` in adata.obs to visualize
+potential and time.
 
 .. code:: ipython3
 
     adata_labeling.obs["potential_fp"] = potential_fp
     adata_labeling.obs["pseudotime_fp"] = -potential_fp
+
 
 .. code:: ipython3
 
@@ -261,9 +257,8 @@ potential and pseudotime across cells.
 
 
 
-.. image:: output_28_0.png
-   :width: 965px
-   
+
+.. image:: output_29_0.png
 
 
 .. code:: ipython3
@@ -283,51 +278,111 @@ potential and pseudotime across cells.
     plt.xlim(0.0, 0.008)
     plt.ylim(0, 12)
     plt.xlabel("vector field pseudotime")
+    plt.show()
 
+
+
+.. image:: output_30_0.png
+
+
+Via the visualization results above from vectorfield analysis, we can
+observe that egakaryocytes appear earliest among the Meg, Ery, and Bas
+lineages.
+
+Molecular mechanisms underlying the early appearance of the Meg lineage
+-----------------------------------------------------------------------
+
+In this section, we will show: - Self- activation of FLI1 - Repression
+of KLF1 by FLI1 - FLI1 represses KLF1 - Speed, acceleration and
+divergence calculation and visualization - Schematic summarizing the
+interactions involving FLI1 and KLF1.
+
+.. code:: ipython3
+
+    Meg_genes = ["FLI1", "KLF1"]
+
+
+Compute jacobian of selected genes
+
+.. code:: ipython3
+
+    dyn.vf.jacobian(adata_labeling, regulators=Meg_genes, effectors=Meg_genes)
+
+
+
+.. parsed-literal::
+
+    Transforming subset Jacobian: 100%|██████████| 1947/1947 [00:00<00:00, 62952.39it/s]
 
 
 
 
 .. parsed-literal::
 
-    Text(0.5, 9.444444444444438, 'vector field pseudotime')
+    AnnData object with n_obs × n_vars = 1947 × 1956
+        obs: 'batch', 'time', 'cell_type', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'new_Size_Factor', 'initial_new_cell_size', 'total_Size_Factor', 'initial_total_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'Size_Factor', 'initial_cell_size', 'ntr', 'cell_cycle_phase', 'leiden', 'control_point_pca', 'inlier_prob_pca', 'obs_vf_angle_pca', 'pca_ddhodge_div', 'pca_ddhodge_potential', 'acceleration_pca', 'curvature_pca', 'n_counts', 'mt_frac', 'jacobian_det_pca', 'manual_selection', 'divergence_pca', 'curv_leiden', 'curv_louvain', 'SPI1->GATA1_jacobian', 'jacobian', 'umap_ori_leiden', 'umap_ori_louvain', 'umap_ddhodge_div', 'umap_ddhodge_potential', 'curl_umap', 'divergence_umap', 'acceleration_umap', 'control_point_umap_ori', 'inlier_prob_umap_ori', 'obs_vf_angle_umap_ori', 'curvature_umap_ori', 'cosine_potential', 'potential_fp', 'pseudotime_fp'
+        var: 'gene_name', 'gene_id', 'nCells', 'nCounts', 'pass_basic_filter', 'use_for_pca', 'frac', 'ntr', 'time_3_alpha', 'time_3_beta', 'time_3_gamma', 'time_3_half_life', 'time_3_alpha_b', 'time_3_alpha_r2', 'time_3_gamma_b', 'time_3_gamma_r2', 'time_3_gamma_logLL', 'time_3_delta_b', 'time_3_delta_r2', 'time_3_bs', 'time_3_bf', 'time_3_uu0', 'time_3_ul0', 'time_3_su0', 'time_3_sl0', 'time_3_U0', 'time_3_S0', 'time_3_total0', 'time_3_beta_k', 'time_3_gamma_k', 'time_5_alpha', 'time_5_beta', 'time_5_gamma', 'time_5_half_life', 'time_5_alpha_b', 'time_5_alpha_r2', 'time_5_gamma_b', 'time_5_gamma_r2', 'time_5_gamma_logLL', 'time_5_bs', 'time_5_bf', 'time_5_uu0', 'time_5_ul0', 'time_5_su0', 'time_5_sl0', 'time_5_U0', 'time_5_S0', 'time_5_total0', 'time_5_beta_k', 'time_5_gamma_k', 'use_for_dynamics', 'gamma', 'gamma_r2', 'use_for_transition', 'gamma_k', 'gamma_b'
+        uns: 'PCs', 'VecFld_pca', 'VecFld_umap', 'X_umap_neighbors', 'cell_phase_genes', 'cell_type_colors', 'dynamics', 'explained_variance_ratio_', 'feature_selection', 'grid_velocity_pca', 'grid_velocity_umap', 'grid_velocity_umap_ori_perturbation', 'grid_velocity_umap_test', 'jacobian_pca', 'leiden', 'neighbors', 'pca_mean', 'pp', 'response'
+        obsm: 'X', 'X_pca', 'X_pca_SparseVFC', 'X_umap', 'X_umap_SparseVFC', 'X_umap_ori_perturbation', 'X_umap_test', 'acceleration_pca', 'acceleration_umap', 'cell_cycle_scores', 'curvature_pca', 'curvature_umap', 'j_delta_x_perturbation', 'velocity_pca', 'velocity_pca_SparseVFC', 'velocity_umap', 'velocity_umap_SparseVFC', 'velocity_umap_ori_perturbation', 'velocity_umap_test'
+        layers: 'M_n', 'M_nn', 'M_t', 'M_tn', 'M_tt', 'X_new', 'X_total', 'velocity_alpha_minus_gamma_s'
+        obsp: 'X_umap_connectivities', 'X_umap_distances', 'connectivities', 'cosine_transition_matrix', 'distances', 'fp_transition_rate', 'moments_con', 'pca_ddhodge', 'perturbation_transition_matrix', 'umap_ddhodge'
 
 
 
+Next we use jacobian analyses to reveal mutual inhibition between FLI1
+and KLF1 (Figure 5F) and self-activation of FLI1.
 
-.. image:: output_29_1.png
-   :width: 365px
-   
-
-
-From the above analysis, we can clearly see that megakaryocytes appear earliest among the Meg, Ery, and Bas
-lineages, in line with what has been reported previously.
-
-Molecular mechanisms underlying the early appearance of the Meg lineage
------------------------------------------------------------------------
-
-Interestingly, this early appearance of Meg lineage is further reinforced by its considerably higher RNA speed
-(Figure S6B) and acceleration (Figure 5E) relative to all other lineages. When inspecting the expression of FLI1 and
-KLF1 (Siatecka and Bieker, 2011), known master regulators of Meg and Ery lineages, respectively, we observed high
-expression of FLI1, rather than KLF1, beginning at the HSPC state (Figure S6C), as shown below:
-
-
-High expression of FLI1, instead of KLF1, beginning at the progenitor state
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code:: ipython3
 
-    dyn.pl.umap(adata_labeling, color=["FLI1", "KLF1"], layer="X_total")
+    dyn.pl.jacobian(
+        adata_labeling,
+        regulators=Meg_genes,
+        effectors=["FLI1"],
+        basis="umap",
+    )
+
+
+
+
+.. image:: output_37_0.png
+
+
+.. code:: ipython3
+
+    dyn.pl.jacobian(
+        adata_labeling,
+        regulators=["KLF1"],
+        effectors=["FLI1"],
+        basis="umap",
+    )
+
+
 
 
 .. image:: output_38_0.png
 
 
-High speed, acceleration and low divergence and curvature of the Meg lineage
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Here we will use dynamo to speed, divergence, acceleration and curvature on the pca space. Note that dynamo calculate
-acceleration and curvature as a `cell by gene` matrix, just like the gene expression matrix. Here we will plot the
-magnitude of the acceleration and curvature vectors, similar to caculating the speed of RNA velocity vectors. RNA divergence
-is a scalar for each cell.
+Expression of FLI1 (Meg lineage master regulator) relative to KLF1 (Ery
+lineage master regulator) in progenitors.
+
+.. code:: ipython3
+
+    dyn.pl.umap(adata_labeling, color=["FLI1", "KLF1"], layer="X_total")
+
+
+
+
+.. image:: output_40_0.png
+
+
+Computing and visualizing speed, divergence, acceleration and curvature
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this subsection we will show that megakaryocytes have the largest RNA
+speed (velocitymagnitude) among all celltypes. Same as our other
+published notebook usage examples, we can use methods from ``dyn.vf`` to
+calculate speed, divergence, acceleration and curvature within specific
+basis. In the following code cell, we select ``pca`` as the basis.
 
 .. code:: ipython3
 
@@ -338,8 +393,9 @@ is a scalar for each cell.
     dyn.vf.curvature(adata_labeling, basis=basis)
 
 
-Each of these quantities are saved to {quantity}_{basis} (e.g. ``speed_pca``). We now visualize these quantities on the
-umap space:
+.. parsed-literal::
+
+    Calculating divergence: 0it [00:00, ?it/s]
 
 
 .. code:: ipython3
@@ -347,10 +403,31 @@ umap space:
     adata_labeling.obs["speed_" + basis][:5]
 
 
+
+
+.. parsed-literal::
+
+    barcode
+    CCACAAGCGTGC-JL12_0    0.116313
+    CCATCCTGTGGA-JL12_0    0.410604
+    CCCTCGGCCGCA-JL12_0    0.086653
+    CCGCCCACCATG-JL12_0    0.145851
+    CCGCTGTGTAAG-JL12_0    0.096051
+    Name: speed_pca, dtype: float64
+
+
+
+| The results are saved to {quantity}\_{basis} (e.g. ``speed_pca``).
+  Then we can visualize via various visualization results.
+| In the result below, we can observe the patterns of dynamics
+  quantities including speed are consistent with the function of FLI1
+  (Meg lineage master regulator) and KLF1 (Ery lineage master
+  regulator).
+
 .. code:: ipython3
 
     import matplotlib.pyplot as plt
-
+    
     fig, axes = plt.subplots(ncols=2, nrows=2, constrained_layout=True, figsize=(12, 8))
     axes
     dyn.pl.umap(adata_labeling, color="speed_" + basis, ax=axes[0, 0], save_show_or_return="return")
@@ -367,39 +444,51 @@ umap space:
     plt.show()
 
 
-.. image:: output_39_0.png
 
-It is clear that the  Meg lineage has the highest RNA speed, acceleration and curvature while the lowest divergence across
-all lineages. The curvature for the Meg lineage is also low.
+.. parsed-literal::
 
-In order to reveal the underlying regulatory mechanism governing this early appearance, we perform RNA Jacobian analyses for these two master
-regulators.  Our Jacobian analyses revealed mutual inhibition between FLI1 and KLF1 and self-activation of FLI1
-(Truong and Ben-David, 2000). More details can be found in the following:
+    |-----> method arg is None, choosing methods automatically...
+    |-----------> method kd_tree selected
+    |-----> method arg is None, choosing methods automatically...
+    |-----------> method kd_tree selected
+    |-----> method arg is None, choosing methods automatically...
+    |-----------> method kd_tree selected
 
-Compute RNA Jacobian between the two master regulators:  FLI1 and KLF1.
+
+
+.. image:: output_45_1.png
+
+
+It is clear that the Meg lineage has the highest RNA speed, acceleration
+and curvature while the lowest divergence across all lineages. The
+curvature for the Meg lineage is also low.
+
+In order to reveal the underlying regulatory mechanism governing this
+early appearance, we perform RNA Jacobian analyses for these two master
+regulators. Our Jacobian analyses revealed mutual inhibition between
+FLI1 and KLF1 and self-activation of FLI1 (Truong and Ben-David, 2000).
+More details can be found in the following:
+
+Compute RNA Jacobian between the two master regulators: FLI1 and KLF1.
 
 .. code:: ipython3
 
     Meg_genes = ["FLI1", "KLF1"]
-
-.. code:: ipython3
-
     dyn.vf.jacobian(adata_labeling, regulators=Meg_genes, effectors=Meg_genes);
-
 
 
 .. parsed-literal::
 
-    Transforming subset Jacobian: 100%|██████████| 1947/1947 [00:00<00:00, 120423.96it/s]
+    Transforming subset Jacobian: 100%|██████████| 1947/1947 [00:00<00:00, 37278.36it/s]
 
 
-Next we will visualize the RNA Jacobian between FLI1 and KLF1 across cells. From the figure shown below, it is clear
-that FLI1 represses KLF1 (the blue color indicates negative Jacobian) while there is a self-activation for FLI1 (the
-red color indicates positive Jacobian).
+Next we will visualize the RNA Jacobian between FLI1 and KLF1 across
+cells. From the figure shown below, it is clear that FLI1 represses KLF1
+(the blue color indicates negative Jacobian) while there is a
+self-activation for FLI1 (the red color indicates positive Jacobian).
 
 .. code:: ipython3
 
-    
     dyn.pl.jacobian(
         adata_labeling,
         regulators=Meg_genes,
@@ -409,9 +498,7 @@ red color indicates positive Jacobian).
 
 
 
-.. image:: output_36_0.png
-   :width: 527px
-   
+.. image:: output_49_0.png
 
 
 .. code:: ipython3
@@ -425,17 +512,20 @@ red color indicates positive Jacobian).
 
 
 
-.. image:: output_37_0.png
-   :width: 527px
+.. image:: output_50_0.png
 
 
-A schematic diagram summarizing the interactions involving FLI1 and KLF1
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Conclusion: a schematic diagram summarizing the interactions involving FLI1 and KLF1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These analyses collectively suggest that self-activation of FLI1 maintains its higher expression
-in the HSPC state, which biases the HSPCs to first commit toward the Meg lineage with high speed and
-acceleration, while repressing the commitment into erythrocytes through inhibition of KLF1:
+Analyses above collectively suggest self-activation of FLI1 maintains
+its higher expression in the HSPC state, which biases the HSPCs to first
+commit towards the Meg lineage with high speed and acceleration, while
+repressing the commitment into erythrocytes through inhibition of KLF1.
+Together with the mutual regulation we show ealier in this tutorial, we
+can generate the following schematic to summarize the gene network.
 
-
-.. figure:: ../hsc_images/fig5_f_iv.png
+.. figure:: https://github.com/aristoteleo/dynamo-tutorials/blob/master/images/fig5_f_iv.png?raw=1
    :alt: fig5_f_iv
+
+   fig5_f_iv

@@ -39,7 +39,7 @@ associated functions.
 The recipes in dynamo
 ---------------------
 
-To make your life easy, currently dynamo supports 4 major recipe for
+To make your life easy, currently dynamo supports 4 major recipes for
 preprocessing. Please find at the end of this tutorial how you can
 customize your preprocessing method.
 
@@ -219,7 +219,7 @@ Applying Monocle Recipe
     |-----------> filtered out 12746 outlier genes
     |-----> PCA dimension reduction
     |-----> <insert> X_pca to obsm in AnnData Object.
-    |-----> [Preprocessor-monocle] completed [3.5468s]
+    |-----> [Preprocessor-monocle] completed [2.1788s]
 
 
 .. code:: ipython3
@@ -233,10 +233,10 @@ Applying Monocle Recipe
 
     AnnData object with n_obs × n_vars = 4167 × 16940
         obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'initial_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'ntr'
-        var: 'nCells', 'nCounts', 'pass_basic_filter', 'log_cv', 'score', 'log_m', 'frac', 'use_for_pca', 'ntr'
+        var: 'nCells', 'nCounts', 'pass_basic_filter', 'score', 'log_m', 'log_cv', 'frac', 'use_for_pca', 'ntr'
         uns: 'pp', 'velocyto_SVR', 'feature_selection', 'PCs', 'explained_variance_ratio_', 'pca_mean'
         obsm: 'X_pca'
-        layers: 'spliced', 'unspliced', 'X_spliced', 'X_unspliced'
+        layers: 'spliced', 'unspliced', 'X_unspliced', 'X_spliced'
 
 
 
@@ -252,7 +252,7 @@ Applying Monocle Recipe
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
     |-----> <insert> X_umap to obsm in AnnData Object.
-    |-----> [UMAP] completed [27.4297s]
+    |-----> [UMAP] completed [24.1043s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
@@ -290,10 +290,10 @@ transformation.
     |-----------> filtered out 350 outlier genes
     |-----> applying Pearson residuals to layer <X>
     |-----> replacing layer <X> with pearson residual normalized data.
-    |-----> [pearson residual normalization for X] completed [1.1042s]
+    |-----> [pearson residual normalization for X] completed [1.0136s]
     |-----> PCA dimension reduction
     |-----> <insert> X_pca to obsm in AnnData Object.
-    |-----> [Preprocessor-pearson residual] completed [4.8708s]
+    |-----> [Preprocessor-pearson residual] completed [4.1126s]
 
 
 .. code:: ipython3
@@ -307,7 +307,7 @@ transformation.
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
     |-----> <insert> X_umap to obsm in AnnData Object.
-    |-----> [UMAP] completed [16.7289s]
+    |-----> [UMAP] completed [13.9565s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
@@ -349,7 +349,7 @@ different layers, as stated above.
     |-----------> set sctransform results to adata.X
     |-----> PCA dimension reduction
     |-----> <insert> X_pca to obsm in AnnData Object.
-    |-----> [Preprocessor-sctransform] completed [16.6057s]
+    |-----> [Preprocessor-sctransform] completed [8.4605s]
 
 
 .. code:: ipython3
@@ -363,7 +363,7 @@ different layers, as stated above.
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
     |-----> <insert> X_umap to obsm in AnnData Object.
-    |-----> [UMAP] completed [16.2677s]
+    |-----> [UMAP] completed [14.2126s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
@@ -398,7 +398,7 @@ Applying Seurat Recipe
     |-----> number of selected highly variable genes: 2000
     |-----> PCA dimension reduction
     |-----> <insert> X_pca to obsm in AnnData Object.
-    |-----> [Preprocessor-seurat] completed [1.4041s]
+    |-----> [Preprocessor-seurat] completed [1.0389s]
 
 
 .. code:: ipython3
@@ -412,7 +412,7 @@ Applying Seurat Recipe
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
     |-----> <insert> X_umap to obsm in AnnData Object.
-    |-----> [UMAP] completed [16.0549s]
+    |-----> [UMAP] completed [14.0753s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
@@ -506,7 +506,7 @@ cell for the top 20 genes
 
 .. parsed-literal::
 
-    <AxesSubplot:title={'center':'Rank by gene expression fraction'}, xlabel='genes', ylabel='fractions of total counts'>
+    <Axes: title={'center': 'Rank by gene expression fraction'}, xlabel='genes', ylabel='fractions of total counts'>
 
 
 
@@ -623,7 +623,7 @@ Let`s run the monocle recipe again.
     |-----------> filtered out 13035 outlier genes
     |-----> PCA dimension reduction
     |-----> <insert> X_pca to obsm in AnnData Object.
-    |-----> [Preprocessor-monocle] completed [2.9955s]
+    |-----> [Preprocessor-monocle] completed [2.1018s]
 
 
 .. code:: ipython3
@@ -637,7 +637,7 @@ Let`s run the monocle recipe again.
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
     |-----> <insert> X_umap to obsm in AnnData Object.
-    |-----> [UMAP] completed [25.0124s]
+    |-----> [UMAP] completed [21.6402s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
@@ -716,11 +716,11 @@ Let`s run the seurat recipe in this time.
     |-----> number of selected highly variable genes: 2500
     |-----> PCA dimension reduction
     |-----> <insert> X_pca to obsm in AnnData Object.
-    |-----> [Preprocessor-seurat] completed [1.4892s]
+    |-----> [Preprocessor-seurat] completed [1.1897s]
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
     |-----> <insert> X_umap to obsm in AnnData Object.
-    |-----> [UMAP] completed [15.9357s]
+    |-----> [UMAP] completed [14.1921s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
@@ -842,10 +842,10 @@ your own specific requirements.
 .. parsed-literal::
 
     AnnData object with n_obs × n_vars = 3937 × 16940
-        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'initial_cell_size'
+        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'initial_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size'
         var: 'nCells', 'nCounts', 'pass_basic_filter'
         uns: 'pp'
-        layers: 'spliced', 'unspliced', 'X_spliced', 'X_unspliced'
+        layers: 'spliced', 'unspliced', 'X_unspliced', 'X_spliced'
 
 
 
@@ -863,10 +863,10 @@ your own specific requirements.
 .. parsed-literal::
 
     AnnData object with n_obs × n_vars = 3937 × 16940
-        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'initial_cell_size'
-        var: 'nCells', 'nCounts', 'pass_basic_filter', 'log_cv', 'score', 'log_m', 'frac', 'use_for_pca'
+        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'initial_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size'
+        var: 'nCells', 'nCounts', 'pass_basic_filter', 'score', 'log_m', 'log_cv', 'frac', 'use_for_pca'
         uns: 'pp', 'velocyto_SVR', 'feature_selection'
-        layers: 'spliced', 'unspliced', 'X_spliced', 'X_unspliced'
+        layers: 'spliced', 'unspliced', 'X_unspliced', 'X_spliced'
 
 
 
@@ -877,7 +877,7 @@ your own specific requirements.
 
 .. parsed-literal::
 
-    |-----> [regress out] completed [28.5796s]
+    |-----> [regress out] completed [26.9355s]
 
 
 .. code:: ipython3
@@ -895,11 +895,11 @@ your own specific requirements.
 .. parsed-literal::
 
     AnnData object with n_obs × n_vars = 3937 × 16940
-        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'spliced_Size_Factor', 'initial_spliced_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'initial_cell_size'
-        var: 'nCells', 'nCounts', 'pass_basic_filter', 'log_cv', 'score', 'log_m', 'frac', 'use_for_pca'
+        obs: 'split_id', 'sample', 'Size_Factor', 'condition', 'Cluster', 'Cell_type', 'umap_1', 'umap_2', 'batch', 'nGenes', 'nCounts', 'pMito', 'pass_basic_filter', 'initial_cell_size', 'unspliced_Size_Factor', 'initial_unspliced_cell_size', 'spliced_Size_Factor', 'initial_spliced_cell_size'
+        var: 'nCells', 'nCounts', 'pass_basic_filter', 'score', 'log_m', 'log_cv', 'frac', 'use_for_pca'
         uns: 'pp', 'velocyto_SVR', 'feature_selection', 'PCs', 'explained_variance_ratio_', 'pca_mean'
         obsm: 'X_pca'
-        layers: 'spliced', 'unspliced', 'X_spliced', 'X_unspliced'
+        layers: 'spliced', 'unspliced', 'X_unspliced', 'X_spliced'
 
 
 
@@ -914,7 +914,7 @@ your own specific requirements.
     |-----> retrieve data for non-linear dimension reduction...
     |-----> [UMAP] using X_pca with n_pca_components = 30
     |-----> <insert> X_umap to obsm in AnnData Object.
-    |-----> [UMAP] completed [21.4056s]
+    |-----> [UMAP] completed [19.5121s]
     |-----------> plotting with basis key=X_umap
     |-----------> skip filtering Cell_type by stack threshold when stacking color because it is not a numeric type
 
