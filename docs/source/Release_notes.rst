@@ -1,6 +1,52 @@
 ==================
 Release notes
 ==================
+Dynamo Ver 1.4.1
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+DEBUG
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Debug and refactor scPotential (`PR 624 <https://github.com/aristoteleo/dynamo-release/pull/624>`_).
+- Replace deprecated ``np.asscalar()`` with ``np.ndarray.item()`` (`PR 643 <https://github.com/aristoteleo/dynamo-release/pull/643>`_).
+- Create chunk option for normalization and gene selection (`PR 598 <https://github.com/aristoteleo/dynamo-release/pull/598>`_).
+- Debug ``pd.state_graph()`` (`PR 630 <https://github.com/aristoteleo/dynamo-release/pull/630>`_).
+- Debug ``pl.jacobian_heatmap()`` (`PR 653 <https://github.com/aristoteleo/dynamo-release/pull/653>`_).
+- Debug ``pl.nneighbors()`` (`PR 644 <https://github.com/aristoteleo/dynamo-release/pull/644>`_).
+- Retry codecov upload (`PR 656 <https://github.com/aristoteleo/dynamo-release/pull/656>`_).
+- Debug vectorfield given layer input (`PR 619 <https://github.com/aristoteleo/dynamo-release/pull/619>`_).
+- Debug simulation module (`PR 658 <https://github.com/aristoteleo/dynamo-release/pull/658>`_).
+- Extra filter after pearson residuals normalization (`PR 665 <https://github.com/aristoteleo/dynamo-release/pull/665>`_).
+- Add missing return value to deprecated functions (`PR 663 <https://github.com/aristoteleo/dynamo-release/pull/663>`_).
+- Debug networks plot (`PR 657 <https://github.com/aristoteleo/dynamo-release/pull/657>`_).
+- Implement ``pl.plot_connectivity()`` (`PR 652 <https://github.com/aristoteleo/dynamo-release/pull/652>`_).
+- Debug the preprocessing of integer matrix input (`PR 664 <https://github.com/aristoteleo/dynamo-release/pull/664>`_).
+- Missing return value in ``pl.lap_min_time()`` (`PR 668 <https://github.com/aristoteleo/dynamo-release/pull/668>`_).
+- Update matplotlib ``Colorbar.draw_all()` to ``Colorbar._draw_all()`` (`PR 669 <https://github.com/aristoteleo/dynamo-release/pull/669>`_).
+- Optimize code coverage tests (`PR 605 <https://github.com/aristoteleo/dynamo-release/pull/605>`_).
+- Debug ``test_gradop()`` by (`PR 677 <https://github.com/aristoteleo/dynamo-release/pull/677>`_).
+- Constraint on matplotlib version by (`PR 679 <https://github.com/aristoteleo/dynamo-release/pull/679>`_).
+- Upgrade code coverage to v4 (`PR 684 <https://github.com/aristoteleo/dynamo-release/pull/684>`_).
+- init a branch for updating dependency (`PR 690 <https://github.com/aristoteleo/dynamo-release/pull/690>`_).
+- Replace ``louvain`` with ``leiden`` (`PR 692 <https://github.com/aristoteleo/dynamo-release/pull/692>`_).
+- Debug ``pl.highest_frac_genes()`` (`PR 681 <https://github.com/aristoteleo/dynamo-release/pull/681>`_).
+- Deprecate more sparse matrix ``.A`` attributes (`PR 695 <https://github.com/aristoteleo/dynamo-release/pull/695>`_).
+- Fix matplotlib version issues and a circular import issue (`PR 686 <https://github.com/aristoteleo/dynamo-release/pull/686>`_).
+- Debug ``set_figure_params()`` (`PR 698 <https://github.com/aristoteleo/dynamo-release/pull/698>`_).
+- Debug: shape and name mismatch in cell-wise alpha saving (`PR 697 <https://github.com/aristoteleo/dynamo-release/pull/697>`_).
+- Debug: The sizes of the scatter plots are not set correctly (`PR 696 <https://github.com/aristoteleo/dynamo-release/pull/696>`_).
+
+
+Others
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Refactor ``pd.fate()`` with Trajectory class (`PR 645 <https://github.com/aristoteleo/dynamo-release/pull/645>`_).
+- Reorganize estimation module (`PR 662 <https://github.com/aristoteleo/dynamo-release/pull/662>`_).
+- Refactor ``pl.scatters()`` and ``pl.scatters_interactive()`` (`PR 654 <https://github.com/aristoteleo/dynamo-release/pull/654>`_).
+- Refactor ``vf.VectorField()`` function (`PR 620 <https://github.com/aristoteleo/dynamo-release/pull/620>`_).
+- Docstring and type hints for the prediction module (`PR 666 <https://github.com/aristoteleo/dynamo-release/pull/666>`_).
+- Update docstr and type hints for External module (`PR 661 <https://github.com/aristoteleo/dynamo-release/pull/661>`_).
+- Add doctring and type hints for simulation module (`PR 660 <https://github.com/aristoteleo/dynamo-release/pull/660>`_).
+- Docstring and type hints for root folder python files (`PR 667 <https://github.com/aristoteleo/dynamo-release/pull/667>`_).
+
+
 Dynamo Ver 1.4.0
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 Feature Changes
